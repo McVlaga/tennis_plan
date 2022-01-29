@@ -21,9 +21,9 @@ class WinLoseBadgeWidget extends StatelessWidget {
         child: Container(
           height: Dimensions.badgeWinLoseHeight,
           width: 270,
-          color: match.matchState == MatchState.win
+          color: match.matchResult == MatchState.win
               ? AppColors.winColor
-              : match.matchState == MatchState.lose
+              : match.matchResult == MatchState.lose
                   ? AppColors.loseColor
                   : AppColors.notPlayedColor,
         ),

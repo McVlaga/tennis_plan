@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'widgets/add_edit_match_section.dart';
+import 'widgets/date_item.dart';
+import 'widgets/first_name_item.dart';
+import 'widgets/last_name_item.dart';
+import 'widgets/time_item.dart';
+import '../matches/models/validation_match.dart';
+import '../widgets/settings_section_widget.dart';
 import 'widgets/court_location_item.dart';
 import 'widgets/court_surface_item.dart';
 import 'widgets/match_result_item.dart';
 import 'widgets/practice_check_box.dart';
 import '../matches/models/a_match.dart';
-import '../widgets/settings_countries_item.dart';
-import '../widgets/settings_date_item.dart';
-import '../widgets/settings_last_name_item.dart';
-import '../widgets/settings_first_name_item.dart';
-import '../widgets/settings_time_item.dart';
+import 'widgets/countries_item.dart';
 import '../matches/models/matches.dart';
 import '../constants/constants.dart';
 
@@ -24,18 +25,18 @@ class AddEditMatchScreen extends StatefulWidget {
 }
 
 class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
-  late AMatch newMatch;
+  late ValidationMatch tempMatch;
 
   @override
   void initState() {
-    newMatch = AMatch(id: DateTime.now().toString());
     super.initState();
+    tempMatch = ValidationMatch(id: DateTime.now().toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: newMatch,
+      value: tempMatch,
       child: Scaffold(
         appBar: AppBar(
           title: const Text(Strings.addMatchDialogTitle),
@@ -52,23 +53,23 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    const AddEditMatchSection(
+                    const SettingsSectionWidget(
                       sectionTitle: 'OPPONENT',
                       sectionWidgets: [
                         SizedBox(height: Dimensions.paddingOne),
-                        SettingsFirstNameItem(),
-                        SettingsLastNameItem(),
-                        SettingsCountriesItem(),
+                        FirstNameItem(),
+                        LastNameItem(),
+                        CountriesItem(),
                         SizedBox(height: Dimensions.paddingOne),
                       ],
                     ),
-                    AddEditMatchSection(
+                    SettingsSectionWidget(
                       sectionTitle: 'MATCH',
                       sectionWidgets: [
                         const PracticeCheckBox(),
-                        const SettingsDateItem(),
-                        const SettingsTimeItem(),
-                        Consumer<AMatch>(
+                        const DateItem(),
+                        const TimeItem(),
+                        Consumer<ValidationMatch>(
                           builder: (ctx, match, child) {
                             if (match.matchDate != null &&
                                 match.matchTime != null) {
@@ -81,9 +82,9 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                               );
                               if (fullDate.isBefore(DateTime.now())) {
                                 return const MatchResultItem();
-                              } else if (newMatch.matchState !=
+                              } else if (tempMatch.matchResult !=
                                   MatchState.notPlayed) {
-                                newMatch.setInvisibleMatchState(
+                                tempMatch.setInvisibleMatchState(
                                     MatchState.notPlayed);
                               }
                             }
@@ -92,17 +93,17 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                         ),
                       ],
                     ),
-                    AddEditMatchSection(
+                    SettingsSectionWidget(
                       sectionTitle: 'COURT',
                       sectionWidgets: [
                         const CourtSurfaceItem(),
-                        Consumer<AMatch>(
+                        Consumer<ValidationMatch>(
                           builder: (ctx, match, child) {
                             if (match.courtSurface != null) {
                               if (match.courtSurface == CourtSurface.hard) {
                                 return const CourtLocationItem();
                               } else {
-                                newMatch.setInvisibleCourtLocation(null);
+                                tempMatch.setInvisibleCourtLocation(null);
                               }
                             }
                             return const SizedBox.shrink();
@@ -115,8 +116,11 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+              padding: const EdgeInsets.only(
+                left: Dimensions.paddingTwo,
+                right: Dimensions.paddingTwo,
+                bottom: Dimensions.paddingTwo,
+              ),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(
                   Radius.circular(Dimensions.borderRadius),
@@ -127,10 +131,9 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                     builder: (ctx, matches, child) {
                       return InkWell(
                         onTap: () {
-                          if (newMatch.opponentFirstName != null &&
-                              newMatch.opponentLastName != null &&
-                              newMatch.opponentCountry != null) {
-                            matches.addMatch(newMatch);
+                          if (tempMatch.isValid()) {
+                            matches
+                                .addMatch(AMatch.fromTemporaryMatch(tempMatch));
                             Navigator.of(ctx).pop();
                           }
                         },
@@ -145,7 +148,6 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                           'ADD',
                           style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),
                         ),

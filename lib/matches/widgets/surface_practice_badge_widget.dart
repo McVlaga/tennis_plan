@@ -50,15 +50,14 @@ class SurfacePracticeBadgeWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingOne),
         child: Row(
           children: [
-            Expanded(
-              child: Text(
-                buildSurfaceLocationString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                ),
+            Text(
+              buildSurfaceLocationString(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
               ),
             ),
+            const Spacer(),
             Text(
               match.isPractice! ? 'PRACTICE' : '',
               style: const TextStyle(

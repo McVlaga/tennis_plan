@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
 
 class FilterWidget extends StatefulWidget {
-  FilterWidget({Key? key}) : super(key: key);
+  const FilterWidget({Key? key}) : super(key: key);
 
   @override
   _FiltersWidgetState createState() => _FiltersWidgetState();
@@ -13,10 +13,10 @@ class _FiltersWidgetState extends State<FilterWidget> {
   void _showFilteringPopupMenu() async {
     await showMenu(
       context: context,
-      position: RelativeRect.fromLTRB(300, 120, 300, 120),
+      position: const RelativeRect.fromLTRB(300, 120, 300, 120),
       items: [
-        PopupMenuItem<String>(child: const Text('Wins'), value: 'Wins'),
-        PopupMenuItem<String>(child: const Text('Losses'), value: 'Loss'),
+        const PopupMenuItem<String>(child: Text('Wins'), value: 'Wins'),
+        const PopupMenuItem<String>(child: Text('Losses'), value: 'Loss'),
       ],
       elevation: 8.0,
     );

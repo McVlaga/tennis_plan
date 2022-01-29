@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../matches/models/validation_match.dart';
 import '../../constants/constants.dart';
-import '../../matches/models/a_match.dart';
 
 class PracticeCheckBox extends StatelessWidget {
   const PracticeCheckBox({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final newMatch = Provider.of<AMatch>(context);
+    final newMatch = Provider.of<ValidationMatch>(context);
     return SizedBox(
       height: Dimensions.addMatchDialogInputHeight,
       child: SwitchListTile(

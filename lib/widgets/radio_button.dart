@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants/constants.dart';
+import '../constants/constants.dart';
 
 class RadioButton extends StatelessWidget {
   final String label;

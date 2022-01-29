@@ -29,7 +29,7 @@ class MatchList extends StatelessWidget {
         itemCount: matches.isEmpty ? 1 : matches.length + 1,
         itemBuilder: (_, index) {
           if (index == 0) {
-            return FilterWidget();
+            return const FilterWidget();
           }
           index--;
 

@@ -1,9 +1,10 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'validation_match.dart';
 import '../../constants/constants.dart';
 
 class AMatch with ChangeNotifier {
-  String id;
+  late String id;
   String? playerFirstName;
   String? playerLastName;
   Country? playerCountry;
@@ -13,7 +14,7 @@ class AMatch with ChangeNotifier {
   bool? isPractice;
   DateTime? matchDate;
   TimeOfDay? matchTime;
-  MatchState? matchState;
+  MatchState? matchResult;
   CourtSurface? courtSurface;
   CourtLocation? courtLocation;
 
@@ -28,10 +29,23 @@ class AMatch with ChangeNotifier {
     this.isPractice = false,
     this.matchDate,
     this.matchTime,
-    this.matchState,
+    this.matchResult,
     this.courtSurface,
     this.courtLocation,
   });
+
+  AMatch.fromTemporaryMatch(ValidationMatch tempMatch) {
+    id = tempMatch.id;
+    opponentFirstName = tempMatch.opponentFirstName;
+    opponentLastName = tempMatch.opponentLastName;
+    opponentCountry = tempMatch.opponentCountry;
+    isPractice = tempMatch.isPractice;
+    matchDate = tempMatch.matchDate;
+    matchTime = tempMatch.matchTime;
+    matchResult = tempMatch.matchResult;
+    courtSurface = tempMatch.courtSurface;
+    courtLocation = tempMatch.courtLocation;
+  }
 
   void setOpponentFirstName(String firstName) {
     opponentFirstName = firstName;
@@ -64,12 +78,8 @@ class AMatch with ChangeNotifier {
   }
 
   void setMatchState(MatchState state) {
-    matchState = state;
+    matchResult = state;
     notifyListeners();
-  }
-
-  void setInvisibleMatchState(MatchState state) {
-    matchState = state;
   }
 
   void setCourtSurface(CourtSurface surface) {
@@ -80,9 +90,5 @@ class AMatch with ChangeNotifier {
   void setCourtLocation(dynamic location) {
     courtLocation = location;
     notifyListeners();
-  }
-
-  void setInvisibleCourtLocation(CourtLocation? location) {
-    courtLocation = location;
   }
 }
