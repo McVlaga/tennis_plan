@@ -6,9 +6,14 @@ import '../../constants/constants.dart';
 class FlagAndNameWidget extends StatelessWidget {
   final Country? country;
   final String name;
+  final String ranking;
 
-  const FlagAndNameWidget({Key? key, required this.name, required this.country})
-      : super(key: key);
+  const FlagAndNameWidget({
+    Key? key,
+    required this.name,
+    required this.country,
+    required this.ranking,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +36,24 @@ class FlagAndNameWidget extends StatelessWidget {
             width: Dimensions.paddingOne,
           ),
         Flexible(
-          child: Text(
-            name,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: Fonts.matchListItemFontSize),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: Fonts.matchListItemFontSize),
+              ),
+              Text(
+                ranking,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Theme.of(context).textTheme.headline6?.color,
+                ),
+              ),
+            ],
           ),
         ),
       ],

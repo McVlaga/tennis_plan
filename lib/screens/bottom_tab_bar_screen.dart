@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:tennis_plan/add_edit_match/add_edit_match_screen.dart';
+import 'package:tennis_plan/constants/constants.dart';
 import '../settings/settings_screen.dart';
 
 import '../matches/match_list_screen.dart';
@@ -48,11 +50,11 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,
-              size: 26,
+              size: 30,
             ),
             activeIcon: Icon(
               Icons.home,
-              size: 26,
+              size: 30,
             ),
             label: '',
             tooltip: '',
@@ -60,11 +62,11 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_outlined,
-              size: 26,
+              size: 30,
             ),
             activeIcon: Icon(
               Icons.person,
-              size: 26,
+              size: 30,
             ),
             label: '',
             tooltip: '',
@@ -72,11 +74,11 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.settings_outlined,
-              size: 26,
+              size: 30,
             ),
             activeIcon: Icon(
               Icons.settings,
-              size: 26,
+              size: 30,
             ),
             label: '',
             tooltip: '',
@@ -88,6 +90,20 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
           });
         },
       ),
+      floatingActionButton: _page == 2
+          ? null
+          : FloatingActionButton(
+              child: Icon(
+                Icons.add,
+                size: Dimensions.navBarItemIconHeight,
+                color: Theme.of(context).iconTheme.color,
+              ),
+              onPressed: () {
+                if (_page == 0) {
+                  Navigator.pushNamed(context, AddEditMatchScreen.routeName);
+                }
+              },
+            ),
     );
   }
 

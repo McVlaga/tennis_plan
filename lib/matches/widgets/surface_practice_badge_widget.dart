@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../constants/constants.dart';
 import '../models/a_match.dart';
@@ -47,21 +48,21 @@ class SurfacePracticeBadgeWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(color: getSurfaceColor()),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingOne),
+        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingTwo),
         child: Row(
           children: [
             Text(
               buildSurfaceLocationString(),
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondary,
                 fontSize: 12,
               ),
             ),
             const Spacer(),
             Text(
-              match.isPractice! ? 'PRACTICE' : '',
-              style: const TextStyle(
-                color: Colors.white,
+              '${match.matchTime!.format(context)} ${DateFormat('MMM d, yyyy').format(match.matchDate!)}',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondary,
                 fontSize: 12,
               ),
             ),

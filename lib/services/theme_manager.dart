@@ -5,6 +5,7 @@ import 'storage_manager.dart';
 class ThemeManager with ChangeNotifier {
   final darkTheme = ThemeData(
     fontFamily: 'Rubik',
+    primaryColor: AppColors.primaryColorDark,
     canvasColor: AppColors.backgroundColorDark,
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
@@ -21,6 +22,9 @@ class ThemeManager with ChangeNotifier {
           color: AppColors.accentColorDark,
         ),
       ),
+    ),
+    textTheme: const TextTheme(
+      headline6: TextStyle(color: AppColors.textSecondaryColorDark),
     ),
     colorScheme: const ColorScheme.dark(
       secondary: AppColors.accentColorDark,
@@ -73,6 +77,9 @@ class ThemeManager with ChangeNotifier {
           color: AppColors.accentColorLight,
         ),
       ),
+    ),
+    textTheme: const TextTheme(
+      headline6: TextStyle(color: AppColors.textSecondaryColorLight),
     ),
     colorScheme: const ColorScheme.light(
       secondary: AppColors.accentColorLight,

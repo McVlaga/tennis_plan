@@ -33,7 +33,7 @@ class DateItem extends StatelessWidget {
       context: context,
       initialDate:
           newMatch.matchDate == null ? DateTime.now() : newMatch.matchDate!,
-      firstDate: DateTime(2015, 8),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2101),
       builder: (BuildContext context, Widget? child) {
         return Theme(

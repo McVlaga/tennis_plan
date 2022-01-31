@@ -14,16 +14,6 @@ class MatchListScreen extends StatelessWidget {
         title: const Text('My Matches'),
       ),
       body: const MatchList(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          size: Dimensions.navBarItemIconHeight,
-          color: Theme.of(context).iconTheme.color,
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, AddEditMatchScreen.routeName);
-        },
-      ),
     );
   }
 }

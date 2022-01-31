@@ -31,8 +31,9 @@ class TimeItem extends StatelessWidget {
     FocusScope.of(context).unfocus();
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime:
-          newMatch.matchTime == null ? TimeOfDay.now() : newMatch.matchTime!,
+      initialTime: newMatch.matchTime == null
+          ? TimeOfDay.now().replacing(minute: 0)
+          : newMatch.matchTime!,
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(

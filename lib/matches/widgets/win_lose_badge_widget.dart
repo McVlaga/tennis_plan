@@ -14,13 +14,13 @@ class WinLoseBadgeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      right: 0,
+      right: -14,
       bottom: 0,
       child: Transform.rotate(
         angle: Dimensions.badgeWinLoseAngle,
         child: Container(
           height: Dimensions.badgeWinLoseHeight,
-          width: 240,
+          width: 300,
           color: match.matchResult == MatchState.win
               ? AppColors.winColor
               : match.matchResult == MatchState.lose

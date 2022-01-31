@@ -1,7 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/match_detail/plan/add_edit_opponent_info._screen.dart';
+import 'package:tennis_plan/match_detail/plan/add_edit_tactical_goals_screen.dart';
 import 'package:tennis_plan/services/user_info.dart';
+import 'match_detail/plan/add_edit_mental_goals_sreen.dart';
+import 'match_detail/plan/add_edit_other_goals.dart';
 import 'services/theme_manager.dart';
 
 import 'add_edit_match/add_edit_match_screen.dart';
@@ -44,6 +48,14 @@ class MyApp extends StatelessWidget {
           MatchDetailTabBarScreen.routeName: (context) =>
               const MatchDetailTabBarScreen(),
           AddEditMatchScreen.routeName: (context) => const AddEditMatchScreen(),
+          AddEditOpponentInfoScreen.routeName: (context) =>
+              const AddEditOpponentInfoScreen(),
+          AddEditTacticalGoalsScreen.routeName: (context) =>
+              const AddEditTacticalGoalsScreen(),
+          AddEditMentalGoalsScreen.routeName: (context) =>
+              const AddEditMentalGoalsScreen(),
+          AddEditOtherGoalsScreen.routeName: (context) =>
+              const AddEditOtherGoalsScreen(),
         },
       );
     });

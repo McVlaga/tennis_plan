@@ -25,11 +25,23 @@ class MatchListItem extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: 80,
+        height: 110,
         width: double.infinity,
         child: Stack(
           children: <Widget>[
             WinLoseBadgeWidget(match: match),
+            Positioned(
+              height: 20,
+              right: 16,
+              bottom: 20,
+              child: Text(
+                match.isPractice! ? 'PRACTICE' : '',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Theme.of(context).textTheme.headline6?.color,
+                ),
+              ),
+            ),
             Column(
               children: [
                 Expanded(
@@ -45,6 +57,8 @@ class MatchListItem extends StatelessWidget {
                             country: match.opponentCountry,
                             name:
                                 '${match.opponentFirstName?[0]}. ${match.opponentLastName}',
+                            ranking:
+                                '${match.opponentRanking?.federation} ${match.opponentRanking?.position}',
                           ),
                         ),
                         const Text(

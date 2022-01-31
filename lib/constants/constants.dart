@@ -28,7 +28,7 @@ class Dimensions {
 
   // Match list dimensions
   static const matchListItemHeight = 80.0;
-  static const matchItemIconHeight = 22.0;
+  static const matchItemIconHeight = 30.0;
   static const badgeWinLoseHeight = 30.0;
   static const badgeWinLoseWidth = 600.0;
   static const circleAvatarRadius = 30.0;
@@ -84,6 +84,7 @@ class AppColors {
   static const surfaceColorLight = Colors.white;
   static const onSecondaryColorLight = Colors.white;
   static const onPrimaryColorLight = Colors.black;
+  static const textSecondaryColorLight = Color(0xff7E90A1);
 
   static const appBarBackgroundColorDark = primaryColorDark;
   static const accentColorDark = Colors.yellow;
@@ -92,6 +93,7 @@ class AppColors {
   static const surfaceColorDark = Color(0xff242837);
   static const onSecondaryColorDark = Colors.black;
   static const onPrimaryColorDark = Colors.white;
+  static const textSecondaryColorDark = Color(0xff7C7B89);
 
   static const accentColor = Colors.yellow;
   static const winColor = Colors.green;
@@ -106,7 +108,7 @@ class Fonts {
   static const rubikFont = 'Rubik';
 
   // Match list item
-  static const matchListItemFontSize = 22.0;
+  static const matchListItemFontSize = 18.0;
   static const matchListItemVSFontSize = 55.0;
 
   // Add a match dialog

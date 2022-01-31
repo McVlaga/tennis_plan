@@ -1,5 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:tennis_plan/matches/models/ranking.dart';
 import '../../add_edit_match/models/validation_match.dart';
 import '../../constants/constants.dart';
 
@@ -8,6 +9,7 @@ class AMatch with ChangeNotifier {
   String? opponentFirstName;
   String? opponentLastName;
   Country? opponentCountry;
+  Ranking? opponentRanking;
   bool? isPractice;
   DateTime? matchDate;
   TimeOfDay? matchTime;
@@ -20,10 +22,11 @@ class AMatch with ChangeNotifier {
     this.opponentFirstName,
     this.opponentLastName,
     this.opponentCountry,
+    this.opponentRanking,
     this.isPractice = false,
     this.matchDate,
     this.matchTime,
-    this.matchResult,
+    this.matchResult = MatchState.notPlayed,
     this.courtSurface,
     this.courtLocation,
   });
@@ -33,10 +36,10 @@ class AMatch with ChangeNotifier {
     opponentFirstName = tempMatch.opponentFirstName;
     opponentLastName = tempMatch.opponentLastName;
     opponentCountry = tempMatch.opponentCountry;
+    opponentRanking = tempMatch.opponentRanking;
     isPractice = tempMatch.isPractice;
     matchDate = tempMatch.matchDate;
     matchTime = tempMatch.matchTime;
-    matchResult = tempMatch.matchResult;
     courtSurface = tempMatch.courtSurface;
     courtLocation = tempMatch.courtLocation;
   }

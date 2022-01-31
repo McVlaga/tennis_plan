@@ -1,6 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tennis_plan/matches/models/ranking.dart';
 
 import '../../constants/constants.dart';
 
@@ -9,16 +10,17 @@ class ValidationMatch with ChangeNotifier {
   String? opponentFirstName;
   String? opponentLastName;
   Country? opponentCountry;
+  Ranking? opponentRanking;
   bool? isPractice;
   DateTime? matchDate;
   TimeOfDay? matchTime;
-  MatchState? matchResult;
   CourtSurface? courtSurface;
   CourtLocation? courtLocation;
 
   String? opponentFirstNameError;
   String? opponentLastNameError;
   String? opponentCountryError;
+  String? opponentRankingError;
   String? matchDateError;
   String? matchTimeError;
   String? matchResultError;
@@ -30,10 +32,10 @@ class ValidationMatch with ChangeNotifier {
     this.opponentFirstName,
     this.opponentLastName,
     this.opponentCountry,
+    this.opponentRanking,
     this.isPractice = false,
     this.matchDate,
     this.matchTime,
-    this.matchResult,
     this.courtSurface,
     this.courtLocation,
   });
@@ -58,6 +60,12 @@ class ValidationMatch with ChangeNotifier {
     } else {
       opponentCountryError = null;
     }
+    if (opponentRanking == null) {
+      opponentRankingError = 'Specify the ranking';
+      isValid = false;
+    } else {
+      opponentRankingError = null;
+    }
     if (matchDate == null) {
       matchDateError = 'Select a date';
       isValid = false;
@@ -69,23 +77,6 @@ class ValidationMatch with ChangeNotifier {
       isValid = false;
     } else {
       matchTimeError = null;
-    }
-    if (matchDate != null && matchTime != null) {
-      DateTime fullDate = DateTime(
-        matchDate!.year,
-        matchDate!.month,
-        matchDate!.day,
-        matchTime!.hour,
-        matchTime!.minute,
-      );
-      if (fullDate.isBefore(DateTime.now())) {
-        if (matchResult == null) {
-          matchResultError = 'Select result';
-          isValid = false;
-        } else {
-          matchResultError = null;
-        }
-      }
     }
     if (courtSurface == null) {
       courtSurfaceError = 'Choose a surface';
@@ -126,12 +117,28 @@ class ValidationMatch with ChangeNotifier {
     notifyListeners();
   }
 
+  void setOpponentRanking(String fed, String posString) {
+    int posInt = int.parse(posString);
+    opponentRanking = Ranking(federation: fed, position: posInt);
+    notifyListeners();
+  }
+
   String get opponentCountryString {
     if (opponentCountry != null) {
       return opponentCountry!.name;
     }
     if (opponentCountryError != null) {
       return opponentCountryError!;
+    }
+    return '';
+  }
+
+  String get opponentRankingString {
+    if (opponentRanking != null) {
+      return '${opponentRanking!.federation} ${opponentRanking!.position}';
+    }
+    if (opponentRankingError != null) {
+      return opponentRankingError!;
     }
     return '';
   }
@@ -169,29 +176,6 @@ class ValidationMatch with ChangeNotifier {
       return matchTimeError!;
     }
     return '';
-  }
-
-  void setMatchState(MatchState state) {
-    matchResult = state;
-    notifyListeners();
-  }
-
-  String get matchStateString {
-    if (matchResult != null) {
-      if (matchResult == MatchState.lose) {
-        return 'I lost';
-      } else if (matchResult == MatchState.win) {
-        return 'I won';
-      }
-    }
-    if (matchResultError != null) {
-      return matchResultError!;
-    }
-    return '';
-  }
-
-  void setInvisibleMatchState(MatchState state) {
-    matchResult = state;
   }
 
   void setCourtSurface(CourtSurface surface) {

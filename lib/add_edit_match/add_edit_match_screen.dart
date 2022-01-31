@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/add_edit_match/widgets/ranking_item.dart';
 
 import '../constants/constants.dart';
 import '../matches/models/a_match.dart';
@@ -12,7 +13,6 @@ import 'widgets/court_surface_item.dart';
 import 'widgets/date_item.dart';
 import 'widgets/first_name_item.dart';
 import 'widgets/last_name_item.dart';
-import 'widgets/match_result_item.dart';
 import 'widgets/practice_check_box.dart';
 import 'widgets/time_item.dart';
 
@@ -61,36 +61,15 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                         FirstNameItem(),
                         LastNameItem(),
                         CountriesItem(),
+                        RankingItem(),
                       ],
                     ),
-                    SettingsSectionWidget(
+                    const SettingsSectionWidget(
                       sectionTitle: 'MATCH',
                       sectionWidgets: [
-                        const PracticeCheckBox(),
-                        const DateItem(),
-                        const TimeItem(),
-                        Consumer<ValidationMatch>(
-                          builder: (ctx, match, child) {
-                            if (match.matchDate != null &&
-                                match.matchTime != null) {
-                              DateTime fullDate = DateTime(
-                                match.matchDate!.year,
-                                match.matchDate!.month,
-                                match.matchDate!.day,
-                                match.matchTime!.hour,
-                                match.matchTime!.minute,
-                              );
-                              if (fullDate.isBefore(DateTime.now())) {
-                                return const MatchResultItem();
-                              } else if (tempMatch.matchResult !=
-                                  MatchState.notPlayed) {
-                                tempMatch.setInvisibleMatchState(
-                                    MatchState.notPlayed);
-                              }
-                            }
-                            return const SizedBox.shrink();
-                          },
-                        ),
+                        PracticeCheckBox(),
+                        DateItem(),
+                        TimeItem(),
                       ],
                     ),
                     SettingsSectionWidget(

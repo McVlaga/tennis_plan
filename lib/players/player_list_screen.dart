@@ -25,14 +25,6 @@ class PlayerListScreen extends StatelessWidget {
           return const PlayerListItem();
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          size: Dimensions.navBarItemIconHeight,
-          color: Theme.of(context).iconTheme.color,
-        ),
-        onPressed: () {},
-      ),
     );
   }
 }
