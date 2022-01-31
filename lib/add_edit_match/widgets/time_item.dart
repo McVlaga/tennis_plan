@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/settings_item_widget.dart';
+
 import '../../constants/constants.dart';
-import '../../matches/models/validation_match.dart';
+import '../../widgets/settings_item_widget.dart';
+import '../models/validation_match.dart';
 
 class TimeItem extends StatelessWidget {
   const TimeItem({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class TimeItem extends StatelessWidget {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme:
-                const ColorScheme.light(primary: AppColors.primaryColor),
+                ColorScheme.light(primary: Theme.of(context).primaryColor),
           ),
           child: child!,
         );

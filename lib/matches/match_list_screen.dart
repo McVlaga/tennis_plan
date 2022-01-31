@@ -12,21 +12,17 @@ class MatchListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Matches'),
-        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: const MatchList(),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: Dimensions.navBarHeight),
-        child: FloatingActionButton(
-          child: const Icon(
-            Icons.add,
-            size: Dimensions.navBarItemIconHeight,
-            color: AppColors.tabBarItemColor,
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, AddEditMatchScreen.routeName);
-          },
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          size: Dimensions.navBarItemIconHeight,
+          color: Theme.of(context).iconTheme.color,
         ),
+        onPressed: () {
+          Navigator.pushNamed(context, AddEditMatchScreen.routeName);
+        },
       ),
     );
   }

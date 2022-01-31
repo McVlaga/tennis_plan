@@ -35,7 +35,7 @@ class SettingsSectionWidget extends StatelessWidget {
             Radius.circular(Dimensions.borderRadius),
           ),
           child: Material(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             child: Column(
               children: <Widget>[
                 const SizedBox(height: Dimensions.paddingOne),

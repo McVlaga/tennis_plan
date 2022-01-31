@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../constants/constants.dart';
+import '../matches/models/a_match.dart';
+import '../matches/models/matches.dart';
+import '../widgets/settings_section_widget.dart';
+import 'models/validation_match.dart';
+import 'widgets/countries_item.dart';
+import 'widgets/court_location_item.dart';
+import 'widgets/court_surface_item.dart';
 import 'widgets/date_item.dart';
 import 'widgets/first_name_item.dart';
 import 'widgets/last_name_item.dart';
-import 'widgets/time_item.dart';
-import '../matches/models/validation_match.dart';
-import '../widgets/settings_section_widget.dart';
-import 'widgets/court_location_item.dart';
-import 'widgets/court_surface_item.dart';
 import 'widgets/match_result_item.dart';
 import 'widgets/practice_check_box.dart';
-import '../matches/models/a_match.dart';
-import 'widgets/countries_item.dart';
-import '../matches/models/matches.dart';
-import '../constants/constants.dart';
+import 'widgets/time_item.dart';
 
 class AddEditMatchScreen extends StatefulWidget {
   static const routeName = '/add-edit-match-screen';
@@ -40,7 +41,8 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(Strings.addMatchDialogTitle),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.secondaryVariant,
+          foregroundColor: Theme.of(context).colorScheme.onSecondary,
         ),
         body: Column(
           children: [
@@ -56,11 +58,9 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                     const SettingsSectionWidget(
                       sectionTitle: 'OPPONENT',
                       sectionWidgets: [
-                        SizedBox(height: Dimensions.paddingOne),
                         FirstNameItem(),
                         LastNameItem(),
                         CountriesItem(),
-                        SizedBox(height: Dimensions.paddingOne),
                       ],
                     ),
                     SettingsSectionWidget(
@@ -126,7 +126,7 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                   Radius.circular(Dimensions.borderRadius),
                 ),
                 child: Material(
-                  color: AppColors.winColor,
+                  color: Theme.of(context).colorScheme.secondaryVariant,
                   child: Consumer<Matches>(
                     builder: (ctx, matches, child) {
                       return InkWell(
@@ -140,15 +140,15 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                         child: child,
                       );
                     },
-                    child: const SizedBox(
+                    child: SizedBox(
                       height: Dimensions.addMatchDialogInputHeight,
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          'ADD',
+                          'SAVE',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),
                       ),

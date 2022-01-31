@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../constants/constants.dart';
-import '../../matches/models/validation_match.dart';
+import '../models/validation_match.dart';
 
 class LastNameItem extends StatelessWidget {
   const LastNameItem({

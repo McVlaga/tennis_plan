@@ -20,7 +20,7 @@ class WinLoseBadgeWidget extends StatelessWidget {
         angle: Dimensions.badgeWinLoseAngle,
         child: Container(
           height: Dimensions.badgeWinLoseHeight,
-          width: 270,
+          width: 240,
           color: match.matchResult == MatchState.win
               ? AppColors.winColor
               : match.matchResult == MatchState.lose

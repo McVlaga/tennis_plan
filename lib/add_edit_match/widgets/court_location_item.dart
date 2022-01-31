@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/settings_item_widget.dart';
-import '../../matches/models/validation_match.dart';
+import '../models/validation_match.dart';
 import '../../widgets/radio_button.dart';
 import '../../constants/constants.dart';
 
@@ -37,7 +37,7 @@ class CourtLocationItem extends StatelessWidget {
           topRight: Radius.circular(Dimensions.borderRadius),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).canvasColor,
       builder: (builder) {
         return ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 300),

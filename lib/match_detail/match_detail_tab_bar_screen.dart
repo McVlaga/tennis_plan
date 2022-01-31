@@ -25,14 +25,13 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          bottom: const TabBar(
-            labelColor: Colors.white,
-            tabs: [
+          bottom: TabBar(
+            labelColor: Theme.of(context).colorScheme.onPrimary,
+            tabs: const [
               Tab(text: 'PLAN'),
               Tab(text: 'REVIEW'),
             ],
           ),
-          backgroundColor: Theme.of(context).primaryColor,
           title: Text('VS ${loadedMatch.opponentLastName}'),
         ),
         body: const TabBarView(

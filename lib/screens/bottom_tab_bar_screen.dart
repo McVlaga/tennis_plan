@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import '../settings/settings_screen.dart';
 
-import '../constants/constants.dart';
 import '../matches/match_list_screen.dart';
 import '../players/player_list_screen.dart';
 
@@ -22,7 +22,7 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
   final List<Widget> _screens = [
     const MatchListScreen(),
     const PlayerListScreen(),
-    const PlayerListScreen(),
+    const SettingsScreen(),
   ];
 
   @override
@@ -37,32 +37,49 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_page],
-      extendBody: true,
-      bottomNavigationBar: CurvedNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         key: _bottomNavigationKey,
-        index: 0,
-        height: Dimensions.navBarHeight,
-        animationCurve: Curves.easeInOut,
-        animationDuration:
-            const Duration(milliseconds: Animations.animationDuration),
-        buttonBackgroundColor: AppColors.accentColor,
-        color: AppColors.primaryColor,
-        backgroundColor: Colors.transparent,
-        items: const <Widget>[
-          Icon(
-            Icons.home,
-            color: AppColors.tabBarItemColor,
-            size: Dimensions.navBarItemIconHeight,
+        currentIndex: _page,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        elevation: 4,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 26,
+            ),
+            activeIcon: Icon(
+              Icons.home,
+              size: 26,
+            ),
+            label: '',
+            tooltip: '',
           ),
-          Icon(
-            Icons.person,
-            color: AppColors.tabBarItemColor,
-            size: Dimensions.navBarItemIconHeight,
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_outlined,
+              size: 26,
+            ),
+            activeIcon: Icon(
+              Icons.person,
+              size: 26,
+            ),
+            label: '',
+            tooltip: '',
           ),
-          Icon(
-            Icons.settings,
-            color: AppColors.tabBarItemColor,
-            size: Dimensions.navBarItemIconHeight,
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.settings_outlined,
+              size: 26,
+            ),
+            activeIcon: Icon(
+              Icons.settings,
+              size: 26,
+            ),
+            label: '',
+            tooltip: '',
           ),
         ],
         onTap: (index) {
@@ -70,7 +87,6 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
             _page = index;
           });
         },
-        letIndexChange: (index) => true,
       ),
     );
   }

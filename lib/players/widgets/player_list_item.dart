@@ -15,7 +15,7 @@ class PlayerListItem extends StatelessWidget {
         bottom: Dimensions.paddingZero,
       ),
       child: Material(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius:
             const BorderRadius.all(Radius.circular(Dimensions.borderRadius)),
         child: InkWell(

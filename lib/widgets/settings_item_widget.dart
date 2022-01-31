@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../constants/constants.dart';
 
 class SettingsItemWidget extends StatelessWidget {
@@ -17,9 +18,9 @@ class SettingsItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Color labelColor;
     if (showError) {
-      labelColor = AppColors.loseColor;
+      labelColor = Theme.of(context).colorScheme.error;
     } else {
-      labelColor = AppColors.primaryColor;
+      labelColor = Theme.of(context).colorScheme.secondaryVariant;
     }
     return Padding(
       padding: const EdgeInsets.all(Dimensions.paddingTwo),

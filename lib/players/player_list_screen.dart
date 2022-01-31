@@ -13,7 +13,6 @@ class PlayerListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Players'),
-        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: ListView.builder(
         padding: const EdgeInsets.only(
@@ -26,16 +25,13 @@ class PlayerListScreen extends StatelessWidget {
           return const PlayerListItem();
         },
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: Dimensions.navBarHeight),
-        child: FloatingActionButton(
-          child: const Icon(
-            Icons.add,
-            size: Dimensions.navBarItemIconHeight,
-            color: AppColors.tabBarItemColor,
-          ),
-          onPressed: () {},
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          size: Dimensions.navBarItemIconHeight,
+          color: Theme.of(context).iconTheme.color,
         ),
+        onPressed: () {},
       ),
     );
   }

@@ -27,6 +27,7 @@ class RadioButton extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Radio(
+                activeColor: Theme.of(context).colorScheme.secondary,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 groupValue: valueType,
                 value: value!,

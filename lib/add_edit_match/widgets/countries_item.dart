@@ -2,7 +2,7 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/settings_item_widget.dart';
-import '../../matches/models/validation_match.dart';
+import '../models/validation_match.dart';
 
 import '../../constants/constants.dart';
 
@@ -33,7 +33,7 @@ class CountriesItem extends StatelessWidget {
       context: context,
       countryListTheme: CountryListThemeData(
         flagSize: 25,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).canvasColor,
         textStyle: const TextStyle(fontSize: 16),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(Dimensions.borderRadius),
@@ -42,9 +42,9 @@ class CountriesItem extends StatelessWidget {
         inputDecoration: InputDecoration(
           labelText: 'Search',
           hintText: 'Start typing to search',
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.search,
-            color: AppColors.primaryColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide(

@@ -1,13 +1,10 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'validation_match.dart';
+import '../../add_edit_match/models/validation_match.dart';
 import '../../constants/constants.dart';
 
 class AMatch with ChangeNotifier {
   late String id;
-  String? playerFirstName;
-  String? playerLastName;
-  Country? playerCountry;
   String? opponentFirstName;
   String? opponentLastName;
   Country? opponentCountry;
@@ -20,9 +17,6 @@ class AMatch with ChangeNotifier {
 
   AMatch({
     required this.id,
-    this.playerFirstName,
-    this.playerLastName,
-    this.playerCountry,
     this.opponentFirstName,
     this.opponentLastName,
     this.opponentCountry,

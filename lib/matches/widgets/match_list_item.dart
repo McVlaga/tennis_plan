@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../../constants/constants.dart';
-import '../models/a_match.dart';
 import '../../match_detail/match_detail_tab_bar_screen.dart';
+import '../models/a_match.dart';
+import 'flag_and_name_widget.dart';
 import 'surface_practice_badge_widget.dart';
 import 'win_lose_badge_widget.dart';
-
-import 'flag_and_name_widget.dart';
 
 class MatchListItem extends StatelessWidget {
   const MatchListItem({
@@ -25,7 +25,7 @@ class MatchListItem extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: 100,
+        height: 80,
         width: double.infinity,
         child: Stack(
           children: <Widget>[
@@ -41,22 +41,10 @@ class MatchListItem extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              FlagAndNameWidget(
-                                  country: match.opponentCountry,
-                                  name: 'A. Masin'),
-                              const SizedBox(
-                                height: Dimensions.paddingOne,
-                              ),
-                              FlagAndNameWidget(
-                                country: match.opponentCountry,
-                                name:
-                                    '${match.opponentFirstName?[0]}. ${match.opponentLastName}',
-                              ),
-                            ],
+                          child: FlagAndNameWidget(
+                            country: match.opponentCountry,
+                            name:
+                                '${match.opponentFirstName?[0]}. ${match.opponentLastName}',
                           ),
                         ),
                         const Text(

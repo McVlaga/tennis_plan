@@ -32,12 +32,15 @@ class _FiltersWidgetState extends State<FilterWidget> {
         padding: const EdgeInsets.all(Dimensions.paddingOne),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const <Widget>[
-            Icon(Icons.filter_list),
-            Text(
+          children: <Widget>[
+            Icon(
+              Icons.filter_list,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            const Text(
               'Filter',
               style: TextStyle(
-                fontSize: Fonts.matchListItemFontSize,
+                fontSize: 16.0,
               ),
             ),
           ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../matches/models/validation_match.dart';
+
 import '../../constants/constants.dart';
+import '../models/validation_match.dart';
 
 class PracticeCheckBox extends StatelessWidget {
   const PracticeCheckBox({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class PracticeCheckBox extends StatelessWidget {
     return SizedBox(
       height: Dimensions.addMatchDialogInputHeight,
       child: SwitchListTile(
+        activeColor: Theme.of(context).colorScheme.secondary,
         contentPadding: const EdgeInsets.only(
           left: Dimensions.paddingTwo,
           right: Dimensions.paddingTwo,
