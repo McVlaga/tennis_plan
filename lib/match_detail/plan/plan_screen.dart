@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tennis_plan/constants/constants.dart';
+import 'package:tennis_plan/match_detail/plan/models/plan.dart';
+import 'package:tennis_plan/match_detail/plan/section_with_list_widget.dart';
+import 'package:tennis_plan/match_detail/plan/shot_with_stars_widget.dart';
+import 'package:tennis_plan/matches/models/a_match.dart';
+import 'package:tennis_plan/matches/widgets/flag_and_name_widget.dart';
 import 'package:tennis_plan/widgets/settings_section_widget.dart';
 
 class PlanScreen extends StatelessWidget {
@@ -7,6 +13,8 @@ class PlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AMatch match = Provider.of<AMatch>(context);
+    Plan? plan = match.plan;
     return ListView(
       padding: const EdgeInsets.only(
         left: Dimensions.paddingTwo,
@@ -17,171 +25,74 @@ class PlanScreen extends StatelessWidget {
         SettingsSectionWidget(
           sectionTitle: 'OPPONENT INFO',
           sectionWidgets: [
-            Container(
-              width: double.infinity,
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingTwo),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
                       Expanded(
-                        child: Align(
-                            alignment: Alignment.center, child: Text('Pusher')),
+                        child: FlagAndNameWidget(
+                          name:
+                              '${match.opponentFirstName} ${match.opponentLastName}',
+                          country: match.opponentCountry,
+                          ranking:
+                              '${match.opponentRanking!.federation} ${match.opponentRanking!.position}',
+                        ),
                       ),
-                      Expanded(
-                        child: Align(
-                            alignment: Alignment.center, child: Text('Lefty')),
+                      Text(
+                        'Righty',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color:
+                                Theme.of(context).textTheme.headline6!.color),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 32),
-                  Text(
-                    'Strengths',
-                    style: TextStyle(fontSize: 16),
-                  ),
                   const SizedBox(height: 16),
-                  Row(
+                  Wrap(
+                    spacing: 8.0, // gap between adjacent chips
+                    runSpacing: 8.0,
                     children: [
-                      Container(
-                        width: 40.0,
-                        height: 40.0,
-                        decoration: new BoxDecoration(
-                          color: Colors.orange,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '1',
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Flexible(
-                        child: Text(
-                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                        ),
-                      ),
+                      ...plan!.shots.map((shot) {
+                        return ShotWithStarsWidget(
+                          title: shot.name,
+                          starNumber: '${shot.score}',
+                        );
+                      }).toList(),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Container(
-                        width: 40.0,
-                        height: 40.0,
-                        decoration: new BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '2',
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Flexible(
-                        child: Text(
-                          'Lorem Ipsum is simply dummy.',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Container(
-                        width: 40.0,
-                        height: 40.0,
-                        decoration: new BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '3',
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Flexible(
-                        child: Text(
-                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 32),
-                  Text(
-                    'Weaknesses',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Container(
-                        width: 40.0,
-                        height: 40.0,
-                        decoration: new BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '1',
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Flexible(
-                        child: Text(
-                          'Lorem Ipsum is simply dummy.',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Container(
-                        width: 40.0,
-                        height: 40.0,
-                        decoration: new BoxDecoration(
-                          color: Colors.orange,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '2',
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Flexible(
-                        child: Text(
-                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 8),
                 ],
               ),
             )
           ],
         ),
+        SizedBox(height: 16),
+        SettingsSectionWidget(
+          sectionTitle: '',
+          sectionWidgets: [
+            SectionWithListWidget(
+              title: 'Strengths',
+              titleIcon: Icons.shield,
+              items: plan.strengths,
+            ),
+          ],
+        ),
+        SizedBox(height: 16),
+        SettingsSectionWidget(
+          sectionTitle: '',
+          sectionWidgets: [
+            SectionWithListWidget(
+              title: 'Weaknesses',
+              titleIcon: Icons.broken_image,
+              items: plan.weaknesses,
+            ),
+          ],
+        ),
+        SizedBox(height: 110),
       ],
     );
   }

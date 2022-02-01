@@ -15,21 +15,22 @@ class SettingsSectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(
-            top: Dimensions.paddingThree,
-            bottom: Dimensions.paddingTwo,
-          ),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              sectionTitle,
-              style: const TextStyle(
-                fontSize: Fonts.addMatchDialogMatchFontSize,
+        if (sectionTitle.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(
+              top: Dimensions.paddingThree,
+              bottom: Dimensions.paddingTwo,
+            ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                sectionTitle,
+                style: const TextStyle(
+                  fontSize: Fonts.addMatchDialogMatchFontSize,
+                ),
               ),
             ),
           ),
-        ),
         ClipRRect(
           borderRadius: const BorderRadius.all(
             Radius.circular(Dimensions.borderRadius),

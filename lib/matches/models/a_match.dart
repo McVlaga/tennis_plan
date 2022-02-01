@@ -1,5 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:tennis_plan/match_detail/plan/models/plan.dart';
+import 'package:tennis_plan/match_detail/plan/models/shot.dart';
 import 'package:tennis_plan/matches/models/ranking.dart';
 import '../../add_edit_match/models/validation_match.dart';
 import '../../constants/constants.dart';
@@ -16,6 +18,8 @@ class AMatch with ChangeNotifier {
   MatchState? matchResult;
   CourtSurface? courtSurface;
   CourtLocation? courtLocation;
+
+  Plan? plan = Plan();
 
   AMatch({
     required this.id,
@@ -86,6 +90,11 @@ class AMatch with ChangeNotifier {
 
   void setCourtLocation(dynamic location) {
     courtLocation = location;
+    notifyListeners();
+  }
+
+  void addShot(String name, int score) {
+    plan!.addShot(Shot(name: name, score: score));
     notifyListeners();
   }
 }

@@ -151,4 +151,18 @@ class ThemeManager with ChangeNotifier {
   }
 }
 
+extension ColorSchemeExtension on ColorScheme {
+  Color get cardShotGoodBg => brightness == Brightness.light
+      ? const Color(0xffE8F5E9)
+      : const Color(0xFF292e40);
+
+  Color get cardShotMediumBg => brightness == Brightness.light
+      ? const Color(0xffFFF3E0)
+      : const Color(0xFF292e40);
+
+  Color get cardShotBadBg => brightness == Brightness.light
+      ? const Color(0xffFFEBEE)
+      : const Color(0xFF292e40);
+}
+
 enum ThemeType { dark, light }
