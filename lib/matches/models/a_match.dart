@@ -93,8 +93,48 @@ class AMatch with ChangeNotifier {
     notifyListeners();
   }
 
-  void addShot(String name, int score) {
-    plan!.addShot(Shot(name: name, score: score));
+  void addOpponentShot(String name, int score) {
+    plan!.addOpponentShot(name, score);
+    notifyListeners();
+  }
+
+  void addOpponentStrength(String strength) {
+    plan!.addOpponentStrength(strength);
+    notifyListeners();
+  }
+
+  void addOpponentWeakness(String weakness) {
+    plan!.addOpponentWeakness(weakness);
+    notifyListeners();
+  }
+
+  void updateOpponentShot(String oldName, String newName, int score) {
+    plan!.updateOpponentShot(oldName, newName, score);
+    notifyListeners();
+  }
+
+  void updateOpponentStrength(String oldStrength, String newStrength) {
+    plan!.updateOpponentStrength(oldStrength, newStrength);
+    notifyListeners();
+  }
+
+  void updateOpponentWeakness(String oldWeakness, String newWeakness) {
+    plan!.updateOpponentWeakness(oldWeakness, newWeakness);
+    notifyListeners();
+  }
+
+  void deleteOpponentShot(String name) {
+    plan!.deleteOpponentShot(name);
+    notifyListeners();
+  }
+
+  void deleteOpponentStrength(String strength) {
+    plan!.deleteOpponentStrength(strength);
+    notifyListeners();
+  }
+
+  void deleteOpponentWeakness(String weakness) {
+    plan!.deleteOpponentWeakness(weakness);
     notifyListeners();
   }
 }
