@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tennis_plan/constants/constants.dart';
 import 'package:tennis_plan/match_detail/plan/models/plan.dart';
 import 'package:tennis_plan/match_detail/plan/ripple_color_text_widget.dart';
-import 'package:tennis_plan/match_detail/plan/ripple_shot_widget.dart';
+import 'package:tennis_plan/match_detail/plan/opponents_info/ripple_shot_widget.dart';
 import 'package:tennis_plan/matches/models/a_match.dart';
 import 'package:tennis_plan/matches/widgets/flag_and_name_widget.dart';
 import 'package:tennis_plan/widgets/settings_section_widget.dart';

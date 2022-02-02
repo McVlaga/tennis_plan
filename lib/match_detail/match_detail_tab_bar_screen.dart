@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/match_detail/plan/add_edit_mental_goals_sreen.dart';
-import 'package:tennis_plan/match_detail/plan/add_edit_opponent_info._screen.dart';
-import 'package:tennis_plan/match_detail/plan/add_edit_other_goals.dart';
-import 'package:tennis_plan/match_detail/plan/add_edit_tactical_goals_screen.dart';
+import 'package:tennis_plan/match_detail/plan/mental/add_edit_mental_goals_sreen.dart';
+import 'package:tennis_plan/match_detail/plan/opponents_info/add_edit_opponent_info._screen.dart';
+import 'package:tennis_plan/match_detail/plan/other/add_edit_other_goals.dart';
+import 'package:tennis_plan/match_detail/plan/tactics/add_edit_tactical_goals_screen.dart';
 
 import '../matches/models/matches.dart';
 import 'plan/plan_screen.dart';
