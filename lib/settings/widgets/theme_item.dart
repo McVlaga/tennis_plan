@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/theme_manager.dart';
+import 'package:tennis_plan/services/theme_manager.dart';
 import '../../widgets/radio_button.dart';
 import '../../constants/constants.dart';
 import '../../widgets/settings_item_widget.dart';
