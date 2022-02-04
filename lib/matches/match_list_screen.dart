@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/matches/widgets/filter_widget.dart';
-import 'package:tennis_plan/matches/widgets/match_list_item.dart';
-import 'package:tennis_plan/widgets/ripple_list_item.dart';
+import 'widgets/filter_widget.dart';
+import 'widgets/match_list_item.dart';
+import '../widgets/ripple_list_item.dart';
 import '../constants/constants.dart';
 import 'models/matches.dart';
 

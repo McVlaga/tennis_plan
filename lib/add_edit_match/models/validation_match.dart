@@ -1,7 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tennis_plan/matches/models/ranking.dart';
+import '../../matches/models/ranking.dart';
 
 import '../../constants/constants.dart';
 

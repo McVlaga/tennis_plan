@@ -1,8 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:tennis_plan/match_detail/plan/models/plan.dart';
-import 'package:tennis_plan/match_detail/plan/models/shot.dart';
-import 'package:tennis_plan/matches/models/ranking.dart';
+import 'ranking.dart';
 import '../../add_edit_match/models/validation_match.dart';
 import '../../constants/constants.dart';
 
@@ -19,7 +18,7 @@ class AMatch with ChangeNotifier {
   CourtSurface? courtSurface;
   CourtLocation? courtLocation;
 
-  Plan? plan = Plan();
+  Plan? plan;
 
   AMatch({
     required this.id,
@@ -33,6 +32,7 @@ class AMatch with ChangeNotifier {
     this.matchResult = MatchState.notPlayed,
     this.courtSurface,
     this.courtLocation,
+    required this.plan,
   });
 
   AMatch.fromTemporaryMatch(ValidationMatch tempMatch) {
@@ -94,47 +94,62 @@ class AMatch with ChangeNotifier {
   }
 
   void addOpponentShot(String name, int score) {
-    plan!.addOpponentShot(name, score);
+    plan?.opponentInfo.addOpponentShot(name, score);
+    notifyListeners();
+  }
+
+  void reorderOpponentShot(int from, int to, String shotName, int shotScore) {
+    plan?.opponentInfo.reorderOpponentShot(from, to, shotName, shotScore);
     notifyListeners();
   }
 
   void addOpponentStrength(String strength) {
-    plan!.addOpponentStrength(strength);
+    plan?.opponentInfo.addOpponentStrength(strength);
+    notifyListeners();
+  }
+
+  void reorderOpponentStrength(int from, int to, String strength) {
+    plan?.opponentInfo.reorderOpponentStrength(from, to, strength);
     notifyListeners();
   }
 
   void addOpponentWeakness(String weakness) {
-    plan!.addOpponentWeakness(weakness);
+    plan?.opponentInfo.addOpponentWeakness(weakness);
+    notifyListeners();
+  }
+
+  void reorderOpponentWeakness(int from, int to, String weakness) {
+    plan?.opponentInfo.reorderOpponentWeakness(from, to, weakness);
     notifyListeners();
   }
 
   void updateOpponentShot(String oldName, String newName, int score) {
-    plan!.updateOpponentShot(oldName, newName, score);
+    plan?.opponentInfo.updateOpponentShot(oldName, newName, score);
     notifyListeners();
   }
 
   void updateOpponentStrength(String oldStrength, String newStrength) {
-    plan!.updateOpponentStrength(oldStrength, newStrength);
+    plan?.opponentInfo.updateOpponentStrength(oldStrength, newStrength);
     notifyListeners();
   }
 
   void updateOpponentWeakness(String oldWeakness, String newWeakness) {
-    plan!.updateOpponentWeakness(oldWeakness, newWeakness);
+    plan?.opponentInfo.updateOpponentWeakness(oldWeakness, newWeakness);
     notifyListeners();
   }
 
   void deleteOpponentShot(String name) {
-    plan!.deleteOpponentShot(name);
+    plan?.opponentInfo.deleteOpponentShot(name);
     notifyListeners();
   }
 
   void deleteOpponentStrength(String strength) {
-    plan!.deleteOpponentStrength(strength);
+    plan?.opponentInfo.deleteOpponentStrength(strength);
     notifyListeners();
   }
 
   void deleteOpponentWeakness(String weakness) {
-    plan!.deleteOpponentWeakness(weakness);
+    plan?.opponentInfo.deleteOpponentWeakness(weakness);
     notifyListeners();
   }
 }

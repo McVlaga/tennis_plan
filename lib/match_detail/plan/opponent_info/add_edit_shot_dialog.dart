@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/match_detail/plan/models/shot.dart';
-import 'package:tennis_plan/matches/models/a_match.dart';
+import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
+import '../../../constants/constants.dart';
+import '../models/shot.dart';
+import '../../../matches/models/a_match.dart';
 
 class AddEditShotDialog extends StatefulWidget {
   const AddEditShotDialog({
     required this.context,
-    required this.match,
+    required this.opponentInfo,
     required this.shot,
     Key? key,
   }) : super(key: key);
 
   final BuildContext context;
-  final AMatch match;
+  final OpponentInfo opponentInfo;
   final Shot? shot;
 
   @override
@@ -138,7 +139,7 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
               },
             ),
             IconButton(
-              padding: EdgeInsets.only(left: 10, top: 6, bottom: 10),
+              padding: EdgeInsets.only(left: 10, top: 6, bottom: 10, right: 20),
               constraints: BoxConstraints(),
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
@@ -167,7 +168,7 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
                         style: TextStyle(color: Colors.red),
                       ),
                       onPressed: () {
-                        widget.match.deleteOpponentShot(oldShotName);
+                        widget.opponentInfo.deleteOpponentShot(oldShotName);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -189,10 +190,10 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
                 onPressed: () {
                   if (shotController.text.isNotEmpty && selectedStar > 0) {
                     if (editing) {
-                      widget.match.updateOpponentShot(
+                      widget.opponentInfo.updateOpponentShot(
                           oldShotName, shotController.text, selectedStar);
                     } else {
-                      widget.match
+                      widget.opponentInfo
                           .addOpponentShot(shotController.text, selectedStar);
                     }
                     Navigator.of(context).pop();

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../constants/constants.dart';
 import '../models/validation_match.dart';
 
 class FirstNameItem extends StatelessWidget {
-  const FirstNameItem({
+  FirstNameItem({
     Key? key,
+    required this.nameController,
   }) : super(key: key);
+
+  TextEditingController nameController;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +21,8 @@ class FirstNameItem extends StatelessWidget {
         vertical: Dimensions.paddingOne,
       ),
       child: TextField(
+        controller: nameController,
         textCapitalization: TextCapitalization.sentences,
-        onChanged: (newValue) {
-          newMatch.setOpponentFirstName(newValue);
-        },
         decoration: InputDecoration(
           border: const UnderlineInputBorder(),
           hintText: 'FirstName',

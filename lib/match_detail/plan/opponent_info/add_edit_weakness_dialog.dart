@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/matches/models/a_match.dart';
+import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
+import '../../../constants/constants.dart';
+import '../../../matches/models/a_match.dart';
 
 class AddEditWeaknessDialog extends StatefulWidget {
   const AddEditWeaknessDialog({
     required this.context,
-    required this.match,
+    required this.opponentInfo,
     required this.weakness,
     Key? key,
   }) : super(key: key);
 
   final BuildContext context;
-  final AMatch match;
+  final OpponentInfo opponentInfo;
   final String? weakness;
 
   @override
@@ -75,7 +76,7 @@ class _AddEditWeaknessDialogState extends State<AddEditWeaknessDialog> {
                         style: TextStyle(color: Colors.red),
                       ),
                       onPressed: () {
-                        widget.match.deleteOpponentWeakness(oldWeakness);
+                        widget.opponentInfo.deleteOpponentWeakness(oldWeakness);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -97,12 +98,13 @@ class _AddEditWeaknessDialogState extends State<AddEditWeaknessDialog> {
                 onPressed: () {
                   if (weaknessController.text.isNotEmpty) {
                     if (editing) {
-                      widget.match.updateOpponentWeakness(
+                      widget.opponentInfo.updateOpponentWeakness(
                         oldWeakness,
                         weaknessController.text,
                       );
                     } else {
-                      widget.match.addOpponentWeakness(weaknessController.text);
+                      widget.opponentInfo
+                          .addOpponentWeakness(weaknessController.text);
                     }
                     Navigator.of(context).pop();
                   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/add_edit_match/widgets/first_name_item.dart';
-import 'package:tennis_plan/add_edit_match/widgets/last_name_item.dart';
-import 'package:tennis_plan/settings/widgets/settings_first_name.dart';
-import 'package:tennis_plan/settings/widgets/settings_last_name.dart';
-import 'package:tennis_plan/settings/widgets/theme_item.dart';
+import '../add_edit_match/widgets/first_name_item.dart';
+import '../add_edit_match/widgets/last_name_item.dart';
+import 'widgets/settings_first_name.dart';
+import 'widgets/settings_last_name.dart';
+import 'widgets/theme_item.dart';
 import '../constants/constants.dart';
 import '../widgets/settings_section_widget.dart';
 

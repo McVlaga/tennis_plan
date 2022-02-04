@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/matches/models/a_match.dart';
+import '../../constants/constants.dart';
+import '../../matches/models/a_match.dart';
 
 class RippleColorTextWidget extends StatelessWidget {
   const RippleColorTextWidget({

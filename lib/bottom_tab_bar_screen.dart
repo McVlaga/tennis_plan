@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:tennis_plan/add_edit_match/add_edit_match_screen.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import '../settings/settings_screen.dart';
+import 'add_edit_match/add_edit_match_screen.dart';
+import 'constants/constants.dart';
+import 'settings/settings_screen.dart';
 
-import '../matches/match_list_screen.dart';
-import '../players/player_list_screen.dart';
+import 'matches/match_list_screen.dart';
+import 'players/player_list_screen.dart';
 
 class BottomTabBarScreen extends StatefulWidget {
   const BottomTabBarScreen({Key? key}) : super(key: key);

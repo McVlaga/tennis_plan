@@ -1,11 +1,15 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/matches/models/ranking.dart';
+import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
+import 'package:tennis_plan/match_detail/plan/models/plan.dart';
+import '../../constants/constants.dart';
+import 'ranking.dart';
 
 import 'a_match.dart';
 
 class Matches with ChangeNotifier {
+  Matches();
+
   final List<AMatch> _matches = [
     AMatch(
       id: DateTime.now().toString(),
@@ -18,6 +22,7 @@ class Matches with ChangeNotifier {
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.notPlayed,
       courtSurface: CourtSurface.grass,
+      plan: Plan(opponentInfo: OpponentInfo()),
     ),
     AMatch(
       id: DateTime.now().toString(),
@@ -30,6 +35,7 @@ class Matches with ChangeNotifier {
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.win,
       courtSurface: CourtSurface.clay,
+      plan: Plan(opponentInfo: OpponentInfo()),
     ),
     AMatch(
       id: DateTime.now().toString(),
@@ -43,6 +49,7 @@ class Matches with ChangeNotifier {
       matchResult: MatchState.lose,
       courtSurface: CourtSurface.hard,
       courtLocation: CourtLocation.indoors,
+      plan: Plan(opponentInfo: OpponentInfo()),
     ),
     AMatch(
       id: DateTime.now().toString(),
@@ -55,10 +62,9 @@ class Matches with ChangeNotifier {
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.win,
       courtSurface: CourtSurface.grass,
+      plan: Plan(opponentInfo: OpponentInfo()),
     ),
   ];
-
-  Matches();
 
   List<AMatch> get matches {
     return [..._matches];

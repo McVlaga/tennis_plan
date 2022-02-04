@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/settings/models/user_info.dart';
+import '../models/user_info.dart';
 import '../../widgets/settings_item_widget.dart';
 import '../../constants/constants.dart';
 

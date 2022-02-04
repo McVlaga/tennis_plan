@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/add_edit_match/widgets/ranking_item.dart';
+import 'widgets/ranking_item.dart';
 
 import '../constants/constants.dart';
 import '../matches/models/a_match.dart';
@@ -27,11 +27,22 @@ class AddEditMatchScreen extends StatefulWidget {
 
 class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
   late ValidationMatch tempMatch;
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     tempMatch = ValidationMatch(id: DateTime.now().toString());
+  }
+
+  void _saveMatch(BuildContext ctx, Matches matches) {
+    tempMatch.setOpponentFirstName(firstNameController.text);
+    tempMatch.setOpponentLastName(lastNameController.text);
+    if (tempMatch.isValid()) {
+      matches.addMatch(AMatch.fromTemporaryMatch(tempMatch));
+      Navigator.of(ctx).pop();
+    }
   }
 
   @override
@@ -55,13 +66,13 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    const SettingsSectionWidget(
+                    SettingsSectionWidget(
                       sectionTitle: 'OPPONENT',
                       sectionWidgets: [
-                        FirstNameItem(),
-                        LastNameItem(),
-                        CountriesItem(),
-                        RankingItem(),
+                        FirstNameItem(nameController: firstNameController),
+                        LastNameItem(nameController: lastNameController),
+                        const CountriesItem(),
+                        const RankingItem(),
                       ],
                     ),
                     const SettingsSectionWidget(
@@ -107,14 +118,10 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                 child: Material(
                   color: Theme.of(context).colorScheme.secondaryVariant,
                   child: Consumer<Matches>(
-                    builder: (ctx, matches, child) {
+                    builder: (_, matches, child) {
                       return InkWell(
                         onTap: () {
-                          if (tempMatch.isValid()) {
-                            matches
-                                .addMatch(AMatch.fromTemporaryMatch(tempMatch));
-                            Navigator.of(ctx).pop();
-                          }
+                          _saveMatch(context, matches);
                         },
                         child: child,
                       );

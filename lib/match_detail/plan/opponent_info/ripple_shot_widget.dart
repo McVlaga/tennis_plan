@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/match_detail/plan/opponents_info/add_edit_shot_dialog.dart';
-import 'package:tennis_plan/match_detail/plan/models/shot.dart';
-import 'package:tennis_plan/matches/models/a_match.dart';
-import 'package:tennis_plan/services/theme_manager.dart';
+import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
+import '../../../constants/constants.dart';
+import 'add_edit_shot_dialog.dart';
+import '../models/shot.dart';
+import '../../../matches/models/a_match.dart';
+import '../../../services/theme_manager.dart';
 
 class RippleShotWidget extends StatelessWidget {
   const RippleShotWidget({
     required this.name,
     required this.starNumber,
-    required this.match,
+    required this.opponentInfo,
     required this.editable,
     Key? key,
   }) : super(key: key);
 
   final String name;
   final String starNumber;
-  final AMatch match;
+  final OpponentInfo opponentInfo;
   final bool editable;
 
-  void showEditShotDialog(BuildContext ctx, AMatch match, Shot? shot) {
+  void showEditShotDialog(
+      BuildContext ctx, OpponentInfo opponentInfo, Shot? shot) {
     FocusScope.of(ctx).unfocus();
     showModalBottomSheet(
       isScrollControlled: true,
@@ -32,14 +34,15 @@ class RippleShotWidget extends StatelessWidget {
       ),
       backgroundColor: Theme.of(ctx).canvasColor,
       builder: (context) {
-        return AddEditShotDialog(context: ctx, match: match, shot: shot);
+        return AddEditShotDialog(
+            context: ctx, opponentInfo: opponentInfo, shot: shot);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final Shot shot = match.plan!.findShotByName(name);
+    final Shot shot = opponentInfo.findShotByName(name);
     return ClipRRect(
       borderRadius:
           const BorderRadius.all(Radius.circular(Dimensions.borderRadius)),
@@ -51,7 +54,7 @@ class RippleShotWidget extends StatelessWidget {
                 : Theme.of(context).colorScheme.cardShotBadBg,
         child: InkWell(
           onTap: () {
-            if (editable) showEditShotDialog(context, match, shot);
+            if (editable) showEditShotDialog(context, opponentInfo, shot);
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),

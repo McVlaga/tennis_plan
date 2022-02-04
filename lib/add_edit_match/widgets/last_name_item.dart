@@ -4,9 +4,12 @@ import '../../constants/constants.dart';
 import '../models/validation_match.dart';
 
 class LastNameItem extends StatelessWidget {
-  const LastNameItem({
+  LastNameItem({
     Key? key,
+    required this.nameController,
   }) : super(key: key);
+
+  TextEditingController nameController;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +20,8 @@ class LastNameItem extends StatelessWidget {
         vertical: Dimensions.paddingOne,
       ),
       child: TextField(
+        controller: nameController,
         textCapitalization: TextCapitalization.sentences,
-        onChanged: (newValue) {
-          newMatch.setOpponentLastName(newValue);
-        },
         decoration: InputDecoration(
           border: const UnderlineInputBorder(),
           hintText: 'Last Name',
