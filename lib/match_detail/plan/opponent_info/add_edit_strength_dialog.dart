@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
 import '../../../constants/constants.dart';
-import '../../../matches/models/a_match.dart';
 
 class AddEditStrengthDialog extends StatefulWidget {
   const AddEditStrengthDialog({

@@ -1,6 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tennis_plan/match_detail/plan/models/plan.dart';
 import '../../matches/models/ranking.dart';
 
 import '../../constants/constants.dart';
@@ -16,6 +17,8 @@ class ValidationMatch with ChangeNotifier {
   TimeOfDay? matchTime;
   CourtSurface? courtSurface;
   CourtLocation? courtLocation;
+
+  Plan plan;
 
   String? opponentFirstNameError;
   String? opponentLastNameError;
@@ -38,6 +41,7 @@ class ValidationMatch with ChangeNotifier {
     this.matchTime,
     this.courtSurface,
     this.courtLocation,
+    required this.plan,
   });
 
   bool isValid() {

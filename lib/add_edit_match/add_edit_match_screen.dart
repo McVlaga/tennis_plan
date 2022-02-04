@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
+import 'package:tennis_plan/match_detail/plan/models/plan.dart';
 import 'widgets/ranking_item.dart';
 
 import '../constants/constants.dart';
@@ -33,7 +35,16 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
   @override
   void initState() {
     super.initState();
-    tempMatch = ValidationMatch(id: DateTime.now().toString());
+    tempMatch = ValidationMatch(
+      id: DateTime.now().toString(),
+      plan: Plan(
+        opponentInfo: OpponentInfo(
+          shots: [],
+          strengths: [],
+          weaknesses: [],
+        ),
+      ),
+    );
   }
 
   void _saveMatch(BuildContext ctx, Matches matches) {

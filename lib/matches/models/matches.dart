@@ -22,7 +22,13 @@ class Matches with ChangeNotifier {
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.notPlayed,
       courtSurface: CourtSurface.grass,
-      plan: Plan(opponentInfo: OpponentInfo()),
+      plan: Plan(
+        opponentInfo: OpponentInfo(
+          shots: [],
+          strengths: [],
+          weaknesses: [],
+        ),
+      ),
     ),
     AMatch(
       id: DateTime.now().toString(),
@@ -35,7 +41,13 @@ class Matches with ChangeNotifier {
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.win,
       courtSurface: CourtSurface.clay,
-      plan: Plan(opponentInfo: OpponentInfo()),
+      plan: Plan(
+        opponentInfo: OpponentInfo(
+          shots: [],
+          strengths: [],
+          weaknesses: [],
+        ),
+      ),
     ),
     AMatch(
       id: DateTime.now().toString(),
@@ -49,7 +61,13 @@ class Matches with ChangeNotifier {
       matchResult: MatchState.lose,
       courtSurface: CourtSurface.hard,
       courtLocation: CourtLocation.indoors,
-      plan: Plan(opponentInfo: OpponentInfo()),
+      plan: Plan(
+        opponentInfo: OpponentInfo(
+          shots: [],
+          strengths: [],
+          weaknesses: [],
+        ),
+      ),
     ),
     AMatch(
       id: DateTime.now().toString(),
@@ -62,7 +80,13 @@ class Matches with ChangeNotifier {
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.win,
       courtSurface: CourtSurface.grass,
-      plan: Plan(opponentInfo: OpponentInfo()),
+      plan: Plan(
+        opponentInfo: OpponentInfo(
+          shots: [],
+          strengths: [],
+          weaknesses: [],
+        ),
+      ),
     ),
   ];
 

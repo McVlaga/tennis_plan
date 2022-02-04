@@ -18,7 +18,7 @@ class AMatch with ChangeNotifier {
   CourtSurface? courtSurface;
   CourtLocation? courtLocation;
 
-  Plan? plan;
+  late Plan plan;
 
   AMatch({
     required this.id,
@@ -46,6 +46,12 @@ class AMatch with ChangeNotifier {
     matchTime = tempMatch.matchTime;
     courtSurface = tempMatch.courtSurface;
     courtLocation = tempMatch.courtLocation;
+    plan = tempMatch.plan;
+  }
+
+  void setPlan(Plan plan) {
+    this.plan = plan;
+    notifyListeners();
   }
 
   void setOpponentFirstName(String firstName) {
@@ -94,62 +100,62 @@ class AMatch with ChangeNotifier {
   }
 
   void addOpponentShot(String name, int score) {
-    plan?.opponentInfo.addOpponentShot(name, score);
+    plan.opponentInfo.addOpponentShot(name, score);
     notifyListeners();
   }
 
   void reorderOpponentShot(int from, int to, String shotName, int shotScore) {
-    plan?.opponentInfo.reorderOpponentShot(from, to, shotName, shotScore);
+    plan.opponentInfo.reorderOpponentShot(from, to, shotName, shotScore);
     notifyListeners();
   }
 
   void addOpponentStrength(String strength) {
-    plan?.opponentInfo.addOpponentStrength(strength);
+    plan.opponentInfo.addOpponentStrength(strength);
     notifyListeners();
   }
 
   void reorderOpponentStrength(int from, int to, String strength) {
-    plan?.opponentInfo.reorderOpponentStrength(from, to, strength);
+    plan.opponentInfo.reorderOpponentStrength(from, to, strength);
     notifyListeners();
   }
 
   void addOpponentWeakness(String weakness) {
-    plan?.opponentInfo.addOpponentWeakness(weakness);
+    plan.opponentInfo.addOpponentWeakness(weakness);
     notifyListeners();
   }
 
   void reorderOpponentWeakness(int from, int to, String weakness) {
-    plan?.opponentInfo.reorderOpponentWeakness(from, to, weakness);
+    plan.opponentInfo.reorderOpponentWeakness(from, to, weakness);
     notifyListeners();
   }
 
   void updateOpponentShot(String oldName, String newName, int score) {
-    plan?.opponentInfo.updateOpponentShot(oldName, newName, score);
+    plan.opponentInfo.updateOpponentShot(oldName, newName, score);
     notifyListeners();
   }
 
   void updateOpponentStrength(String oldStrength, String newStrength) {
-    plan?.opponentInfo.updateOpponentStrength(oldStrength, newStrength);
+    plan.opponentInfo.updateOpponentStrength(oldStrength, newStrength);
     notifyListeners();
   }
 
   void updateOpponentWeakness(String oldWeakness, String newWeakness) {
-    plan?.opponentInfo.updateOpponentWeakness(oldWeakness, newWeakness);
+    plan.opponentInfo.updateOpponentWeakness(oldWeakness, newWeakness);
     notifyListeners();
   }
 
   void deleteOpponentShot(String name) {
-    plan?.opponentInfo.deleteOpponentShot(name);
+    plan.opponentInfo.deleteOpponentShot(name);
     notifyListeners();
   }
 
   void deleteOpponentStrength(String strength) {
-    plan?.opponentInfo.deleteOpponentStrength(strength);
+    plan.opponentInfo.deleteOpponentStrength(strength);
     notifyListeners();
   }
 
   void deleteOpponentWeakness(String weakness) {
-    plan?.opponentInfo.deleteOpponentWeakness(weakness);
+    plan.opponentInfo.deleteOpponentWeakness(weakness);
     notifyListeners();
   }
 }

@@ -15,10 +15,10 @@ class PlanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AMatch match = Provider.of<AMatch>(context);
-    OpponentInfo opponentInfo = match.plan!.opponentInfo;
-    List<Shot> shots = match.plan!.opponentInfo.shots;
-    List<String> strengths = match.plan!.opponentInfo.strengths;
-    List<String> weaknesses = match.plan!.opponentInfo.weaknesses;
+    OpponentInfo opponentInfo = match.plan.opponentInfo;
+    List<Shot> shots = match.plan.opponentInfo.shots;
+    List<String> strengths = match.plan.opponentInfo.strengths;
+    List<String> weaknesses = match.plan.opponentInfo.weaknesses;
     return ListView(
       padding: const EdgeInsets.only(
         left: Dimensions.paddingTwo,

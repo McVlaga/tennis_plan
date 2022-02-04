@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/matches/models/a_match.dart';
 import '../constants/constants.dart';
 import 'plan/mental/add_edit_mental_goals_sreen.dart';
 import 'plan/opponent_info/add_edit_opponent_info._screen.dart';
@@ -22,13 +23,28 @@ class MatchDetailTabBarScreen extends StatefulWidget {
 }
 
 class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
+  bool firstInit = true;
+
+  late AMatch match;
+  late String matchId;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (firstInit) {
+      matchId = ModalRoute.of(context)!.settings.arguments as String;
+      match = Provider.of<Matches>(
+        context,
+        listen: false,
+      ).findById(matchId);
+      firstInit = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String matchId = ModalRoute.of(context)!.settings.arguments as String;
-    final loadedMatch =
-        Provider.of<Matches>(context, listen: false).findById(matchId);
     return ChangeNotifierProvider.value(
-      value: loadedMatch,
+      value: match,
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -40,7 +56,7 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                 Tab(text: 'REVIEW'),
               ],
             ),
-            title: Text('VS ${loadedMatch.opponentLastName}'),
+            title: Text('VS ${match.opponentLastName}'),
           ),
           body: const TabBarView(
             children: [

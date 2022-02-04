@@ -2,92 +2,86 @@ import 'package:flutter/material.dart';
 import 'package:tennis_plan/match_detail/plan/models/shot.dart';
 
 class OpponentInfo with ChangeNotifier {
-  OpponentInfo();
-
-  final List<Shot> _shots = [
-    Shot(name: 'Forehand Cross', score: 5),
-    Shot(name: 'Forehand Line', score: 4),
-    Shot(name: 'Backhand', score: 3),
-    Shot(name: 'Serve', score: 2),
-    Shot(name: 'Volleys', score: 4),
-  ];
-  final List<String> _strengths = [
-    'Play to the opponents backhand as much as you can. Try no to let him play his forehand ever in his life.',
-    'Try to put every return in',
-    'Dont ever play volleys. If the guy tries to make me play a volley, then.',
-  ];
-  final List<String> _weaknesses = [
-    'Make him run as much as you can',
-    'Dont ever play volleys. If the guy tries to make me play a volley, then.',
-  ];
-
-  List<Shot> get shots {
-    return [..._shots];
+  OpponentInfo({required shots, required strengths, required weaknesses}) {
+    this.shots = List.from(shots);
+    this.weaknesses = List.from(weaknesses);
+    this.strengths = List.from(strengths);
   }
 
-  List<String> get strengths {
-    return [..._strengths];
-  }
+  late List<Shot> shots;
+  late List<String> strengths;
+  late List<String> weaknesses;
 
-  List<String> get weaknesses {
-    return [..._weaknesses];
-  }
+  // List<Shot> shots = [
+  //   Shot(name: 'Forehand Cross', score: 5),
+  //   Shot(name: 'Forehand Line', score: 4),
+  //   Shot(name: 'Backhand', score: 3),
+  //   Shot(name: 'Serve', score: 2),
+  //   Shot(name: 'Volleys', score: 4),
+  // ];
+  // List<String> strengths = [
+  //   'Play to the opponents backhand as much as you can. Try no to let him play his forehand ever in his life.',
+  //   'Try to put every return in',
+  //   'Dont ever play volleys. If the guy tries to make me play a volley, then.',
+  // ];
+  // List<String> weaknesses = [
+  //   'Make him run as much as you can',
+  //   'Dont ever play volleys. If the guy tries to make me play a volley, then.',
+  // ];
 
   void addOpponentShot(String name, int score) {
-    _shots.add(Shot(name: name, score: score));
+    shots.add(Shot(name: name, score: score));
     notifyListeners();
   }
 
   void addOpponentShotAt(String shotName, int shotScore, int index) {
-    _shots.insert(index, Shot(name: shotName, score: shotScore));
+    shots.insert(index, Shot(name: shotName, score: shotScore));
   }
 
   void addOpponentStrength(String newStrength) {
-    _strengths.add(newStrength);
+    strengths.add(newStrength);
     notifyListeners();
   }
 
   void addOpponentStrengthAt(String newStrength, int index) {
-    _strengths.insert(index, newStrength);
+    strengths.insert(index, newStrength);
   }
 
   void addOpponentWeakness(String newWeakness) {
-    _weaknesses.add(newWeakness);
+    weaknesses.add(newWeakness);
     notifyListeners();
   }
 
   void addOpponentWeaknessAt(String newWeakness, int index) {
-    _weaknesses.insert(index, newWeakness);
+    weaknesses.insert(index, newWeakness);
   }
 
   Shot findShotByName(String name) {
-    return _shots.firstWhere((shot) => shot.name == name);
+    return shots.firstWhere((shot) => shot.name == name);
   }
 
   String findStrengthByName(String name) {
-    return _strengths.firstWhere((strength) => strength == name);
+    return strengths.firstWhere((strength) => strength == name);
   }
 
   String findWeaknessByName(String name) {
-    return _weaknesses.firstWhere((weakness) => weakness == name);
+    return weaknesses.firstWhere((weakness) => weakness == name);
   }
 
   void updateOpponentShot(String oldName, String newName, int score) {
     Shot shot = Shot(name: newName, score: score);
-    int foundIndex =
-        _shots.indexWhere((indexShot) => indexShot.name == oldName);
+    int foundIndex = shots.indexWhere((indexShot) => indexShot.name == oldName);
     if (foundIndex >= 0) {
-      _shots[_shots.indexWhere((indexShot) => indexShot.name == oldName)] =
-          shot;
+      shots[shots.indexWhere((indexShot) => indexShot.name == oldName)] = shot;
     }
     notifyListeners();
   }
 
   void updateOpponentStrength(String oldStrength, String newStrength) {
     int foundIndex =
-        _strengths.indexWhere((indexStrength) => indexStrength == oldStrength);
+        strengths.indexWhere((indexStrength) => indexStrength == oldStrength);
     if (foundIndex >= 0) {
-      _strengths[_strengths.indexWhere(
+      strengths[strengths.indexWhere(
           (indexStrength) => indexStrength == oldStrength)] = newStrength;
     }
     notifyListeners();
@@ -95,42 +89,42 @@ class OpponentInfo with ChangeNotifier {
 
   void updateOpponentWeakness(String oldWeakness, String newWeakness) {
     int foundIndex =
-        _weaknesses.indexWhere((indexWeakness) => indexWeakness == oldWeakness);
+        weaknesses.indexWhere((indexWeakness) => indexWeakness == oldWeakness);
     if (foundIndex >= 0) {
-      _weaknesses[_weaknesses.indexWhere(
+      weaknesses[weaknesses.indexWhere(
           (indexWeakness) => indexWeakness == oldWeakness)] = newWeakness;
     }
     notifyListeners();
   }
 
   void deleteOpponentShot(String name) {
-    _shots.remove(
-        _shots[_shots.indexWhere((indexShot) => indexShot.name == name)]);
+    shots
+        .remove(shots[shots.indexWhere((indexShot) => indexShot.name == name)]);
     notifyListeners();
   }
 
   void deleteOpponentShotAt(int index) {
-    _shots.removeAt(index);
+    shots.removeAt(index);
   }
 
   void deleteOpponentStrength(String strength) {
-    _strengths.remove(_strengths[
-        _strengths.indexWhere((indexStrength) => indexStrength == strength)]);
+    strengths.remove(strengths[
+        strengths.indexWhere((indexStrength) => indexStrength == strength)]);
     notifyListeners();
   }
 
   void deleteOpponentStrengthAt(int index) {
-    _strengths.removeAt(index);
+    strengths.removeAt(index);
   }
 
   void deleteOpponentWeakness(String weakness) {
-    _weaknesses.remove(_weaknesses[
-        _weaknesses.indexWhere((indexWeakness) => indexWeakness == weakness)]);
+    weaknesses.remove(weaknesses[
+        weaknesses.indexWhere((indexWeakness) => indexWeakness == weakness)]);
     notifyListeners();
   }
 
   void deleteOpponentWeaknessAt(int index) {
-    _weaknesses.removeAt(index);
+    weaknesses.removeAt(index);
   }
 
   void reorderOpponentShot(int from, int to, String shotName, int shotScore) {

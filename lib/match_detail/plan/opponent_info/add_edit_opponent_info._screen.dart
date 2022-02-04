@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
+import 'package:tennis_plan/match_detail/plan/models/plan.dart';
 import 'package:tennis_plan/match_detail/plan/models/shot.dart';
 import 'package:tennis_plan/match_detail/plan/opponent_info/add_header_list_button.dart';
 import 'package:tennis_plan/match_detail/plan/opponent_info/opponent_info_instruction_widget.dart';
@@ -25,7 +26,9 @@ class AddEditOpponentInfoScreen extends StatefulWidget {
 }
 
 class _AddEditOpponentInfoScreenState extends State<AddEditOpponentInfoScreen> {
-  late OpponentInfo opponentInfo;
+  late AMatch match;
+  late OpponentInfo tempOpponentInfo;
+  late Plan tempPlan;
   bool reordering = false;
   bool firstInit = true;
 
@@ -34,11 +37,24 @@ class _AddEditOpponentInfoScreenState extends State<AddEditOpponentInfoScreen> {
     super.didChangeDependencies();
     if (firstInit) {
       String matchId = ModalRoute.of(context)!.settings.arguments as String;
-      AMatch loadedMatch = Provider.of<Matches>(
+      match = Provider.of<Matches>(
         context,
         listen: false,
       ).findById(matchId);
-      opponentInfo = loadedMatch.plan!.opponentInfo;
+      Plan loadedPlan = match.plan;
+      tempOpponentInfo = OpponentInfo(
+        shots: loadedPlan.opponentInfo.shots,
+        strengths: loadedPlan.opponentInfo.strengths,
+        weaknesses: loadedPlan.opponentInfo.weaknesses,
+      );
+      tempPlan = Plan(opponentInfo: tempOpponentInfo);
+      // plan.setOpponentInfo(
+      //   OpponentInfo(
+      //     shots: loadedOpponentInfo.shots,
+      //     strengths: loadedOpponentInfo.strengths,
+      //     weaknesses: loadedOpponentInfo.weaknesses,
+      //   ),
+      // );
       firstInit = false;
     }
   }
@@ -83,7 +99,7 @@ class _AddEditOpponentInfoScreenState extends State<AddEditOpponentInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: opponentInfo,
+      value: tempOpponentInfo,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Opponent Info'),
@@ -279,15 +295,21 @@ class _AddEditOpponentInfoScreenState extends State<AddEditOpponentInfoScreen> {
                   ),
                   child: Material(
                     color: Colors.red,
-                    child: SizedBox(
-                      height: Dimensions.addMatchDialogInputHeight,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'SAVE',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).colorScheme.onSecondary,
+                    child: InkWell(
+                      onTap: () {
+                        match.setPlan(tempPlan);
+                        Navigator.of(context).pop();
+                      },
+                      child: SizedBox(
+                        height: Dimensions.addMatchDialogInputHeight,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'SAVE',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
                           ),
                         ),
                       ),

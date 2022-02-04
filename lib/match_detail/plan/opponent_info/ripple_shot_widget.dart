@@ -3,7 +3,6 @@ import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
 import '../../../constants/constants.dart';
 import 'add_edit_shot_dialog.dart';
 import '../models/shot.dart';
-import '../../../matches/models/a_match.dart';
 import '../../../services/theme_manager.dart';
 
 class RippleShotWidget extends StatelessWidget {
@@ -72,7 +71,7 @@ class RippleShotWidget extends StatelessWidget {
                   children: [
                     Text(
                       starNumber,
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                     Icon(
                       Icons.star,
