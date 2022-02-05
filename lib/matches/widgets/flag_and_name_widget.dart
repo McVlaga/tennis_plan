@@ -6,7 +6,7 @@ import '../../constants/constants.dart';
 class FlagAndNameWidget extends StatelessWidget {
   final Country? country;
   final String name;
-  final String ranking;
+  final String? ranking;
 
   const FlagAndNameWidget({
     Key? key,
@@ -42,17 +42,20 @@ class FlagAndNameWidget extends StatelessWidget {
             children: [
               Text(
                 name,
-                overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.fade,
+                maxLines: 1,
+                softWrap: false,
                 style: const TextStyle(fontSize: Fonts.matchListItemFontSize),
               ),
-              Text(
-                ranking,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 12.0,
-                  color: Theme.of(context).textTheme.headline6?.color,
+              if (ranking != null)
+                Text(
+                  ranking!,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Theme.of(context).textTheme.headline6?.color,
+                  ),
                 ),
-              ),
             ],
           ),
         ),

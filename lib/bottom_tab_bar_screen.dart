@@ -19,13 +19,8 @@ class BottomTabBarScreen extends StatefulWidget {
 
 class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
   int _page = 0;
+  String _appBarTitle = 'MyMatches';
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
-
-  final List<Widget> _screens = [
-    const MatchListScreen(),
-    const PlayerListScreen(),
-    const SettingsScreen(),
-  ];
 
   @override
   void initState() {
@@ -35,10 +30,37 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
     super.initState();
   }
 
+  void onTabTapped(int index) {
+    setState(() {
+      _page = index;
+      switch (index) {
+        case 0:
+          _appBarTitle = 'My Matches';
+          break;
+        case 1:
+          _appBarTitle = 'Players';
+          break;
+        case 2:
+          _appBarTitle = 'Settings';
+          break;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_page],
+      appBar: AppBar(
+        title: Text(_appBarTitle),
+      ),
+      body: IndexedStack(
+        index: _page,
+        children: const [
+          MatchListScreen(),
+          PlayerListScreen(),
+          SettingsScreen(),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         key: _bottomNavigationKey,
         currentIndex: _page,
@@ -84,11 +106,7 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
             tooltip: '',
           ),
         ],
-        onTap: (index) {
-          setState(() {
-            _page = index;
-          });
-        },
+        onTap: onTabTapped,
       ),
       floatingActionButton: _page == 2
           ? null

@@ -19,172 +19,186 @@ class PlanScreen extends StatelessWidget {
     List<Shot> shots = match.plan.opponentInfo.shots;
     List<String> strengths = match.plan.opponentInfo.strengths;
     List<String> weaknesses = match.plan.opponentInfo.weaknesses;
-    return ListView(
+    return ListView.builder(
       padding: const EdgeInsets.only(
         left: Dimensions.paddingTwo,
         right: Dimensions.paddingTwo,
         bottom: Dimensions.paddingTwo,
       ),
-      children: [
-        SettingsSectionWidget(
-          sectionTitle: 'OPPONENT INFO',
-          sectionWidgets: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.paddingTwo,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: FlagAndNameWidget(
-                          name:
-                              '${match.opponentFirstName} ${match.opponentLastName}',
-                          country: match.opponentCountry,
-                          ranking:
-                              '${match.opponentRanking!.federation} ${match.opponentRanking!.position}',
-                        ),
-                      ),
-                      Text(
-                        'Righty',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color:
-                                Theme.of(context).textTheme.headline6!.color),
-                      ),
-                    ],
-                  ),
-                  if (shots.isNotEmpty) const SizedBox(height: 16),
-                  if (shots.isNotEmpty)
-                    Wrap(
-                      spacing: 8.0, // gap between adjacent chips
-                      runSpacing: 8.0,
-                      children: [
-                        ...shots.map((shot) {
-                          return RippleShotWidget(
-                            name: shot.name,
-                            starNumber: '${shot.score}',
-                            opponentInfo: opponentInfo,
-                            editable: false,
-                          );
-                        }).toList(),
-                      ],
-                    ),
-                  SizedBox(height: 8),
-                ],
-              ),
-            )
-          ],
-        ),
-        const SizedBox(height: 16),
-        if (strengths.isNotEmpty)
-          SettingsSectionWidget(
-            sectionTitle: '',
+      shrinkWrap: true,
+      itemCount: 6,
+      itemBuilder: (_, index) {
+        if (index == 0) {
+          return SettingsSectionWidget(
+            sectionTitle: 'OPPONENT INFO',
             sectionWidgets: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.paddingTwo),
-                    child: Row(
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.paddingTwo,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Row(
                       children: [
-                        Icon(
-                          Icons.shield,
-                          size: 18,
-                          color: Theme.of(context).colorScheme.onPrimary,
+                        Expanded(
+                          child: FlagAndNameWidget(
+                            name:
+                                '${match.opponentFirstName} ${match.opponentLastName}',
+                            country: match.opponentCountry,
+                            ranking: match.opponentRanking != null
+                                ? '${match.opponentRanking?.federation} ${match.opponentRanking?.position}'
+                                : null,
+                          ),
                         ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          'Strengths',
-                          style: const TextStyle(fontSize: 18),
+                        Text(
+                          'Righty',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color:
+                                  Theme.of(context).textTheme.headline6!.color),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (_, index) {
-                      return RippleColorTextWidget(
-                        itemColor: Colors.green,
-                        item: strengths[index],
-                        tapFunction: null,
-                      );
-                    },
-                    itemCount: strengths.length,
-                    separatorBuilder: (_, index) {
-                      return const Divider(
-                        height: 1,
-                        thickness: 1,
-                        indent: 41,
-                      );
-                    },
-                  ),
-                ],
-              ),
+                    if (shots.isNotEmpty) const SizedBox(height: 16),
+                    if (shots.isNotEmpty)
+                      Wrap(
+                        spacing: 8.0, // gap between adjacent chips
+                        runSpacing: 8.0,
+                        children: [
+                          ...shots.map((shot) {
+                            return RippleShotWidget(
+                              name: shot.name,
+                              starNumber: '${shot.score}',
+                              opponentInfo: opponentInfo,
+                              editable: false,
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    SizedBox(height: 8),
+                  ],
+                ),
+              )
             ],
-          ),
-        if (strengths.isNotEmpty) const SizedBox(height: 16),
-        if (weaknesses.isNotEmpty)
-          SettingsSectionWidget(
-            sectionTitle: '',
-            sectionWidgets: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.paddingTwo),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.broken_image,
-                          size: 18,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          'Weaknesses',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
+          );
+        }
+        if (index == 1) return const SizedBox(height: 16);
+        if (index == 2) {
+          if (strengths.isNotEmpty) {
+            return SettingsSectionWidget(
+              sectionTitle: '',
+              sectionWidgets: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.paddingTwo),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.shield,
+                            size: 18,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(
+                            'Strengths',
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (_, index) {
-                      return RippleColorTextWidget(
-                        itemColor: Colors.red,
-                        item: weaknesses[index],
-                        tapFunction: null,
-                      );
-                    },
-                    itemCount: weaknesses.length,
-                    separatorBuilder: (_, index) {
-                      return const Divider(
-                        height: 1,
-                        thickness: 1,
-                        indent: 41,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        const SizedBox(height: 110),
-      ],
+                    const SizedBox(height: 8),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (_, index) {
+                        return RippleColorTextWidget(
+                          itemColor: Colors.green,
+                          item: strengths[index],
+                          tapFunction: null,
+                        );
+                      },
+                      itemCount: strengths.length,
+                      separatorBuilder: (_, index) {
+                        return const Divider(
+                          height: 1,
+                          thickness: 1,
+                          indent: 41,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }
+        }
+        if (index == 3) {
+          if (strengths.isNotEmpty) return const SizedBox(height: 16);
+        }
+        if (index == 4) {
+          if (weaknesses.isNotEmpty) {
+            return SettingsSectionWidget(
+              sectionTitle: '',
+              sectionWidgets: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.paddingTwo),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.broken_image,
+                            size: 18,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(
+                            'Weaknesses',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (_, index) {
+                        return RippleColorTextWidget(
+                          itemColor: Colors.red,
+                          item: weaknesses[index],
+                          tapFunction: null,
+                        );
+                      },
+                      itemCount: weaknesses.length,
+                      separatorBuilder: (_, index) {
+                        return const Divider(
+                          height: 1,
+                          thickness: 1,
+                          indent: 41,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }
+        }
+        if (index == 5) return const SizedBox(height: 110);
+        return const SizedBox.shrink();
+      },
     );
   }
 }

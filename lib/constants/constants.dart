@@ -45,23 +45,26 @@ class Dimensions {
 
 class AppColors {
   static const primaryColorDarkHex = 0xff1F1D2B;
-  static const MaterialColor primaryColorDark = MaterialColor(
-    primaryColorDarkHex,
-    <int, Color>{
-      50: Color(0xff1F1D2B),
-      100: Color(0xff1F1D2B),
-      200: Color(0xff1F1D2B),
-      300: Color(0xff1F1D2B),
-      400: Color(0xff1F1D2B),
-      500: Color(primaryColorDarkHex),
-      600: Color(0xff1F1D2B),
-      700: Color(0xff1F1D2B),
-      800: Color(0xff1F1D2B),
-      900: Color(0xff1F1D2B),
-    },
-  );
+  static const MaterialColor primarySwatchDark = Colors.yellow;
+
+  // MaterialColor(
+  //   primaryColorDarkHex,
+  //   <int, Color>{
+  //     50: Color(0xff1F1D2B),
+  //     100: Color(0xff1F1D2B),
+  //     200: Color(0xff1F1D2B),
+  //     300: Color(0xff1F1D2B),
+  //     400: Color(0xff1F1D2B),
+  //     500: Color(primaryColorDarkHex),
+  //     600: Color(0xff1F1D2B),
+  //     700: Color(0xff1F1D2B),
+  //     800: Color(0xff1F1D2B),
+  //     900: Color(0xff1F1D2B),
+  //   },
+  // );
+
   static const primarySwatchLightHex = 0xffFBBC04;
-  static const MaterialColor primarySwatchLight = MaterialColor(
+  static const primarySwatchLight = MaterialColor(
     primarySwatchLightHex,
     <int, Color>{
       50: Color(0xffFBBC04),
@@ -76,6 +79,7 @@ class AppColors {
       900: Color(0xffFBBC04),
     },
   );
+
   static const primaryColorLight = Colors.white;
   static const appBarBackgroundColorLight = Colors.white;
   static const accentColorLight = Color(0xffFBBC04);
@@ -86,7 +90,7 @@ class AppColors {
   static const onPrimaryColorLight = Colors.black;
   static const textSecondaryColorLight = Color(0xff7E90A1);
 
-  static const appBarBackgroundColorDark = primaryColorDark;
+  static const appBarBackgroundColorDark = Color(0xff1F1D2B);
   static const accentColorDark = Colors.yellow;
   static const accentColorTwoDark = Colors.yellow;
   static const backgroundColorDark = Color(0xff222330);

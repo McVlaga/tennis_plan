@@ -58,44 +58,44 @@ class ValidationMatch with ChangeNotifier {
     } else {
       opponentLastNameError = null;
     }
-    if (opponentCountry == null) {
-      opponentCountryError = 'Choose a country';
-      isValid = false;
-    } else {
-      opponentCountryError = null;
-    }
-    if (opponentRanking == null) {
-      opponentRankingError = 'Specify the ranking';
-      isValid = false;
-    } else {
-      opponentRankingError = null;
-    }
-    if (matchDate == null) {
-      matchDateError = 'Select a date';
-      isValid = false;
-    } else {
-      matchDateError = null;
-    }
-    if (matchTime == null) {
-      matchTimeError = 'Select time';
-      isValid = false;
-    } else {
-      matchTimeError = null;
-    }
-    if (courtSurface == null) {
-      courtSurfaceError = 'Choose a surface';
-      isValid = false;
-    } else {
-      courtSurfaceError = null;
-      if (courtSurface == CourtSurface.hard) {
-        if (courtLocation == null) {
-          courtLocationError = 'Choose a location';
-          isValid = false;
-        } else {
-          courtLocationError = null;
-        }
-      }
-    }
+    // if (opponentCountry == null) {
+    //   opponentCountryError = 'Choose a country';
+    //   isValid = false;
+    // } else {
+    //   opponentCountryError = null;
+    // }
+    // if (opponentRanking == null) {
+    //   opponentRankingError = 'Specify the ranking';
+    //   isValid = false;
+    // } else {
+    //   opponentRankingError = null;
+    // }
+    // if (matchDate == null) {
+    //   matchDateError = 'Select a date';
+    //   isValid = false;
+    // } else {
+    //   matchDateError = null;
+    // }
+    // if (matchTime == null) {
+    //   matchTimeError = 'Select time';
+    //   isValid = false;
+    // } else {
+    //   matchTimeError = null;
+    // }
+    // if (courtSurface == null) {
+    //   courtSurfaceError = 'Choose a surface';
+    //   isValid = false;
+    // } else {
+    //   courtSurfaceError = null;
+    //   if (courtSurface == CourtSurface.hard) {
+    //     if (courtLocation == null) {
+    //       courtLocationError = 'Choose a location';
+    //       isValid = false;
+    //     } else {
+    //       courtLocationError = null;
+    //     }
+    //   }
+    // }
     if (!isValid) {
       notifyListeners();
     }
@@ -106,12 +106,12 @@ class ValidationMatch with ChangeNotifier {
     return property == null;
   }
 
-  void setOpponentFirstName(String firstName) {
+  void setOpponentFirstName(String? firstName) {
     opponentFirstName = firstName;
     notifyListeners();
   }
 
-  void setOpponentLastName(String lastName) {
+  void setOpponentLastName(String? lastName) {
     opponentLastName = lastName;
     notifyListeners();
   }

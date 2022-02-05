@@ -48,8 +48,10 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
   }
 
   void _saveMatch(BuildContext ctx, Matches matches) {
-    tempMatch.setOpponentFirstName(firstNameController.text);
-    tempMatch.setOpponentLastName(lastNameController.text);
+    tempMatch.setOpponentFirstName(
+        firstNameController.text.isEmpty ? null : firstNameController.text);
+    tempMatch.setOpponentLastName(
+        lastNameController.text.isEmpty ? null : lastNameController.text);
     if (tempMatch.isValid()) {
       matches.addMatch(AMatch.fromTemporaryMatch(tempMatch));
       Navigator.of(ctx).pop();
@@ -66,86 +68,86 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
           backgroundColor: Theme.of(context).colorScheme.secondaryVariant,
           foregroundColor: Theme.of(context).colorScheme.onSecondary,
         ),
-        body: Column(
+        body: Stack(
           children: [
-            Expanded(
-              child: SingleChildScrollView(
+            ListView(
+              padding: const EdgeInsets.only(
+                left: Dimensions.paddingTwo,
+                right: Dimensions.paddingTwo,
+                bottom: 100,
+              ),
+              children: <Widget>[
+                SettingsSectionWidget(
+                  sectionTitle: 'OPPONENT',
+                  sectionWidgets: [
+                    FirstNameItem(nameController: firstNameController),
+                    LastNameItem(nameController: lastNameController),
+                    const CountriesItem(),
+                    const RankingItem(),
+                  ],
+                ),
+                const SettingsSectionWidget(
+                  sectionTitle: 'MATCH',
+                  sectionWidgets: [
+                    PracticeCheckBox(),
+                    DateItem(),
+                    TimeItem(),
+                  ],
+                ),
+                SettingsSectionWidget(
+                  sectionTitle: 'COURT',
+                  sectionWidgets: [
+                    const CourtSurfaceItem(),
+                    Consumer<ValidationMatch>(
+                      builder: (ctx, match, child) {
+                        if (match.courtSurface != null) {
+                          if (match.courtSurface == CourtSurface.hard) {
+                            return const CourtLocationItem();
+                          } else {
+                            tempMatch.setInvisibleCourtLocation(null);
+                          }
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Positioned(
+              bottom: 0,
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
                 padding: const EdgeInsets.only(
                   left: Dimensions.paddingTwo,
                   right: Dimensions.paddingTwo,
                   bottom: Dimensions.paddingTwo,
                 ),
-                child: Column(
-                  children: <Widget>[
-                    SettingsSectionWidget(
-                      sectionTitle: 'OPPONENT',
-                      sectionWidgets: [
-                        FirstNameItem(nameController: firstNameController),
-                        LastNameItem(nameController: lastNameController),
-                        const CountriesItem(),
-                        const RankingItem(),
-                      ],
-                    ),
-                    const SettingsSectionWidget(
-                      sectionTitle: 'MATCH',
-                      sectionWidgets: [
-                        PracticeCheckBox(),
-                        DateItem(),
-                        TimeItem(),
-                      ],
-                    ),
-                    SettingsSectionWidget(
-                      sectionTitle: 'COURT',
-                      sectionWidgets: [
-                        const CourtSurfaceItem(),
-                        Consumer<ValidationMatch>(
-                          builder: (ctx, match, child) {
-                            if (match.courtSurface != null) {
-                              if (match.courtSurface == CourtSurface.hard) {
-                                return const CourtLocationItem();
-                              } else {
-                                tempMatch.setInvisibleCourtLocation(null);
-                              }
-                            }
-                            return const SizedBox.shrink();
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(Dimensions.borderRadius),
+                  ),
+                  child: Material(
+                    color: Theme.of(context).colorScheme.secondaryVariant,
+                    child: Consumer<Matches>(
+                      builder: (_, matches, child) {
+                        return InkWell(
+                          onTap: () {
+                            _saveMatch(context, matches);
                           },
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: Dimensions.paddingTwo,
-                right: Dimensions.paddingTwo,
-                bottom: Dimensions.paddingTwo,
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(Dimensions.borderRadius),
-                ),
-                child: Material(
-                  color: Theme.of(context).colorScheme.secondaryVariant,
-                  child: Consumer<Matches>(
-                    builder: (_, matches, child) {
-                      return InkWell(
-                        onTap: () {
-                          _saveMatch(context, matches);
-                        },
-                        child: child,
-                      );
-                    },
-                    child: SizedBox(
-                      height: Dimensions.addMatchDialogInputHeight,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'SAVE',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).colorScheme.onSecondary,
+                          child: child,
+                        );
+                      },
+                      child: SizedBox(
+                        height: Dimensions.addMatchDialogInputHeight,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'SAVE',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
                           ),
                         ),
                       ),

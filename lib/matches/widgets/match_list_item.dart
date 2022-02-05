@@ -15,6 +15,18 @@ class MatchListItem extends StatelessWidget {
 
   final AMatch match;
 
+  String getNameString() {
+    return '${match.opponentFirstName?[0]}. ${match.opponentLastName}';
+  }
+
+  String? getRankingString() {
+    if (match.opponentRanking != null) {
+      return '${match.opponentRanking?.federation} ${match.opponentRanking?.position}';
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -55,12 +67,11 @@ class MatchListItem extends StatelessWidget {
                         Expanded(
                           child: FlagAndNameWidget(
                             country: match.opponentCountry,
-                            name:
-                                '${match.opponentFirstName?[0]}. ${match.opponentLastName}',
-                            ranking:
-                                '${match.opponentRanking?.federation} ${match.opponentRanking?.position}',
+                            name: getNameString(),
+                            ranking: getRankingString(),
                           ),
                         ),
+                        const SizedBox(width: 10),
                         const Text(
                           Strings.matchListItemVSString,
                           style: TextStyle(

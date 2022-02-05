@@ -5,11 +5,12 @@ import 'storage_manager.dart';
 class ThemeManager with ChangeNotifier {
   final darkTheme = ThemeData(
     fontFamily: 'Rubik',
-    primaryColor: AppColors.primaryColorDark,
+    primarySwatch: AppColors.primarySwatchDark,
+    primaryColor: AppColors.primarySwatchDark,
     canvasColor: AppColors.backgroundColorDark,
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primaryColorDark,
+      backgroundColor: AppColors.appBarBackgroundColorDark,
       elevation: 0,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -27,6 +28,7 @@ class ThemeManager with ChangeNotifier {
       headline6: TextStyle(color: AppColors.textSecondaryColorDark),
     ),
     colorScheme: const ColorScheme.dark(
+      primary: AppColors.primarySwatchDark,
       secondary: AppColors.accentColorDark,
       secondaryVariant: AppColors.accentColorTwoDark,
       surface: AppColors.surfaceColorDark,
@@ -42,8 +44,8 @@ class ThemeManager with ChangeNotifier {
     ),
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.accentColorDark[700],
-      selectionColor: AppColors.primaryColorDark,
-      selectionHandleColor: AppColors.primaryColorDark,
+      selectionColor: AppColors.accentColorDark[900],
+      selectionHandleColor: AppColors.accentColorDark[700],
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.accentColor,
@@ -67,7 +69,6 @@ class ThemeManager with ChangeNotifier {
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.appBarBackgroundColorLight,
-      foregroundColor: Colors.black87,
       elevation: 0,
     ),
     tabBarTheme: const TabBarTheme(
@@ -82,6 +83,7 @@ class ThemeManager with ChangeNotifier {
       headline6: TextStyle(color: AppColors.textSecondaryColorLight),
     ),
     colorScheme: const ColorScheme.light(
+      primary: AppColors.primarySwatchLight,
       secondary: AppColors.accentColorLight,
       secondaryVariant: AppColors.accentColorTwoLight,
       surface: AppColors.surfaceColorLight,

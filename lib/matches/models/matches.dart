@@ -94,6 +94,18 @@ class Matches with ChangeNotifier {
     return [..._matches];
   }
 
+  List<AMatch> getMatchesWithQuery(String query) {
+    if (query.isEmpty) {
+      return matches;
+    } else {
+      return _matches.where((match) {
+        return match.opponentLastName!
+            .toLowerCase()
+            .contains(query.toLowerCase());
+      }).toList();
+    }
+  }
+
   void addMatch(AMatch newMatch) {
     _matches.insert(0, newMatch);
     notifyListeners();

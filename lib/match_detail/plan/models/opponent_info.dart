@@ -4,30 +4,13 @@ import 'package:tennis_plan/match_detail/plan/models/shot.dart';
 class OpponentInfo with ChangeNotifier {
   OpponentInfo({required shots, required strengths, required weaknesses}) {
     this.shots = List.from(shots);
-    this.weaknesses = List.from(weaknesses);
     this.strengths = List.from(strengths);
+    this.weaknesses = List.from(weaknesses);
   }
 
   late List<Shot> shots;
   late List<String> strengths;
   late List<String> weaknesses;
-
-  // List<Shot> shots = [
-  //   Shot(name: 'Forehand Cross', score: 5),
-  //   Shot(name: 'Forehand Line', score: 4),
-  //   Shot(name: 'Backhand', score: 3),
-  //   Shot(name: 'Serve', score: 2),
-  //   Shot(name: 'Volleys', score: 4),
-  // ];
-  // List<String> strengths = [
-  //   'Play to the opponents backhand as much as you can. Try no to let him play his forehand ever in his life.',
-  //   'Try to put every return in',
-  //   'Dont ever play volleys. If the guy tries to make me play a volley, then.',
-  // ];
-  // List<String> weaknesses = [
-  //   'Make him run as much as you can',
-  //   'Dont ever play volleys. If the guy tries to make me play a volley, then.',
-  // ];
 
   void addOpponentShot(String name, int score) {
     shots.add(Shot(name: name, score: score));

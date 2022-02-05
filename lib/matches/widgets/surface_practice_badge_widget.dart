@@ -35,10 +35,22 @@ class SurfacePracticeBadgeWidget extends StatelessWidget {
       case CourtSurface.grass:
         return Colors.green;
       case CourtSurface.carpet:
-        return Colors.grey;
+        return Colors.blueGrey;
       default:
-        return Colors.blue;
+        return Colors.grey;
     }
+  }
+
+  String getDateString(BuildContext context) {
+    String time = '';
+    String date = '';
+    if (match.matchTime != null) {
+      time = match.matchTime!.format(context);
+    }
+    if (match.matchDate != null) {
+      date = DateFormat('MMM d, yyyy').format(match.matchDate!);
+    }
+    return '$time $date';
   }
 
   @override
@@ -46,21 +58,24 @@ class SurfacePracticeBadgeWidget extends StatelessWidget {
     return Container(
       height: 20,
       width: double.infinity,
-      decoration: BoxDecoration(color: getSurfaceColor()),
+      decoration: BoxDecoration(
+        color: getSurfaceColor(),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingTwo),
         child: Row(
           children: [
-            Text(
-              buildSurfaceLocationString(),
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSecondary,
-                fontSize: 12,
+            if (match.courtSurface != null)
+              Text(
+                buildSurfaceLocationString(),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  fontSize: 12,
+                ),
               ),
-            ),
             const Spacer(),
             Text(
-              '${match.matchTime!.format(context)} ${DateFormat('MMM d, yyyy').format(match.matchDate!)}',
+              getDateString(context),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSecondary,
                 fontSize: 12,

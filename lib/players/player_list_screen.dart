@@ -11,9 +11,6 @@ class PlayerListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Players'),
-      ),
       body: ListView.builder(
         padding: const EdgeInsets.only(
             left: Dimensions.paddingOne,
