@@ -20,15 +20,15 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           children: const [
             SettingsSectionWidget(
-              sectionTitle: 'USER INFO',
-              sectionWidgets: [
+              title: 'USER INFO',
+              children: [
                 SettingsFirstName(),
                 SettingsLastName(),
               ],
             ),
             SettingsSectionWidget(
-              sectionTitle: 'THEME',
-              sectionWidgets: [
+              title: 'THEME',
+              children: [
                 ThemeItem(),
               ],
             ),

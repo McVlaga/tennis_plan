@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
-import 'package:tennis_plan/match_detail/plan/models/shot.dart';
-import '../../constants/constants.dart';
-import 'ripple_color_text_widget.dart';
-import 'opponent_info/ripple_shot_widget.dart';
+import 'models/shot.dart';
+import 'ripple_weakness_widget.dart';
+import 'section_header_widget.dart';
 import '../../matches/models/a_match.dart';
+import '../../constants/constants.dart';
+import 'ripple_strength_widget.dart';
+import 'opponent_info/ripple_shot_widget.dart';
 import '../../matches/widgets/flag_and_name_widget.dart';
 import '../../widgets/settings_section_widget.dart';
 
@@ -14,191 +15,126 @@ class PlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AMatch match = Provider.of<AMatch>(context);
-    OpponentInfo opponentInfo = match.plan.opponentInfo;
-    List<Shot> shots = match.plan.opponentInfo.shots;
-    List<String> strengths = match.plan.opponentInfo.strengths;
-    List<String> weaknesses = match.plan.opponentInfo.weaknesses;
-    return ListView.builder(
+    AMatch match = context.watch<AMatch>();
+    List<Shot> shots = match.opponentShots.shots;
+    List<String> strengths = match.opponentStrengths.strengths;
+    List<String> weaknesses = match.opponentWeaknesses.weaknesses;
+    return ListView(
       padding: const EdgeInsets.only(
         left: Dimensions.paddingTwo,
         right: Dimensions.paddingTwo,
         bottom: Dimensions.paddingTwo,
       ),
       shrinkWrap: true,
-      itemCount: 6,
-      itemBuilder: (_, index) {
-        if (index == 0) {
-          return SettingsSectionWidget(
-            sectionTitle: 'OPPONENT INFO',
-            sectionWidgets: [
+      children: [
+        SettingsSectionWidget(
+          title: 'OPPONENT INFO',
+          children: [
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: const [
+                  Expanded(child: FlagAndNameWidget()),
+                  Text(
+                    'Righty',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            if (shots.isNotEmpty) const SizedBox(height: 16),
+            if (shots.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.paddingTwo,
+                padding: const EdgeInsets.only(
+                  left: Dimensions.paddingTwo,
+                  right: Dimensions.paddingTwo,
+                  top: Dimensions.paddingOne,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Wrap(
+                  spacing: 8.0,
+                  runSpacing: 8.0,
                   children: [
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: FlagAndNameWidget(
-                            name:
-                                '${match.opponentFirstName} ${match.opponentLastName}',
-                            country: match.opponentCountry,
-                            ranking: match.opponentRanking != null
-                                ? '${match.opponentRanking?.federation} ${match.opponentRanking?.position}'
-                                : null,
-                          ),
-                        ),
-                        Text(
-                          'Righty',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color:
-                                  Theme.of(context).textTheme.headline6!.color),
-                        ),
-                      ],
-                    ),
-                    if (shots.isNotEmpty) const SizedBox(height: 16),
-                    if (shots.isNotEmpty)
-                      Wrap(
-                        spacing: 8.0, // gap between adjacent chips
-                        runSpacing: 8.0,
-                        children: [
-                          ...shots.map((shot) {
-                            return RippleShotWidget(
-                              name: shot.name,
-                              starNumber: '${shot.score}',
-                              opponentInfo: opponentInfo,
-                              editable: false,
-                            );
-                          }).toList(),
-                        ],
-                      ),
-                    SizedBox(height: 8),
+                    ...shots.map((shot) {
+                      return ChangeNotifierProvider.value(
+                        value: shot,
+                        builder: (_, __) {
+                          return const RippleShotWidget(shots: null);
+                        },
+                      );
+                    }).toList(),
                   ],
                 ),
-              )
+              ),
+            const SizedBox(height: 8),
+          ],
+        ),
+        const SizedBox(height: 16),
+        if (strengths.isNotEmpty)
+          SettingsSectionWidget(
+            title: '',
+            children: [
+              const SizedBox(height: 8),
+              const SectionHeaderWidget(
+                title: 'Strengths',
+                icon: Icons.shield,
+              ),
+              const SizedBox(height: 8),
+              ListView.separated(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (_, index) {
+                  return RippleStrengthWidget(
+                    strengths: null,
+                    strength: strengths[index],
+                  );
+                },
+                itemCount: strengths.length,
+                separatorBuilder: (_, index) {
+                  return const Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 41,
+                  );
+                },
+              ),
             ],
-          );
-        }
-        if (index == 1) return const SizedBox(height: 16);
-        if (index == 2) {
-          if (strengths.isNotEmpty) {
-            return SettingsSectionWidget(
-              sectionTitle: '',
-              sectionWidgets: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.paddingTwo),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.shield,
-                            size: 18,
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                          const SizedBox(width: 8),
-                          const Text(
-                            'Strengths',
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (_, index) {
-                        return RippleColorTextWidget(
-                          itemColor: Colors.green,
-                          item: strengths[index],
-                          tapFunction: null,
-                        );
-                      },
-                      itemCount: strengths.length,
-                      separatorBuilder: (_, index) {
-                        return const Divider(
-                          height: 1,
-                          thickness: 1,
-                          indent: 41,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            );
-          }
-        }
-        if (index == 3) {
-          if (strengths.isNotEmpty) return const SizedBox(height: 16);
-        }
-        if (index == 4) {
-          if (weaknesses.isNotEmpty) {
-            return SettingsSectionWidget(
-              sectionTitle: '',
-              sectionWidgets: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.paddingTwo),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.broken_image,
-                            size: 18,
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                          const SizedBox(width: 8),
-                          const Text(
-                            'Weaknesses',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (_, index) {
-                        return RippleColorTextWidget(
-                          itemColor: Colors.red,
-                          item: weaknesses[index],
-                          tapFunction: null,
-                        );
-                      },
-                      itemCount: weaknesses.length,
-                      separatorBuilder: (_, index) {
-                        return const Divider(
-                          height: 1,
-                          thickness: 1,
-                          indent: 41,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            );
-          }
-        }
-        if (index == 5) return const SizedBox(height: 110);
-        return const SizedBox.shrink();
-      },
+          ),
+        const SizedBox(height: 16),
+        if (weaknesses.isNotEmpty)
+          SettingsSectionWidget(
+            title: '',
+            children: [
+              const SizedBox(height: 8),
+              const SectionHeaderWidget(
+                title: 'Weaknesses',
+                icon: Icons.broken_image,
+              ),
+              const SizedBox(height: 8),
+              ListView.separated(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (_, index) {
+                  return RippleWeaknessWidget(
+                    weaknesses: null,
+                    weakness: weaknesses[index],
+                  );
+                },
+                itemCount: weaknesses.length,
+                separatorBuilder: (_, index) {
+                  return const Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 41,
+                  );
+                },
+              ),
+            ],
+          ),
+        const SizedBox(height: 110),
+      ],
     );
   }
 }

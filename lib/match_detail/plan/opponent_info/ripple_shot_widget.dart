@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
+import 'package:provider/provider.dart';
+import '../models/shots.dart';
 import '../../../constants/constants.dart';
 import 'add_edit_shot_dialog.dart';
 import '../models/shot.dart';
@@ -7,20 +8,13 @@ import '../../../services/theme_manager.dart';
 
 class RippleShotWidget extends StatelessWidget {
   const RippleShotWidget({
-    required this.name,
-    required this.starNumber,
-    required this.opponentInfo,
-    required this.editable,
+    required this.shots,
     Key? key,
   }) : super(key: key);
 
-  final String name;
-  final String starNumber;
-  final OpponentInfo opponentInfo;
-  final bool editable;
+  final Shots? shots;
 
-  void showEditShotDialog(
-      BuildContext ctx, OpponentInfo opponentInfo, Shot? shot) {
+  void showAddEditShotDialog(BuildContext ctx, Shot shot) {
     FocusScope.of(ctx).unfocus();
     showModalBottomSheet(
       isScrollControlled: true,
@@ -32,16 +26,15 @@ class RippleShotWidget extends StatelessWidget {
         ),
       ),
       backgroundColor: Theme.of(ctx).canvasColor,
-      builder: (context) {
-        return AddEditShotDialog(
-            context: ctx, opponentInfo: opponentInfo, shot: shot);
+      builder: (_) {
+        return AddEditShotDialog(shots: shots!, shot: shot);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final Shot shot = opponentInfo.findShotByName(name);
+    Shot shot = context.watch<Shot>();
     return ClipRRect(
       borderRadius:
           const BorderRadius.all(Radius.circular(Dimensions.borderRadius)),
@@ -53,7 +46,7 @@ class RippleShotWidget extends StatelessWidget {
                 : Theme.of(context).colorScheme.cardShotBadBg,
         child: InkWell(
           onTap: () {
-            if (editable) showEditShotDialog(context, opponentInfo, shot);
+            if (shots != null) showAddEditShotDialog(context, shot);
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -61,7 +54,7 @@ class RippleShotWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  name,
+                  shot.name,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
@@ -70,7 +63,7 @@ class RippleShotWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      starNumber,
+                      shot.score.toString(),
                       style: const TextStyle(fontSize: 20),
                     ),
                     Icon(

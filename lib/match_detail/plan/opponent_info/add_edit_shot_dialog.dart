@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
+import '../models/shots.dart';
 import '../../../constants/constants.dart';
 import '../models/shot.dart';
-import '../../../matches/models/a_match.dart';
 
 class AddEditShotDialog extends StatefulWidget {
   const AddEditShotDialog({
-    required this.context,
-    required this.opponentInfo,
-    required this.shot,
     Key? key,
+    required this.shots,
+    required this.shot,
   }) : super(key: key);
 
-  final BuildContext context;
-  final OpponentInfo opponentInfo;
+  final Shots shots;
   final Shot? shot;
 
   @override
@@ -51,9 +48,7 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
         children: [
           const Align(
             alignment: Alignment.centerLeft,
-            child: Text(
-              'Shot',
-            ),
+            child: Text('Shot'),
           ),
           TextField(
             autofocus: true,
@@ -68,9 +63,7 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
           const SizedBox(height: Dimensions.paddingThree),
           const Align(
             alignment: Alignment.centerLeft,
-            child: Text(
-              'Score',
-            ),
+            child: Text('Score'),
           ),
           const SizedBox(height: Dimensions.paddingZero),
           Row(children: [
@@ -168,7 +161,7 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
                         style: TextStyle(color: Colors.red),
                       ),
                       onPressed: () {
-                        widget.opponentInfo.deleteOpponentShot(oldShotName);
+                        widget.shots.deleteOpponentShot(oldShotName);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -190,10 +183,10 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
                 onPressed: () {
                   if (shotController.text.isNotEmpty && selectedStar > 0) {
                     if (editing) {
-                      widget.opponentInfo.updateOpponentShot(
+                      widget.shots.updateOpponentShot(
                           oldShotName, shotController.text, selectedStar);
                     } else {
-                      widget.opponentInfo
+                      widget.shots
                           .addOpponentShot(shotController.text, selectedStar);
                     }
                     Navigator.of(context).pop();

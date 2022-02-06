@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/constants.dart';
 import '../models/a_match.dart';
@@ -6,13 +7,11 @@ import '../models/a_match.dart';
 class WinLoseBadgeWidget extends StatelessWidget {
   const WinLoseBadgeWidget({
     Key? key,
-    required this.match,
   }) : super(key: key);
-
-  final AMatch match;
 
   @override
   Widget build(BuildContext context) {
+    AMatch match = context.watch<AMatch>();
     return Positioned(
       right: -14,
       bottom: 0,

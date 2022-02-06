@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
+import '../models/strengths.dart';
 import '../../../constants/constants.dart';
 
 class AddEditStrengthDialog extends StatefulWidget {
   const AddEditStrengthDialog({
-    required this.context,
-    required this.opponentInfo,
+    required this.strengths,
     required this.strength,
     Key? key,
   }) : super(key: key);
 
-  final BuildContext context;
-  final OpponentInfo opponentInfo;
+  final Strengths strengths;
   final String? strength;
 
   @override
@@ -75,7 +73,7 @@ class _AddEditStrengthDialogState extends State<AddEditStrengthDialog> {
                         style: TextStyle(color: Colors.red),
                       ),
                       onPressed: () {
-                        widget.opponentInfo.deleteOpponentStrength(oldStrength);
+                        widget.strengths.deleteOpponentStrength(oldStrength);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -97,12 +95,12 @@ class _AddEditStrengthDialogState extends State<AddEditStrengthDialog> {
                 onPressed: () {
                   if (strengthController.text.isNotEmpty) {
                     if (editing) {
-                      widget.opponentInfo.updateOpponentStrength(
+                      widget.strengths.updateOpponentStrength(
                         oldStrength,
                         strengthController.text,
                       );
                     } else {
-                      widget.opponentInfo
+                      widget.strengths
                           .addOpponentStrength(strengthController.text);
                     }
                     Navigator.of(context).pop();

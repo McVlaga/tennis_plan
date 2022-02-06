@@ -1,8 +1,5 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
-import 'package:tennis_plan/match_detail/plan/models/plan.dart';
-import '../../constants/constants.dart';
 import 'ranking.dart';
 
 import 'a_match.dart';
@@ -22,13 +19,6 @@ class Matches with ChangeNotifier {
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.notPlayed,
       courtSurface: CourtSurface.grass,
-      plan: Plan(
-        opponentInfo: OpponentInfo(
-          shots: [],
-          strengths: [],
-          weaknesses: [],
-        ),
-      ),
     ),
     AMatch(
       id: DateTime.now().toString(),
@@ -41,13 +31,6 @@ class Matches with ChangeNotifier {
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.win,
       courtSurface: CourtSurface.clay,
-      plan: Plan(
-        opponentInfo: OpponentInfo(
-          shots: [],
-          strengths: [],
-          weaknesses: [],
-        ),
-      ),
     ),
     AMatch(
       id: DateTime.now().toString(),
@@ -59,15 +42,7 @@ class Matches with ChangeNotifier {
       matchDate: DateTime.now(),
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.lose,
-      courtSurface: CourtSurface.hard,
-      courtLocation: CourtLocation.indoors,
-      plan: Plan(
-        opponentInfo: OpponentInfo(
-          shots: [],
-          strengths: [],
-          weaknesses: [],
-        ),
-      ),
+      courtSurface: CourtSurface.hardIndoors,
     ),
     AMatch(
       id: DateTime.now().toString(),
@@ -80,13 +55,6 @@ class Matches with ChangeNotifier {
       matchTime: TimeOfDay.now(),
       matchResult: MatchState.win,
       courtSurface: CourtSurface.grass,
-      plan: Plan(
-        opponentInfo: OpponentInfo(
-          shots: [],
-          strengths: [],
-          weaknesses: [],
-        ),
-      ),
     ),
   ];
 

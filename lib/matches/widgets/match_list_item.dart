@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/constants.dart';
 import '../../match_detail/match_detail_tab_bar_screen.dart';
@@ -8,40 +9,26 @@ import 'surface_practice_badge_widget.dart';
 import 'win_lose_badge_widget.dart';
 
 class MatchListItem extends StatelessWidget {
-  const MatchListItem({
-    Key? key,
-    required this.match,
-  }) : super(key: key);
-
-  final AMatch match;
-
-  String getNameString() {
-    return '${match.opponentFirstName?[0]}. ${match.opponentLastName}';
-  }
-
-  String? getRankingString() {
-    if (match.opponentRanking != null) {
-      return '${match.opponentRanking?.federation} ${match.opponentRanking?.position}';
-    } else {
-      return null;
-    }
-  }
+  const MatchListItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    AMatch match = context.watch<AMatch>();
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(
           MatchDetailTabBarScreen.routeName,
           arguments: match.id,
         );
+
+        FocusManager.instance.primaryFocus?.unfocus();
       },
       child: SizedBox(
         height: 110,
         width: double.infinity,
         child: Stack(
           children: <Widget>[
-            WinLoseBadgeWidget(match: match),
+            const WinLoseBadgeWidget(),
             Positioned(
               height: 20,
               right: 16,
@@ -63,16 +50,12 @@ class MatchListItem extends StatelessWidget {
                       right: Dimensions.paddingFive,
                     ),
                     child: Row(
-                      children: [
+                      children: const [
                         Expanded(
-                          child: FlagAndNameWidget(
-                            country: match.opponentCountry,
-                            name: getNameString(),
-                            ranking: getRankingString(),
-                          ),
+                          child: FlagAndNameWidget(),
                         ),
-                        const SizedBox(width: 10),
-                        const Text(
+                        SizedBox(width: 10),
+                        Text(
                           Strings.matchListItemVSString,
                           style: TextStyle(
                               fontSize: Fonts.matchListItemVSFontSize,
@@ -82,7 +65,7 @@ class MatchListItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                SurfacePracticeBadgeWidget(match: match),
+                const SurfacePracticeBadgeWidget(),
               ],
             ),
           ],

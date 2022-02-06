@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/match_detail/plan/models/opponent_info.dart';
-import 'package:tennis_plan/match_detail/plan/models/plan.dart';
 import 'widgets/ranking_item.dart';
 
 import '../constants/constants.dart';
@@ -10,7 +8,6 @@ import '../matches/models/matches.dart';
 import '../widgets/settings_section_widget.dart';
 import 'models/validation_match.dart';
 import 'widgets/countries_item.dart';
-import 'widgets/court_location_item.dart';
 import 'widgets/court_surface_item.dart';
 import 'widgets/date_item.dart';
 import 'widgets/first_name_item.dart';
@@ -35,16 +32,7 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
   @override
   void initState() {
     super.initState();
-    tempMatch = ValidationMatch(
-      id: DateTime.now().toString(),
-      plan: Plan(
-        opponentInfo: OpponentInfo(
-          shots: [],
-          strengths: [],
-          weaknesses: [],
-        ),
-      ),
-    );
+    tempMatch = ValidationMatch(id: DateTime.now().toString());
   }
 
   void _saveMatch(BuildContext ctx, Matches matches) {
@@ -78,8 +66,8 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
               ),
               children: <Widget>[
                 SettingsSectionWidget(
-                  sectionTitle: 'OPPONENT',
-                  sectionWidgets: [
+                  title: 'OPPONENT',
+                  children: [
                     FirstNameItem(nameController: firstNameController),
                     LastNameItem(nameController: lastNameController),
                     const CountriesItem(),
@@ -87,29 +75,17 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                   ],
                 ),
                 const SettingsSectionWidget(
-                  sectionTitle: 'MATCH',
-                  sectionWidgets: [
+                  title: 'MATCH',
+                  children: [
                     PracticeCheckBox(),
                     DateItem(),
                     TimeItem(),
                   ],
                 ),
-                SettingsSectionWidget(
-                  sectionTitle: 'COURT',
-                  sectionWidgets: [
-                    const CourtSurfaceItem(),
-                    Consumer<ValidationMatch>(
-                      builder: (ctx, match, child) {
-                        if (match.courtSurface != null) {
-                          if (match.courtSurface == CourtSurface.hard) {
-                            return const CourtLocationItem();
-                          } else {
-                            tempMatch.setInvisibleCourtLocation(null);
-                          }
-                        }
-                        return const SizedBox.shrink();
-                      },
-                    ),
+                const SettingsSectionWidget(
+                  title: 'COURT',
+                  children: [
+                    CourtSurfaceItem(),
                   ],
                 )
               ],

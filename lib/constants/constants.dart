@@ -130,9 +130,3 @@ class Strings {
   static const addMatchDialogCountryTitle = 'Select a country';
   static const addMatchDialogMatchTitle = 'Match played?';
 }
-
-enum MatchState { win, lose, notPlayed }
-
-enum CourtSurface { grass, hard, clay, carpet }
-
-enum CourtLocation { indoors, outdoors }

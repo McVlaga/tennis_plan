@@ -31,6 +31,7 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
   }
 
   void onTabTapped(int index) {
+    FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
       _page = index;
       switch (index) {
@@ -119,6 +120,7 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
               onPressed: () {
                 if (_page == 0) {
                   Navigator.pushNamed(context, AddEditMatchScreen.routeName);
+                  FocusManager.instance.primaryFocus?.unfocus();
                 }
               },
             ),

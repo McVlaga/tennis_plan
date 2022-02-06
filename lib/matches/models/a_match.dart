@@ -1,11 +1,19 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/match_detail/plan/models/plan.dart';
+import 'package:intl/intl.dart';
+import '../../match_detail/plan/models/shots.dart';
+import '../../match_detail/plan/models/strengths.dart';
+import '../../match_detail/plan/models/weaknesses.dart';
 import 'ranking.dart';
 import '../../add_edit_match/models/validation_match.dart';
-import '../../constants/constants.dart';
+
+enum MatchState { win, lose, notPlayed }
+
+enum CourtSurface { hardIndoors, hardOutdoors, grass, clay, carpet }
 
 class AMatch with ChangeNotifier {
+  final DateFormat _dateFormat = DateFormat('MMM d, yyyy');
+
   late String id;
   String? opponentFirstName;
   String? opponentLastName;
@@ -16,9 +24,10 @@ class AMatch with ChangeNotifier {
   TimeOfDay? matchTime;
   MatchState? matchResult;
   CourtSurface? courtSurface;
-  CourtLocation? courtLocation;
 
-  late Plan plan;
+  Shots opponentShots = Shots([]);
+  Strengths opponentStrengths = Strengths([]);
+  Weaknesses opponentWeaknesses = Weaknesses([]);
 
   AMatch({
     required this.id,
@@ -31,8 +40,6 @@ class AMatch with ChangeNotifier {
     this.matchTime,
     this.matchResult = MatchState.notPlayed,
     this.courtSurface,
-    this.courtLocation,
-    required this.plan,
   });
 
   AMatch.fromTemporaryMatch(ValidationMatch tempMatch) {
@@ -45,12 +52,16 @@ class AMatch with ChangeNotifier {
     matchDate = tempMatch.matchDate;
     matchTime = tempMatch.matchTime;
     courtSurface = tempMatch.courtSurface;
-    courtLocation = tempMatch.courtLocation;
-    plan = tempMatch.plan;
   }
 
-  void setPlan(Plan plan) {
-    this.plan = plan;
+  void setOpponentInfo(
+    Shots newOpponentShots,
+    Strengths newOpponentStrengths,
+    Weaknesses newOpponentWeaknesses,
+  ) {
+    opponentShots = newOpponentShots;
+    opponentStrengths = newOpponentStrengths;
+    opponentWeaknesses = newOpponentWeaknesses;
     notifyListeners();
   }
 
@@ -94,68 +105,66 @@ class AMatch with ChangeNotifier {
     notifyListeners();
   }
 
-  void setCourtLocation(dynamic location) {
-    courtLocation = location;
-    notifyListeners();
+  String getNameString() {
+    return '${opponentFirstName?[0]}. $opponentLastName';
   }
 
-  void addOpponentShot(String name, int score) {
-    plan.opponentInfo.addOpponentShot(name, score);
-    notifyListeners();
+  String getFullNameString() {
+    return '$opponentFirstName $opponentLastName';
   }
 
-  void reorderOpponentShot(int from, int to, String shotName, int shotScore) {
-    plan.opponentInfo.reorderOpponentShot(from, to, shotName, shotScore);
-    notifyListeners();
+  String getRankingString() {
+    if (opponentRanking != null) {
+      return '${opponentRanking?.federation} ${opponentRanking?.position}';
+    } else {
+      return '';
+    }
   }
 
-  void addOpponentStrength(String strength) {
-    plan.opponentInfo.addOpponentStrength(strength);
-    notifyListeners();
+  String getFlagImagePath() {
+    return 'icons/flags/png/${opponentCountry!.countryCode.toLowerCase()}.png';
   }
 
-  void reorderOpponentStrength(int from, int to, String strength) {
-    plan.opponentInfo.reorderOpponentStrength(from, to, strength);
-    notifyListeners();
+  String buildSurfaceLocationString() {
+    if (courtSurface != null) {
+      String surface = courtSurface!.name.toUpperCase();
+      if (courtSurface == CourtSurface.hardIndoors) {
+        return 'HARD, INDOORS';
+      } else if (courtSurface == CourtSurface.hardOutdoors) {
+        return 'HARD, OUTDOORS';
+      } else {
+        return surface;
+      }
+    }
+    return '';
   }
 
-  void addOpponentWeakness(String weakness) {
-    plan.opponentInfo.addOpponentWeakness(weakness);
-    notifyListeners();
+  Color getSurfaceColor() {
+    switch (courtSurface) {
+      case CourtSurface.hardIndoors:
+        return Colors.blue;
+      case CourtSurface.hardOutdoors:
+        return Colors.blue;
+      case CourtSurface.clay:
+        return Colors.orange;
+      case CourtSurface.grass:
+        return Colors.green;
+      case CourtSurface.carpet:
+        return Colors.blueGrey;
+      default:
+        return Colors.grey;
+    }
   }
 
-  void reorderOpponentWeakness(int from, int to, String weakness) {
-    plan.opponentInfo.reorderOpponentWeakness(from, to, weakness);
-    notifyListeners();
-  }
-
-  void updateOpponentShot(String oldName, String newName, int score) {
-    plan.opponentInfo.updateOpponentShot(oldName, newName, score);
-    notifyListeners();
-  }
-
-  void updateOpponentStrength(String oldStrength, String newStrength) {
-    plan.opponentInfo.updateOpponentStrength(oldStrength, newStrength);
-    notifyListeners();
-  }
-
-  void updateOpponentWeakness(String oldWeakness, String newWeakness) {
-    plan.opponentInfo.updateOpponentWeakness(oldWeakness, newWeakness);
-    notifyListeners();
-  }
-
-  void deleteOpponentShot(String name) {
-    plan.opponentInfo.deleteOpponentShot(name);
-    notifyListeners();
-  }
-
-  void deleteOpponentStrength(String strength) {
-    plan.opponentInfo.deleteOpponentStrength(strength);
-    notifyListeners();
-  }
-
-  void deleteOpponentWeakness(String weakness) {
-    plan.opponentInfo.deleteOpponentWeakness(weakness);
-    notifyListeners();
+  String getDateString(BuildContext context) {
+    String time = '';
+    String date = '';
+    if (matchTime != null) {
+      time = matchTime!.format(context);
+    }
+    if (matchDate != null) {
+      date = _dateFormat.format(matchDate!);
+    }
+    return '$time $date';
   }
 }

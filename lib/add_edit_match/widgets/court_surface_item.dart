@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../matches/models/a_match.dart';
 import '../models/validation_match.dart';
 import '../../widgets/radio_button.dart';
 import '../../constants/constants.dart';
@@ -39,18 +40,28 @@ class CourtSurfaceItem extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).canvasColor,
       builder: (builder) {
-        return ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 300),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 32),
           child: Wrap(
             children: <Widget>[
-              const SizedBox(height: Dimensions.paddingOne),
               RadioButton(
-                label: 'Hard',
+                label: 'Hard Indoors',
                 valueType: newMatch.courtSurface,
-                value: CourtSurface.hard,
+                value: CourtSurface.hardIndoors,
                 function: () {
-                  if (newMatch.courtSurface != CourtSurface.hard) {
-                    newMatch.setCourtSurface(CourtSurface.hard);
+                  if (newMatch.courtSurface != CourtSurface.hardIndoors) {
+                    newMatch.setCourtSurface(CourtSurface.hardIndoors);
+                  }
+                  Navigator.pop(context);
+                },
+              ),
+              RadioButton(
+                label: 'Hard Outdoors',
+                valueType: newMatch.courtSurface,
+                value: CourtSurface.hardOutdoors,
+                function: () {
+                  if (newMatch.courtSurface != CourtSurface.hardOutdoors) {
+                    newMatch.setCourtSurface(CourtSurface.hardOutdoors);
                   }
                   Navigator.pop(context);
                 },

@@ -1,10 +1,8 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tennis_plan/match_detail/plan/models/plan.dart';
+import '../../matches/models/a_match.dart';
 import '../../matches/models/ranking.dart';
-
-import '../../constants/constants.dart';
 
 class ValidationMatch with ChangeNotifier {
   String id;
@@ -16,9 +14,6 @@ class ValidationMatch with ChangeNotifier {
   DateTime? matchDate;
   TimeOfDay? matchTime;
   CourtSurface? courtSurface;
-  CourtLocation? courtLocation;
-
-  Plan plan;
 
   String? opponentFirstNameError;
   String? opponentLastNameError;
@@ -40,8 +35,6 @@ class ValidationMatch with ChangeNotifier {
     this.matchDate,
     this.matchTime,
     this.courtSurface,
-    this.courtLocation,
-    required this.plan,
   });
 
   bool isValid() {
@@ -189,7 +182,13 @@ class ValidationMatch with ChangeNotifier {
 
   String get courtSurfaceString {
     if (courtSurface != null) {
-      return courtSurface!.name;
+      if (courtSurface == CourtSurface.hardIndoors) {
+        return 'hard indoors';
+      } else if (courtSurface == CourtSurface.hardOutdoors) {
+        return 'hard outdoors';
+      } else {
+        return courtSurface!.name;
+      }
     }
     if (courtSurfaceError != null) {
       return courtSurfaceError!;
@@ -197,24 +196,24 @@ class ValidationMatch with ChangeNotifier {
     return '';
   }
 
-  void setCourtLocation(dynamic location) {
-    courtLocation = location;
-    notifyListeners();
-  }
+  // void setCourtLocation(dynamic location) {
+  //   courtLocation = location;
+  //   notifyListeners();
+  // }
 
-  String get courtLocationString {
-    if (courtLocation != null) {
-      return courtLocation!.name;
-    }
-    if (courtLocationError != null) {
-      return courtLocationError!;
-    }
-    return '';
-  }
+  // String get courtLocationString {
+  //   if (courtLocation != null) {
+  //     return courtLocation!.name;
+  //   }
+  //   if (courtLocationError != null) {
+  //     return courtLocationError!;
+  //   }
+  //   return '';
+  // }
 
-  void setInvisibleCourtLocation(CourtLocation? location) {
-    courtLocation = location;
-  }
+  // void setInvisibleCourtLocation(CourtLocation? location) {
+  //   courtLocation = location;
+  // }
 
   void showErrors() {
     notifyListeners();

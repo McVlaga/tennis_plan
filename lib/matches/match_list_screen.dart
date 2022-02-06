@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/matches/models/a_match.dart';
 import 'widgets/match_list_item.dart';
 import '../widgets/ripple_list_item.dart';
 import '../constants/constants.dart';
@@ -15,7 +14,6 @@ class MatchListScreen extends StatefulWidget {
 
 class _MatchListScreenState extends State<MatchListScreen> {
   bool _firstInit = true;
-  var matches = <AMatch>[];
   final _searchController = TextEditingController();
 
   @override
@@ -37,7 +35,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    matches =
+    final matches =
         context.watch<Matches>().getMatchesWithQuery(_searchController.text);
     return Scaffold(
       body: Column(
@@ -71,68 +69,25 @@ class _MatchListScreenState extends State<MatchListScreen> {
               padding: const EdgeInsets.only(
                 left: Dimensions.paddingTwo,
                 right: Dimensions.paddingTwo,
-                top: Dimensions.paddingTwo,
+                top: Dimensions.paddingOne,
                 bottom: Dimensions.matchesListPaddingBottom,
               ),
               itemCount: matches.isEmpty ? 1 : matches.length + 1,
               itemBuilder: (_, index) {
                 if (index == 0) {
                   // return const FilterWidget();
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 }
                 index--;
 
-                return RippleListItem(
-                  child: MatchListItem(
-                    match: matches[index],
-                  ),
-                );
+                return ChangeNotifierProvider.value(
+                    value: matches[index],
+                    builder: (_, __) {
+                      return const RippleListItem(child: MatchListItem());
+                    });
               },
             ),
           ),
-          // Container(
-          //   height: 100,
-          //   width: double.infinity,
-          //   color: Theme.of(context).appBarTheme.backgroundColor,
-          //   child: Row(
-          //     children: [
-          //       Expanded(
-          //         child: TextField(
-          //           decoration: InputDecoration(
-          //             prefixIcon: Icon(Icons.search),
-          //             isDense: true,
-          //             filled: true,
-          //             fillColor: Colors.transparent,
-          //             border: InputBorder.none,
-          //             focusedBorder: InputBorder.none,
-          //             hintText: 'Search...',
-          //           ),
-          //         ),
-          //       ),
-          //       const SizedBox(width: 8),
-          //       ClipRRect(
-          //         borderRadius: const BorderRadius.all(
-          //           Radius.circular(Dimensions.borderRadius),
-          //         ),
-          //         child: Material(
-          //           color: Colors.transparent,
-          //           child: InkWell(
-          //             onTap: () {},
-          //             child: SizedBox(
-          //               height: double.infinity,
-          //               width: 70,
-          //               child: Icon(
-          //                 Icons.filter_list,
-          //                 color: Theme.of(context).colorScheme.onBackground,
-          //                 size: 30,
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );

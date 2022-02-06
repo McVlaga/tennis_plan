@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/matches/models/a_match.dart';
+import '../matches/models/a_match.dart';
 import '../constants/constants.dart';
 import 'plan/mental/add_edit_mental_goals_sreen.dart';
 import 'plan/opponent_info/add_edit_opponent_info._screen.dart';
