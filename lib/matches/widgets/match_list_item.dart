@@ -52,7 +52,7 @@ class MatchListItem extends StatelessWidget {
                     child: Row(
                       children: const [
                         Expanded(
-                          child: FlagAndNameWidget(),
+                          child: FlagAndNameWidget(fullName: false),
                         ),
                         SizedBox(width: 10),
                         Text(

@@ -4,7 +4,6 @@ import '../models/shots.dart';
 import '../../../constants/constants.dart';
 import 'add_edit_shot_dialog.dart';
 import '../models/shot.dart';
-import '../../../services/theme_manager.dart';
 
 class RippleShotWidget extends StatelessWidget {
   const RippleShotWidget({
@@ -39,11 +38,7 @@ class RippleShotWidget extends StatelessWidget {
       borderRadius:
           const BorderRadius.all(Radius.circular(Dimensions.borderRadius)),
       child: Material(
-        color: shot.score == 5
-            ? Theme.of(context).colorScheme.cardShotGoodBg
-            : shot.score == 3 || shot.score == 4
-                ? Theme.of(context).colorScheme.cardShotMediumBg
-                : Theme.of(context).colorScheme.cardShotBadBg,
+        color: shot.getShotColor(context),
         child: InkWell(
           onTap: () {
             if (shots != null) showAddEditShotDialog(context, shot);

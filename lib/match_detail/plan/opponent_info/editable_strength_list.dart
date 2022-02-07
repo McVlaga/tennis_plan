@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
+
 import '../models/strengths.dart';
 import '../ripple_strength_widget.dart';
 

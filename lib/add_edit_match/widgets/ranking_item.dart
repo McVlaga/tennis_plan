@@ -56,14 +56,12 @@ class RankingItem extends StatelessWidget {
             children: [
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  'Federation',
-                ),
+                child: Text('Federation'),
               ),
               TextField(
                 autofocus: true,
                 controller: fedController,
-                textCapitalization: TextCapitalization.sentences,
+                textCapitalization: TextCapitalization.characters,
                 onChanged: null,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -102,12 +100,9 @@ class RankingItem extends StatelessWidget {
                   TextButton(
                     child: const Text('SAVE'),
                     onPressed: () {
-                      if (fedController.text.isNotEmpty &&
-                          fedController.text.isNotEmpty) {
-                        newMatch.setOpponentRanking(
-                            fedController.text, posController.text);
-                        Navigator.of(context).pop();
-                      }
+                      newMatch.setOpponentRanking(
+                          fedController.text, posController.text);
+                      Navigator.of(context).pop();
                     },
                   ),
                 ],

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
-import '../matches/models/a_match.dart';
+import '../add_edit_match/add_edit_match_screen.dart';
+
 import '../constants/constants.dart';
+import '../matches/models/a_match.dart';
+import '../matches/models/matches.dart';
 import 'plan/mental/add_edit_mental_goals_sreen.dart';
 import 'plan/opponent_info/add_edit_opponent_info._screen.dart';
 import 'plan/other/add_edit_other_goals.dart';
-import 'plan/tactics/add_edit_tactical_goals_screen.dart';
-
-import '../matches/models/matches.dart';
 import 'plan/plan_screen.dart';
+import 'plan/tactics/add_edit_tactical_goals_screen.dart';
 import 'review/review_screen.dart';
 
 class MatchDetailTabBarScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
   bool firstInit = true;
 
   late AMatch match;
+  late Matches matches;
   late String matchId;
 
   @override
@@ -33,12 +35,46 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
     super.didChangeDependencies();
     if (firstInit) {
       matchId = ModalRoute.of(context)!.settings.arguments as String;
-      match = Provider.of<Matches>(
-        context,
-        listen: false,
-      ).findById(matchId);
+      matches = Provider.of<Matches>(context, listen: false);
+      match = matches.findById(matchId);
       firstInit = false;
     }
+  }
+
+  void showDeleteDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Match VS ${match.opponentLastName}',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+          content: const Text("Are you sure you want to delete this match?"),
+          actions: [
+            TextButton(
+              child: const Text("CANCEL"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "DELETE",
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                matches.deleteMatch(matchId);
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -57,6 +93,21 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
               ],
             ),
             title: Text('VS ${match.opponentLastName}'),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    AddEditMatchScreen.routeName,
+                    arguments: match.id,
+                  );
+                },
+                icon: const Icon(Icons.edit),
+              ),
+              IconButton(
+                onPressed: showDeleteDialog,
+                icon: const Icon(Icons.delete),
+              ),
+            ],
           ),
           body: const TabBarView(
             children: [

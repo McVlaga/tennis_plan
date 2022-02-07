@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'models/shot.dart';
-import 'ripple_weakness_widget.dart';
-import 'section_header_widget.dart';
-import '../../matches/models/a_match.dart';
+
 import '../../constants/constants.dart';
-import 'ripple_strength_widget.dart';
-import 'opponent_info/ripple_shot_widget.dart';
+import '../../matches/models/a_match.dart';
 import '../../matches/widgets/flag_and_name_widget.dart';
 import '../../widgets/settings_section_widget.dart';
+import 'models/shot.dart';
+import 'opponent_info/ripple_shot_widget.dart';
+import 'ripple_strength_widget.dart';
+import 'ripple_weakness_widget.dart';
+import 'section_header_widget.dart';
 
 class PlanScreen extends StatelessWidget {
   const PlanScreen({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class PlanScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: const [
-                  Expanded(child: FlagAndNameWidget()),
+                  Expanded(child: FlagAndNameWidget(fullName: true)),
                   Text(
                     'Righty',
                     style: TextStyle(fontSize: 20),

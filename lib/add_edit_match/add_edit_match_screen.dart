@@ -25,14 +25,41 @@ class AddEditMatchScreen extends StatefulWidget {
 }
 
 class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
+  late AMatch match;
+  late String matchId;
   late ValidationMatch tempMatch;
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  bool firstInit = true;
+  bool editing = false;
 
   @override
-  void initState() {
-    super.initState();
-    tempMatch = ValidationMatch(id: DateTime.now().toString());
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (firstInit) {
+      var argument = ModalRoute.of(context)!.settings.arguments;
+      if (argument != null) {
+        editing = true;
+        matchId = argument as String;
+        match = Provider.of<Matches>(context, listen: false).findById(matchId);
+        tempMatch = ValidationMatch(
+          id: match.id,
+          opponentFirstName: match.opponentFirstName,
+          opponentLastName: match.opponentLastName,
+          opponentCountry: match.opponentCountry,
+          opponentRanking: match.opponentRanking,
+          isPractice: match.isPractice,
+          matchDate: match.matchDate,
+          matchTime: match.matchTime,
+          courtSurface: match.courtSurface,
+        );
+        firstNameController.text = match.opponentFirstName!;
+        lastNameController.text = match.opponentLastName!;
+      } else {
+        tempMatch = ValidationMatch(id: DateTime.now().toString());
+      }
+      firstInit = false;
+    }
   }
 
   void _saveMatch(BuildContext ctx, Matches matches) {
@@ -41,7 +68,11 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
     tempMatch.setOpponentLastName(
         lastNameController.text.isEmpty ? null : lastNameController.text);
     if (tempMatch.isValid()) {
-      matches.addMatch(AMatch.fromTemporaryMatch(tempMatch));
+      if (editing) {
+        match.updateMatch(tempMatch);
+      } else {
+        matches.addMatch(tempMatch);
+      }
       Navigator.of(ctx).pop();
     }
   }
@@ -52,7 +83,7 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
       value: tempMatch,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(Strings.addMatchDialogTitle),
+          title: Text(editing ? 'Edit match' : 'Add a match'),
           backgroundColor: Theme.of(context).colorScheme.secondaryVariant,
           foregroundColor: Theme.of(context).colorScheme.onSecondary,
         ),

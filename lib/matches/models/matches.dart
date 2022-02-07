@@ -1,5 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import '../../add_edit_match/models/validation_match.dart';
 import 'ranking.dart';
 
 import 'a_match.dart';
@@ -74,12 +75,17 @@ class Matches with ChangeNotifier {
     }
   }
 
-  void addMatch(AMatch newMatch) {
-    _matches.insert(0, newMatch);
+  void addMatch(ValidationMatch tempMatch) {
+    _matches.insert(0, AMatch.fromTemporaryMatch(tempMatch));
     notifyListeners();
   }
 
   AMatch findById(String id) {
     return _matches.firstWhere((match) => match.id == id);
+  }
+
+  void deleteMatch(String id) {
+    _matches.remove(_matches.firstWhere((match) => match.id == id));
+    notifyListeners();
   }
 }

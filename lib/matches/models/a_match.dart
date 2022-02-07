@@ -105,7 +105,27 @@ class AMatch with ChangeNotifier {
     notifyListeners();
   }
 
-  String getNameString() {
+  void updateMatch(ValidationMatch tempMatch) {
+    opponentFirstName = tempMatch.opponentFirstName!;
+    opponentLastName = tempMatch.opponentLastName!;
+    opponentCountry = tempMatch.opponentCountry;
+    opponentRanking = tempMatch.opponentRanking;
+    isPractice = tempMatch.isPractice;
+    matchDate = tempMatch.matchDate;
+    matchTime = tempMatch.matchTime;
+    courtSurface = tempMatch.courtSurface;
+    notifyListeners();
+  }
+
+  String getNameString(bool fullName) {
+    if (fullName) {
+      return getFullNameString();
+    } else {
+      return getShortNameString();
+    }
+  }
+
+  String getShortNameString() {
     return '${opponentFirstName?[0]}. $opponentLastName';
   }
 

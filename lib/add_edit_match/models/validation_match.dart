@@ -115,8 +115,12 @@ class ValidationMatch with ChangeNotifier {
   }
 
   void setOpponentRanking(String fed, String posString) {
-    int posInt = int.parse(posString);
-    opponentRanking = Ranking(federation: fed, position: posInt);
+    if (fed.isEmpty || posString.isEmpty) {
+      opponentRanking = null;
+    } else {
+      int posInt = int.parse(posString);
+      opponentRanking = Ranking(federation: fed, position: posInt);
+    }
     notifyListeners();
   }
 

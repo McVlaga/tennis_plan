@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../matches/models/a_match.dart';
-import '../models/validation_match.dart';
-import '../../widgets/radio_button.dart';
+
 import '../../constants/constants.dart';
+import '../../matches/models/a_match.dart';
+import '../../widgets/radio_button.dart';
 import '../../widgets/settings_item_widget.dart';
+import '../models/validation_match.dart';
 
 class CourtSurfaceItem extends StatelessWidget {
   const CourtSurfaceItem({Key? key}) : super(key: key);

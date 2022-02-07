@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/a_match.dart';
 
 import '../../constants/constants.dart';
+import '../models/a_match.dart';
 
 class FlagAndNameWidget extends StatelessWidget {
   const FlagAndNameWidget({
     Key? key,
+    required this.fullName,
   }) : super(key: key);
+
+  final bool fullName;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,7 @@ class FlagAndNameWidget extends StatelessWidget {
             height: Dimensions.matchItemIconHeight,
             width: Dimensions.matchItemIconHeight,
             child: CircleAvatar(
+              key: ValueKey(match.id),
               radius: Dimensions.circleAvatarRadius,
               foregroundImage: AssetImage(
                 match.getFlagImagePath(),
@@ -37,7 +41,7 @@ class FlagAndNameWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                match.getFullNameString(),
+                match.getNameString(fullName),
                 overflow: TextOverflow.fade,
                 maxLines: 1,
                 softWrap: false,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'shot.dart';
 
 class Shots with ChangeNotifier {

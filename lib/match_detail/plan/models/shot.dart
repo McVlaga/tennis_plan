@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../services/theme_manager.dart';
 
 class Shot with ChangeNotifier {
   Shot({
@@ -15,5 +16,15 @@ class Shot with ChangeNotifier {
 
   void setScore(int score) {
     this.score = score;
+  }
+
+  Color getShotColor(BuildContext context) {
+    if (score == 5) {
+      return Theme.of(context).colorScheme.cardShotGoodBg;
+    } else if (score == 3 || score == 4) {
+      return Theme.of(context).colorScheme.cardShotMediumBg;
+    } else {
+      return Theme.of(context).colorScheme.cardShotBadBg;
+    }
   }
 }

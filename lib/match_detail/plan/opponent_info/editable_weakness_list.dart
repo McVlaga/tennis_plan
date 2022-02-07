@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
-import '../models/weaknesses.dart';
 
+import '../models/weaknesses.dart';
 import '../ripple_weakness_widget.dart';
 
 class EditableWeaknessList extends StatelessWidget {

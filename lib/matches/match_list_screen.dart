@@ -47,7 +47,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  color: Theme.of(context).colorScheme.surface,
+                  color: Theme.of(context).canvasColor,
                 ),
                 child: TextField(
                   controller: _searchController,

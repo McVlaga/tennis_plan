@@ -1,5 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+
 import '../../services/storage_manager.dart';
 
 class UserInfo with ChangeNotifier {
