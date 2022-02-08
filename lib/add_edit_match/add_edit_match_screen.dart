@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'widgets/lefty_check_box.dart';
 import 'widgets/ranking_item.dart';
 
 import '../constants/constants.dart';
@@ -103,14 +104,15 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                     LastNameItem(nameController: lastNameController),
                     const CountriesItem(),
                     const RankingItem(),
+                    const LeftyCheckBox(),
                   ],
                 ),
                 const SettingsSectionWidget(
                   title: 'MATCH',
                   children: [
-                    PracticeCheckBox(),
                     DateItem(),
                     TimeItem(),
+                    PracticeCheckBox(),
                   ],
                 ),
                 const SettingsSectionWidget(

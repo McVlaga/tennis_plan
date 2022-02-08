@@ -46,6 +46,7 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.surface,
           title: Text(
             'Match VS ${match.opponentLastName}',
             style: TextStyle(
@@ -92,7 +93,10 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                 Tab(text: 'REVIEW'),
               ],
             ),
-            title: Text('VS ${match.opponentLastName}'),
+            title: Text(
+              'VS ${match.opponentLastName}',
+              overflow: TextOverflow.fade,
+            ),
             actions: [
               IconButton(
                 onPressed: () {

@@ -27,6 +27,7 @@ class Matches with ChangeNotifier {
       opponentLastName: 'Nadal',
       opponentCountry: Country.parse('Spain'),
       opponentRanking: Ranking(federation: 'ATP', position: 6),
+      isOpponentLefty: true,
       isPractice: false,
       matchDate: DateTime.now(),
       matchTime: TimeOfDay.now(),

@@ -80,7 +80,10 @@ class SettingsFirstName extends StatelessWidget {
                   ),
                   const SizedBox(width: Dimensions.paddingTwo),
                   TextButton(
-                    child: const Text('SAVE'),
+                    child: const Text(
+                      'SAVE',
+                      style: TextStyle(color: Colors.green),
+                    ),
                     onPressed: () {
                       if (controller.text.isNotEmpty) {
                         userInfo.setFirstName(controller.text);

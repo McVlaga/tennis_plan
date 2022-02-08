@@ -86,7 +86,8 @@ class SettingsLastName extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: const Text('SAVE'),
+                    child: const Text('SAVE',
+                        style: TextStyle(color: Colors.green)),
                   ),
                 ],
               ),

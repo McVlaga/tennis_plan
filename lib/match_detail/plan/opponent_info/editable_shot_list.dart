@@ -23,7 +23,7 @@ class EditableShotList extends StatelessWidget {
         horizontal: Dimensions.paddingTwo,
         vertical: Dimensions.paddingOne,
       ),
-      spacing: 8.0, // gap between adjacent chips
+      spacing: 8.0,
       runSpacing: 8.0,
       onReorder: (int from, int to) {
         tempShots.reorderOpponentShot(

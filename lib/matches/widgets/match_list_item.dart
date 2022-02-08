@@ -31,6 +31,18 @@ class MatchListItem extends StatelessWidget {
             const WinLoseBadgeWidget(),
             Positioned(
               height: 20,
+              left: 16,
+              top: 10,
+              child: Text(
+                match.isOpponentLefty! ? 'LEFTY' : '',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Theme.of(context).textTheme.headline6?.color,
+                ),
+              ),
+            ),
+            Positioned(
+              height: 20,
               right: 16,
               bottom: 20,
               child: Text(

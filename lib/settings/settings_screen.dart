@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
+import '../constants/constants.dart';
+import '../widgets/settings_section_widget.dart';
 import 'widgets/settings_first_name.dart';
 import 'widgets/settings_last_name.dart';
 import 'widgets/theme_item.dart';
-import '../constants/constants.dart';
-import '../widgets/settings_section_widget.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);

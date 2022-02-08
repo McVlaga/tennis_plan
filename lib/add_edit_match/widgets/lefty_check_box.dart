@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import '../../constants/constants.dart';
 import '../models/validation_match.dart';
 
-class PracticeCheckBox extends StatelessWidget {
-  const PracticeCheckBox({Key? key}) : super(key: key);
+class LeftyCheckBox extends StatelessWidget {
+  const LeftyCheckBox({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,10 @@ class PracticeCheckBox extends StatelessWidget {
           left: Dimensions.paddingTwo,
           right: Dimensions.paddingTwo,
         ),
-        title: const Text("Practice"),
-        value: newMatch.isPractice!,
+        title: const Text("Lefty"),
+        value: newMatch.isOpponentLefty!,
         onChanged: (newValue) {
-          newMatch.setIsPractice(newValue);
+          newMatch.setIsOpponentLefty(newValue);
         }, //  <-- leading Checkbox
       ),
     );

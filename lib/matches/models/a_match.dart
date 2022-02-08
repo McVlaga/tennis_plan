@@ -19,6 +19,7 @@ class AMatch with ChangeNotifier {
   String? opponentLastName;
   Country? opponentCountry;
   Ranking? opponentRanking;
+  bool? isOpponentLefty;
   bool? isPractice;
   DateTime? matchDate;
   TimeOfDay? matchTime;
@@ -35,6 +36,7 @@ class AMatch with ChangeNotifier {
     this.opponentLastName,
     this.opponentCountry,
     this.opponentRanking,
+    this.isOpponentLefty = false,
     this.isPractice = false,
     this.matchDate,
     this.matchTime,
@@ -48,6 +50,7 @@ class AMatch with ChangeNotifier {
     opponentLastName = tempMatch.opponentLastName;
     opponentCountry = tempMatch.opponentCountry;
     opponentRanking = tempMatch.opponentRanking;
+    isOpponentLefty = tempMatch.isOpponentLefty;
     isPractice = tempMatch.isPractice;
     matchDate = tempMatch.matchDate;
     matchTime = tempMatch.matchTime;
@@ -77,6 +80,11 @@ class AMatch with ChangeNotifier {
 
   void setOpponentCountry(Country country) {
     opponentCountry = country;
+    notifyListeners();
+  }
+
+  void setIsOpponentLefty(bool lefty) {
+    isOpponentLefty = lefty;
     notifyListeners();
   }
 
@@ -110,6 +118,7 @@ class AMatch with ChangeNotifier {
     opponentLastName = tempMatch.opponentLastName!;
     opponentCountry = tempMatch.opponentCountry;
     opponentRanking = tempMatch.opponentRanking;
+    isOpponentLefty = tempMatch.isOpponentLefty;
     isPractice = tempMatch.isPractice;
     matchDate = tempMatch.matchDate;
     matchTime = tempMatch.matchTime;

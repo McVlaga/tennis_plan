@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/services/theme_manager.dart';
 
 import '../../constants/constants.dart';
 import '../../matches/models/a_match.dart';
@@ -16,6 +17,8 @@ class PlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkMode = Theme.of(context).brightness == Brightness.dark;
+    final courtWidth = (MediaQuery.of(context).size.width - 144) / 2;
     AMatch match = context.watch<AMatch>();
     List<Shot> shots = match.opponentShots.shots;
     List<String> strengths = match.opponentStrengths.strengths;
@@ -35,11 +38,11 @@ class PlanScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
-                children: const [
-                  Expanded(child: FlagAndNameWidget(fullName: true)),
+                children: [
+                  const Expanded(child: FlagAndNameWidget(fullName: true)),
                   Text(
-                    'Righty',
-                    style: TextStyle(fontSize: 20),
+                    match.isOpponentLefty! ? 'Lefty' : 'Righty',
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ],
               ),
@@ -70,7 +73,7 @@ class PlanScreen extends StatelessWidget {
             const SizedBox(height: 8),
           ],
         ),
-        const SizedBox(height: 16),
+        if (strengths.isNotEmpty) const SizedBox(height: 16),
         if (strengths.isNotEmpty)
           SettingsSectionWidget(
             title: '',
@@ -102,7 +105,7 @@ class PlanScreen extends StatelessWidget {
               ),
             ],
           ),
-        const SizedBox(height: 16),
+        if (weaknesses.isNotEmpty) const SizedBox(height: 16),
         if (weaknesses.isNotEmpty)
           SettingsSectionWidget(
             title: '',
@@ -134,6 +137,164 @@ class PlanScreen extends StatelessWidget {
               ),
             ],
           ),
+        const Padding(
+          padding: EdgeInsets.only(
+            top: Dimensions.paddingFour,
+            bottom: Dimensions.paddingTwo,
+          ),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'TACTICS',
+              style: TextStyle(
+                fontSize: Fonts.addMatchDialogMatchFontSize,
+              ),
+            ),
+          ),
+        ),
+        SettingsSectionWidget(
+          title: '',
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Image.asset(
+                      darkMode
+                          ? 'assets/images/court_on_black.png'
+                          : 'assets/images/court_on_white.png',
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Plan A',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.green,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                              'Play to the opponent\'s backhand and never play to his forehand'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        SettingsSectionWidget(
+          title: '',
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Image.asset(
+                      darkMode
+                          ? 'assets/images/court_on_black.png'
+                          : 'assets/images/court_on_white.png',
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Plan B',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                              'Play to the opponent\'s backhand and never play to his forehand'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        SettingsSectionWidget(
+          title: '',
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Image.asset(
+                      darkMode
+                          ? 'assets/images/court_on_black.png'
+                          : 'assets/images/court_on_white.png',
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Plan C',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                              'Play to the opponent\'s backhand and never play to his forehand'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        SettingsSectionWidget(
+          title: '',
+          children: [
+            const SizedBox(height: 8),
+            const SectionHeaderWidget(
+              title: 'Goals',
+              icon: Icons.next_plan,
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
         const SizedBox(height: 110),
       ],
     );

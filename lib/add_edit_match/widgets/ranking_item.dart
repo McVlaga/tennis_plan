@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/validation_match.dart';
+
 import '../../constants/constants.dart';
 import '../../widgets/settings_item_widget.dart';
+import '../models/validation_match.dart';
 
 class RankingItem extends StatelessWidget {
   const RankingItem({Key? key}) : super(key: key);
@@ -98,7 +99,10 @@ class RankingItem extends StatelessWidget {
                   ),
                   const SizedBox(width: Dimensions.paddingTwo),
                   TextButton(
-                    child: const Text('SAVE'),
+                    child: const Text(
+                      'SAVE',
+                      style: TextStyle(color: Colors.green),
+                    ),
                     onPressed: () {
                       newMatch.setOpponentRanking(
                           fedController.text, posController.text);

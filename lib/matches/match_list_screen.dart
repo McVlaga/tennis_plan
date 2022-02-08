@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'widgets/match_list_item.dart';
-import '../widgets/ripple_list_item.dart';
+
 import '../constants/constants.dart';
+import '../widgets/ripple_list_item.dart';
 import 'models/matches.dart';
+import 'widgets/match_list_item.dart';
 
 class MatchListScreen extends StatefulWidget {
   const MatchListScreen({Key? key}) : super(key: key);

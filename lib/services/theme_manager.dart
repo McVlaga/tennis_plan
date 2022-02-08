@@ -166,6 +166,10 @@ extension ColorSchemeExtension on ColorScheme {
   Color get cardShotBadBg => brightness == Brightness.light
       ? const Color(0xffFFEBEE)
       : const Color(0xFF292e40);
+
+  Color get contentBgColor => brightness == Brightness.light
+      ? const Color(0xffF8F8F8)
+      : const Color(0xFF292e40);
 }
 
 enum ThemeType { dark, light }
