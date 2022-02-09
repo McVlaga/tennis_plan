@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'match_detail/plan/tactics/add_edit_plan_screen.dart';
 
 import 'add_edit_match/add_edit_match_screen.dart';
 import 'bottom_tab_bar_screen.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
               const AddEditMentalGoalsScreen(),
           AddEditOtherGoalsScreen.routeName: (context) =>
               const AddEditOtherGoalsScreen(),
+          AddEditPlanScreen.routeName: (context) => const AddEditPlanScreen(),
         },
       );
     });

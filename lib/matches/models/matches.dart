@@ -1,9 +1,9 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import '../../add_edit_match/models/validation_match.dart';
-import 'ranking.dart';
 
+import '../../add_edit_match/models/validation_match.dart';
 import 'a_match.dart';
+import 'ranking.dart';
 
 class Matches with ChangeNotifier {
   Matches();

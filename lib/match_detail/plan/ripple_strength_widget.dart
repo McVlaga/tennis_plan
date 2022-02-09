@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
+import '../../constants/constants.dart';
 import 'models/strengths.dart';
 import 'opponent_info/add_edit_strength_dialog.dart';
-import '../../constants/constants.dart';
 
 class RippleStrengthWidget extends StatelessWidget {
   const RippleStrengthWidget({

@@ -1,11 +1,12 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../../add_edit_match/models/validation_match.dart';
 import '../../match_detail/plan/models/shots.dart';
 import '../../match_detail/plan/models/strengths.dart';
 import '../../match_detail/plan/models/weaknesses.dart';
 import 'ranking.dart';
-import '../../add_edit_match/models/validation_match.dart';
 
 enum MatchState { win, lose, notPlayed }
 

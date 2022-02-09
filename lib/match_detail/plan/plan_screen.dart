@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/services/theme_manager.dart';
+import '../../services/theme_manager.dart';
 
 import '../../constants/constants.dart';
 import '../../matches/models/a_match.dart';

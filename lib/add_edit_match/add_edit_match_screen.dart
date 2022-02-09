@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'widgets/lefty_check_box.dart';
-import 'widgets/ranking_item.dart';
 
 import '../constants/constants.dart';
 import '../matches/models/a_match.dart';
@@ -13,7 +11,9 @@ import 'widgets/court_surface_item.dart';
 import 'widgets/date_item.dart';
 import 'widgets/first_name_item.dart';
 import 'widgets/last_name_item.dart';
+import 'widgets/lefty_check_box.dart';
 import 'widgets/practice_check_box.dart';
+import 'widgets/ranking_item.dart';
 import 'widgets/time_item.dart';
 
 class AddEditMatchScreen extends StatefulWidget {

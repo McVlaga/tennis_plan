@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:reorderables/reorderables.dart';
-import '../models/shot.dart';
-import '../models/shots.dart';
-import '../models/strengths.dart';
-import '../models/weaknesses.dart';
-import 'add_edit_strength_dialog.dart';
-import 'add_header_list_button.dart';
-import 'editable_shot_list.dart';
-import 'editable_strength_list.dart';
-import 'opponent_info_instruction_widget.dart';
-import '../ripple_weakness_widget.dart';
+
 import '../../../constants/constants.dart';
-import 'add_edit_shot_dialog.dart';
-import '../ripple_strength_widget.dart';
-import 'add_edit_weakness_dialog.dart';
-import 'editable_weakness_list.dart';
-import 'ripple_shot_widget.dart';
 import '../../../matches/models/a_match.dart';
 import '../../../matches/models/matches.dart';
 import '../../../widgets/settings_section_widget.dart';
+import '../models/shots.dart';
+import '../models/strengths.dart';
+import '../models/weaknesses.dart';
+import 'add_edit_shot_dialog.dart';
+import 'add_edit_strength_dialog.dart';
+import 'add_edit_weakness_dialog.dart';
+import 'add_header_list_button.dart';
+import 'editable_shot_list.dart';
+import 'editable_strength_list.dart';
+import 'editable_weakness_list.dart';
+import 'opponent_info_instruction_widget.dart';
 
 class AddEditOpponentInfoScreen extends StatefulWidget {
   const AddEditOpponentInfoScreen({Key? key}) : super(key: key);

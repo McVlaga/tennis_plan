@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../services/theme_manager.dart';
 
 class Shot with ChangeNotifier {
