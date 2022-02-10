@@ -1,6 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../services/theme_manager.dart';
+import 'package:tennis_plan/match_detail/plan/models/tactical_plan.dart';
 
 import '../../constants/constants.dart';
 import '../../matches/models/a_match.dart';
@@ -18,11 +20,15 @@ class PlanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = Theme.of(context).brightness == Brightness.dark;
-    final courtWidth = (MediaQuery.of(context).size.width - 144) / 2;
     AMatch match = context.watch<AMatch>();
     List<Shot> shots = match.opponentShots.shots;
     List<String> strengths = match.opponentStrengths.strengths;
     List<String> weaknesses = match.opponentWeaknesses.weaknesses;
+    List<TacticalPlan> plans = match.tacticalPlans.tacticalPlans;
+    Uint8List? imageBytes;
+    if (plans.isNotEmpty) {
+      imageBytes = plans[0].imageBytes;
+    }
     return ListView(
       padding: const EdgeInsets.only(
         left: Dimensions.paddingTwo,
@@ -162,11 +168,13 @@ class PlanScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Image.asset(
-                      darkMode
-                          ? 'assets/images/court_on_black.png'
-                          : 'assets/images/court_on_white.png',
-                    ),
+                    child: imageBytes != null
+                        ? Image.memory(Uint8List.view(imageBytes.buffer))
+                        : Image.asset(
+                            darkMode
+                                ? 'assets/images/court_on_black.png'
+                                : 'assets/images/court_on_white.png',
+                          ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(

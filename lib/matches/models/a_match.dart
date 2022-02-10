@@ -1,6 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tennis_plan/match_detail/plan/models/tactical_plans.dart';
 
 import '../../add_edit_match/models/validation_match.dart';
 import '../../match_detail/plan/models/shots.dart';
@@ -30,6 +31,8 @@ class AMatch with ChangeNotifier {
   Shots opponentShots = Shots([]);
   Strengths opponentStrengths = Strengths([]);
   Weaknesses opponentWeaknesses = Weaknesses([]);
+
+  TacticalPlans tacticalPlans = TacticalPlans([]);
 
   AMatch({
     required this.id,
@@ -66,6 +69,11 @@ class AMatch with ChangeNotifier {
     opponentShots = newOpponentShots;
     opponentStrengths = newOpponentStrengths;
     opponentWeaknesses = newOpponentWeaknesses;
+    notifyListeners();
+  }
+
+  void setTacticalInfo(TacticalPlans newTacticalPlans) {
+    tacticalPlans = newTacticalPlans;
     notifyListeners();
   }
 
