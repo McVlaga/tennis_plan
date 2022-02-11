@@ -25,10 +25,6 @@ class PlanScreen extends StatelessWidget {
     List<String> strengths = match.opponentStrengths.strengths;
     List<String> weaknesses = match.opponentWeaknesses.weaknesses;
     List<TacticalPlan> plans = match.tacticalPlans.tacticalPlans;
-    Uint8List? imageBytes;
-    if (plans.isNotEmpty) {
-      imageBytes = plans[0].imageBytes;
-    }
     return ListView(
       padding: const EdgeInsets.only(
         left: Dimensions.paddingTwo,
@@ -143,166 +139,87 @@ class PlanScreen extends StatelessWidget {
               ),
             ],
           ),
-        const Padding(
-          padding: EdgeInsets.only(
-            top: Dimensions.paddingFour,
-            bottom: Dimensions.paddingTwo,
-          ),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'TACTICS',
-              style: TextStyle(
-                fontSize: Fonts.addMatchDialogMatchFontSize,
+        if (plans.isNotEmpty)
+          const Padding(
+            padding: EdgeInsets.only(
+              top: Dimensions.paddingFour,
+              bottom: Dimensions.paddingTwo,
+            ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'TACTICS',
+                style: TextStyle(
+                  fontSize: Fonts.addMatchDialogMatchFontSize,
+                ),
               ),
             ),
           ),
-        ),
-        SettingsSectionWidget(
-          title: '',
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: imageBytes != null
-                        ? Image.memory(Uint8List.view(imageBytes.buffer))
-                        : Image.asset(
-                            darkMode
-                                ? 'assets/images/court_on_black.png'
-                                : 'assets/images/court_on_white.png',
-                          ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Column(
+        if (plans.isNotEmpty)
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: plans.length,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (_, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: SettingsSectionWidget(
+                  title: '',
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Plan A',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.green,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Image.memory(
+                              Uint8List.view(plans[index].imageBytes!.buffer),
                             ),
                           ),
-                          SizedBox(height: 8),
-                          Text(
-                              'Play to the opponent\'s backhand and never play to his forehand'),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    plans[index].title,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    plans[index].description,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+                  ],
+                ),
+              );
+            },
+          ),
         const SizedBox(height: 16),
-        SettingsSectionWidget(
-          title: '',
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Image.asset(
-                      darkMode
-                          ? 'assets/images/court_on_black.png'
-                          : 'assets/images/court_on_white.png',
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Plan B',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.blue,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                              'Play to the opponent\'s backhand and never play to his forehand'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        SettingsSectionWidget(
-          title: '',
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Image.asset(
-                      darkMode
-                          ? 'assets/images/court_on_black.png'
-                          : 'assets/images/court_on_white.png',
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Plan C',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.orange,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                              'Play to the opponent\'s backhand and never play to his forehand'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        SettingsSectionWidget(
-          title: '',
-          children: [
-            const SizedBox(height: 8),
-            const SectionHeaderWidget(
-              title: 'Goals',
-              icon: Icons.next_plan,
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
+        // SettingsSectionWidget(
+        //   title: '',
+        //   children: [
+        //     const SizedBox(height: 8),
+        //     const SectionHeaderWidget(
+        //       title: 'Goals',
+        //       icon: Icons.next_plan,
+        //     ),
+        //     const SizedBox(height: 8),
+        //   ],
+        // ),
         const SizedBox(height: 110),
       ],
     );

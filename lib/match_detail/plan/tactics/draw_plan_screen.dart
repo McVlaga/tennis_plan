@@ -10,7 +10,7 @@ import 'package:tennis_plan/constants/constants.dart';
 import 'package:tennis_plan/match_detail/plan/models/tactical_plans.dart';
 import 'package:tennis_plan/match_detail/plan/tactics/court_painter.dart';
 import 'package:tennis_plan/match_detail/plan/tactics/drawing.dart';
-import 'package:tennis_plan/match_detail/plan/tactics/drawn_line.dart';
+import 'package:tennis_plan/match_detail/plan/tactics/canvas_path.dart';
 import 'package:tennis_plan/match_detail/plan/tactics/painter.dart';
 import 'package:tennis_plan/matches/models/a_match.dart';
 import 'package:tennis_plan/matches/models/matches.dart';
@@ -29,16 +29,17 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
   late AMatch match;
   late TacticalPlans tempPlans;
 
-  GlobalKey _globalKey = new GlobalKey();
-  Drawing _drawing = Drawing(paths: []);
-  CanvasPath? _newPath = CanvasPath([], Colors.green, 15);
-  Color selectedColor = Colors.green;
-  double selectedWidth = 15.0;
+  final GlobalKey _globalKey = GlobalKey();
+  final Drawing _drawing = Drawing(paths: []);
+  CanvasPath? _newPath;
+  Paint _currentPaintSettings = Paint()
+    ..strokeWidth = 15
+    ..color = Colors.orange
+    ..strokeCap = StrokeCap.round
+    ..style = PaintingStyle.stroke;
 
-  StreamController<Drawing> linesStreamController =
+  final StreamController<Drawing> _drawingStreamController =
       StreamController<Drawing>.broadcast();
-  StreamController<CanvasPath?> currentLineStreamController =
-      StreamController<CanvasPath?>.broadcast();
 
   late double paddingTop;
   late double canvasHeight;
@@ -49,6 +50,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (firstInit) {
+      _newPath = CanvasPath([], _currentPaintSettings);
       initCanvasSizes();
       String matchId = ModalRoute.of(context)!.settings.arguments as String;
       match = Provider.of<Matches>(
@@ -78,6 +80,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
           await image.toByteData(format: ui.ImageByteFormat.png);
       Uint8List? pngBytes = byteData?.buffer.asUint8List();
       tempPlans.addPlan('Plan A', 'Description', pngBytes);
+      match.setTacticalPlans(tempPlans);
       var saved = await ImageGallerySaver.saveImage(
         pngBytes!,
         quality: 100,
@@ -129,7 +132,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
                 child: Stack(
                   children: [
                     buildAllPaths(context),
-                    buildCurrentPath(context),
+                    //buildCurrentPath(context),
                   ],
                 ),
               ),
@@ -174,82 +177,71 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
     );
   }
 
-  GestureDetector buildCurrentPath(BuildContext context) {
+  GestureDetector buildAllPaths(BuildContext context) {
     return GestureDetector(
       onPanStart: onPanStart,
       onPanUpdate: onPanUpdate,
-      onPanEnd: onPanEnd,
       child: RepaintBoundary(
+        key: _globalKey,
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           alignment: Alignment.topLeft,
           color: Colors.transparent,
-          child: StreamBuilder<CanvasPath?>(
-            stream: currentLineStreamController.stream,
-            builder: (context, snapshot) {
-              return CustomPaint(
-                isComplex: true,
-                willChange: true,
-                painter: Painter(lines: [_newPath]),
-              );
-            },
+          child: Stack(
+            children: [
+              CustomPaint(painter: CourtPainter(context)),
+              StreamBuilder<Drawing>(
+                stream: _drawingStreamController.stream,
+                builder: (context, snapshot) {
+                  return CustomPaint(
+                    painter: Painter(drawing: _drawing),
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  RepaintBoundary buildAllPaths(BuildContext context) {
-    return RepaintBoundary(
-      key: _globalKey,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        alignment: Alignment.topLeft,
-        child: Stack(
-          children: [
-            CustomPaint(painter: CourtPainter(context)),
-            StreamBuilder<Drawing>(
-              stream: linesStreamController.stream,
-              builder: (context, snapshot) {
-                return CustomPaint(
-                  painter: Painter(lines: _drawing.paths),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+  onPanStart(DragStartDetails det) {
+    Offset point = det.localPosition;
+    _newPath = CanvasPath([point], _paintFrom(_currentPaintSettings));
+    _newPath!.movePathTo(point.dx, point.dy);
+    _drawing.paths.add(_newPath);
+    _drawingStreamController.add(_drawing);
   }
 
-  onPanStart(DragStartDetails details) {
-    Offset point = details.localPosition;
-    _newPath = CanvasPath([point], selectedColor, selectedWidth);
+  onPanUpdate(DragUpdateDetails det) {
+    Offset point = det.localPosition;
+    _newPath!.makeLineTo(point.dx, point.dy);
+    _newPath!.points.add(point);
+    _drawingStreamController.add(_drawing);
   }
 
-  onPanUpdate(DragUpdateDetails details) {
-    Offset point = details.localPosition;
-    List<Offset> path = List.from(_newPath!.points)..add(point);
-    _newPath = CanvasPath(path, selectedColor, selectedWidth);
-    currentLineStreamController.add(_newPath);
-  }
-
-  onPanEnd(DragEndDetails details) {
-    _drawing.paths = List.from(_drawing.paths)..add(_newPath);
-    linesStreamController.add(_drawing);
+  Paint _paintFrom(Paint paint) {
+    return Paint()
+      ..color = paint.color
+      ..strokeWidth = paint.strokeWidth
+      ..blendMode = paint.blendMode
+      ..strokeCap = paint.strokeCap
+      ..shader = paint.shader
+      ..style = paint.style;
   }
 
   Row buildToolbar() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const SizedBox(width: 16),
         buildClearButton(),
         buildUndoButton(),
         buildStrokeSlider(),
         buildColorButton(Colors.blue),
         buildEraserButton(),
+        const SizedBox(width: 16),
       ],
     );
   }
@@ -257,19 +249,19 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
   SliderTheme buildStrokeSlider() {
     return SliderTheme(
       data: SliderThemeData(
-        thumbShape:
-            RoundSliderThumbShape(enabledThumbRadius: selectedWidth / 2),
+        thumbShape: RoundSliderThumbShape(
+            enabledThumbRadius: _currentPaintSettings.strokeWidth / 2),
       ),
-      child: SizedBox(
-        width: 150,
+      child: Expanded(
         child: Slider(
-          activeColor: selectedColor,
-          value: selectedWidth,
+          activeColor: _currentPaintSettings.color,
+          value: _currentPaintSettings.strokeWidth,
           min: 1,
           max: 30,
           onChanged: (value) {
             setState(() {
-              selectedWidth = value;
+              _currentPaintSettings = _currentPaintSettings
+                ..strokeWidth = value;
             });
           },
         ),
@@ -281,11 +273,11 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
     return IconButton(
       onPressed: () {
         setState(() {
-          selectedColor = color;
+          _currentPaintSettings = _currentPaintSettings..color = color;
         });
       },
       icon: CircleAvatar(
-        backgroundColor: selectedColor,
+        backgroundColor: _currentPaintSettings.color,
         child: Icon(
           Icons.color_lens,
           size: 20.0,
@@ -335,5 +327,11 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _drawingStreamController.close();
+    super.dispose();
   }
 }

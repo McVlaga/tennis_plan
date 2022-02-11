@@ -72,6 +72,11 @@ class AMatch with ChangeNotifier {
     notifyListeners();
   }
 
+  void setTacticalPlans(TacticalPlans newTacticalPlans) {
+    tacticalPlans = newTacticalPlans;
+    notifyListeners();
+  }
+
   void setTacticalInfo(TacticalPlans newTacticalPlans) {
     tacticalPlans = newTacticalPlans;
     notifyListeners();

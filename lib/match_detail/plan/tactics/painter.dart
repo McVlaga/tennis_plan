@@ -1,31 +1,28 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/match_detail/plan/tactics/drawn_line.dart';
+import 'package:tennis_plan/match_detail/plan/tactics/canvas_path.dart';
+import 'package:tennis_plan/match_detail/plan/tactics/drawing.dart';
 
 class Painter extends CustomPainter {
-  final List<CanvasPath?> lines;
+  final Drawing drawing;
 
-  Painter({required this.lines});
+  Painter({required this.drawing});
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..color = Colors.redAccent
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = 5.0;
+    final List<CanvasPath?> canvasPaths = drawing.paths;
 
-    for (int i = 0; i < lines.length; ++i) {
-      if (lines[i] == null) continue;
-      paint.color = lines[i]!.color;
-      paint.strokeWidth = lines[i]!.width;
-
-      // draw single point
-      if (lines[i]!.points.length == 1) {
-        canvas.drawLine(lines[i]!.points[0], lines[i]!.points[0], paint);
-      }
-
-      // draw line
-      for (int j = 0; j < lines[i]!.points.length - 1; ++j) {
-        canvas.drawLine(lines[i]!.points[j], lines[i]!.points[j + 1], paint);
+    if (canvasPaths.isNotEmpty) {
+      for (var canvasPath in canvasPaths) {
+        if (canvasPath!.points.isNotEmpty) {
+          if (canvasPath.points.length == 1) {
+            canvas.drawPoints(
+                PointMode.points, canvasPath.points, canvasPath.paint);
+          } else {
+            canvas.drawPath(canvasPath.path, canvasPath.paint);
+          }
+        }
       }
     }
   }
