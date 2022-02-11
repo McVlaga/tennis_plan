@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../../constants/constants.dart';
 import '../../matches/models/a_match.dart';
+import '../../settings/widgets/settings_item_widget.dart';
 import '../../widgets/radio_button.dart';
-import '../../widgets/settings_item_widget.dart';
 import '../models/validation_match.dart';
 
 class CourtSurfaceItem extends StatelessWidget {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/user_info.dart';
-import '../../widgets/settings_item_widget.dart';
+
 import '../../constants/constants.dart';
+import '../models/user_info.dart';
+import 'settings_item_widget.dart';
 
 class SettingsFirstName extends StatelessWidget {
   const SettingsFirstName({Key? key}) : super(key: key);

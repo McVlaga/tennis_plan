@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/constants.dart';
-import '../../widgets/settings_item_widget.dart';
+import '../../settings/widgets/settings_item_widget.dart';
 import '../models/validation_match.dart';
 
 class CountriesItem extends StatelessWidget {

@@ -6,14 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/match_detail/plan/models/tactical_plans.dart';
-import 'package:tennis_plan/match_detail/plan/tactics/court_painter.dart';
-import 'package:tennis_plan/match_detail/plan/tactics/drawing.dart';
-import 'package:tennis_plan/match_detail/plan/tactics/canvas_path.dart';
-import 'package:tennis_plan/match_detail/plan/tactics/painter.dart';
-import 'package:tennis_plan/matches/models/a_match.dart';
-import 'package:tennis_plan/matches/models/matches.dart';
+import '../tactics/models/tactical_plan.dart';
+import '../tactics/models/tactical_plans.dart';
+import '../../../constants/constants.dart';
+import 'court_painter.dart';
+import 'drawing.dart';
+import 'canvas_path.dart';
+import 'painter.dart';
+import '../../../matches/models/a_match.dart';
+import '../../../matches/models/matches.dart';
 
 class DrawPlanScreen extends StatefulWidget {
   const DrawPlanScreen({Key? key}) : super(key: key);
@@ -28,6 +29,8 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
   bool firstInit = true;
   late AMatch match;
   late TacticalPlans tempPlans;
+  late TacticalPlan tempPlan;
+  late bool editing;
 
   final GlobalKey _globalKey = GlobalKey();
   final Drawing _drawing = Drawing(paths: []);
@@ -44,6 +47,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
   late double paddingTop;
   late double canvasHeight;
   late double canvasWidth;
+  late double courtHeight;
   static const courtAspectRatio = 1.2;
 
   @override
@@ -52,22 +56,27 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
     if (firstInit) {
       _newPath = CanvasPath([], _currentPaintSettings);
       initCanvasSizes();
-      String matchId = ModalRoute.of(context)!.settings.arguments as String;
+      Map<String, String?> arguments =
+          ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+      String matchId = arguments['matchId'] as String;
       match = Provider.of<Matches>(
         context,
         listen: false,
       ).findById(matchId);
+      String planTitle = arguments['planTitle'] as String;
+      tempPlan = tempPlans.findByTitle(planTitle);
       tempPlans = match.tacticalPlans;
       firstInit = false;
     }
   }
 
   void initCanvasSizes() {
-    final deviceHeight = MediaQuery.of(context).size.height;
-    paddingTop = deviceHeight / 10;
+    final deviceHeight =
+        MediaQuery.of(context).size.height - AppBar().preferredSize.height;
     canvasHeight = deviceHeight - deviceHeight / 3;
+    paddingTop = canvasHeight / 7;
 
-    final courtHeight = deviceHeight - deviceHeight / 3 - paddingTop * 2;
+    courtHeight = deviceHeight - deviceHeight / 3 - paddingTop * 2;
     canvasWidth = courtHeight / courtAspectRatio;
   }
 
@@ -118,8 +127,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
         backgroundColor: Colors.blue,
         foregroundColor: Theme.of(context).colorScheme.onSecondary,
       ),
-      body: Container(
-        width: double.infinity,
+      body: Padding(
         padding: const EdgeInsets.only(top: 16),
         child: Column(
           children: [
@@ -129,12 +137,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
                 width: canvasWidth,
                 height: canvasHeight,
                 color: Theme.of(context).colorScheme.surface,
-                child: Stack(
-                  children: [
-                    buildAllPaths(context),
-                    //buildCurrentPath(context),
-                  ],
-                ),
+                child: buildAllPaths(context),
               ),
             ),
             const SizedBox(height: 8),
@@ -184,13 +187,14 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
       child: RepaintBoundary(
         key: _globalKey,
         child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: canvasWidth,
+          height: canvasHeight,
           alignment: Alignment.topLeft,
           color: Colors.transparent,
           child: Stack(
             children: [
-              CustomPaint(painter: CourtPainter(context)),
+              CustomPaint(
+                  painter: CourtPainter(context, courtHeight, paddingTop)),
               StreamBuilder<Drawing>(
                 stream: _drawingStreamController.stream,
                 builder: (context, snapshot) {

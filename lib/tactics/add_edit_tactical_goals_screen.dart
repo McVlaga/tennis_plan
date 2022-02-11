@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/matches/models/a_match.dart';
-import 'package:tennis_plan/matches/models/matches.dart';
+import 'package:tennis_plan/widgets/section_title_widget.dart';
+import '../court_drawing/draw_plan_screen.dart';
+import 'dialogs/add_edit_plan_info_dialog.dart';
+import 'models/tactical_plans.dart';
+import 'widgets/editable_plans_list_widget.dart';
+import '../../../matches/models/a_match.dart';
+import '../../../matches/models/matches.dart';
 import '../../../constants/constants.dart';
 import '../opponent_info/add_header_list_button.dart';
-import 'draw_plan_screen.dart';
-import '../../../widgets/settings_section_widget.dart';
+import '../../../settings/widgets/settings_section_widget.dart';
 
 class AddEditTacticalGoalsScreen extends StatefulWidget {
   const AddEditTacticalGoalsScreen({Key? key}) : super(key: key);
@@ -21,6 +25,7 @@ class _AddEditTacticalGoalsScreenState
   bool firstInit = true;
   late AMatch match;
   late String matchId;
+  late TacticalPlans tempPlans;
 
   @override
   void didChangeDependencies() {
@@ -28,6 +33,7 @@ class _AddEditTacticalGoalsScreenState
     if (firstInit) {
       matchId = ModalRoute.of(context)!.settings.arguments as String;
       match = Provider.of<Matches>(context, listen: false).findById(matchId);
+      tempPlans = TacticalPlans(match.tacticalPlans.plans);
       firstInit = false;
     }
   }
@@ -49,28 +55,17 @@ class _AddEditTacticalGoalsScreenState
               bottom: 80,
             ),
             children: [
-              SettingsSectionWidget(
-                title: 'PLANS',
-                children: [
-                  AddHeaderListButton(
-                    title: 'Add a plan',
-                    showDialog: () {
-                      Navigator.of(context).pushNamed(
-                        DrawPlanScreen.routeName,
-                        arguments: matchId,
-                      );
-                    },
-                  ),
-                ],
+              const SectionTitleWidget(title: 'PLANS'),
+              ChangeNotifierProvider<TacticalPlans>.value(
+                value: tempPlans,
+                builder: (_, __) {
+                  return const EditablePlansListWidget();
+                },
               ),
-              SettingsSectionWidget(
-                title: 'GOALS',
-                children: [
-                  AddHeaderListButton(
-                    title: 'Add a goal',
-                    showDialog: () {},
-                  ),
-                ],
+              const SectionTitleWidget(title: 'GOALS'),
+              AddHeaderListButton(
+                title: 'Add a goal',
+                showDialog: () {},
               ),
             ],
           ),

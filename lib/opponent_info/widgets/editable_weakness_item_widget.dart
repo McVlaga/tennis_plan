@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import '../dialogs/add_edit_weakness_dialog.dart';
 
-import '../../constants/constants.dart';
-import 'models/strengths.dart';
-import 'opponent_info/add_edit_strength_dialog.dart';
+import '../../../constants/constants.dart';
+import '../models/weaknesses.dart';
 
-class RippleStrengthWidget extends StatelessWidget {
-  const RippleStrengthWidget({
+class EditableWeaknessItemWidget extends StatelessWidget {
+  const EditableWeaknessItemWidget({
     Key? key,
-    required this.strengths,
-    required this.strength,
+    required this.weaknesses,
+    required this.weakness,
   }) : super(key: key);
 
-  final Strengths? strengths;
-  final String strength;
+  final Weaknesses? weaknesses;
+  final String weakness;
 
   void showAddEditItemDialog(BuildContext ctx) {
     FocusScope.of(ctx).unfocus();
@@ -27,7 +27,8 @@ class RippleStrengthWidget extends StatelessWidget {
       ),
       backgroundColor: Theme.of(ctx).canvasColor,
       builder: (_) {
-        return AddEditStrengthDialog(strengths: strengths!, strength: strength);
+        return AddEditWeaknessDialog(
+            weaknesses: weaknesses!, weakness: weakness);
       },
     );
   }
@@ -38,7 +39,7 @@ class RippleStrengthWidget extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          if (strengths != null) showAddEditItemDialog(context);
+          if (weaknesses != null) showAddEditItemDialog(context);
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -52,13 +53,13 @@ class RippleStrengthWidget extends StatelessWidget {
                 width: 10.0,
                 height: 10.0,
                 decoration: const BoxDecoration(
-                  color: Colors.green,
+                  color: Colors.red,
                   shape: BoxShape.circle,
                 ),
                 margin: const EdgeInsets.only(top: 4),
               ),
               const SizedBox(width: 16),
-              Flexible(child: Text(strength)),
+              Flexible(child: Text(weakness)),
             ],
           ),
         ),

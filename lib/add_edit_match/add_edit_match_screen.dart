@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../constants/constants.dart';
 import '../matches/models/a_match.dart';
 import '../matches/models/matches.dart';
-import '../widgets/settings_section_widget.dart';
+import '../settings/widgets/settings_section_widget.dart';
 import 'models/validation_match.dart';
 import 'widgets/countries_item.dart';
 import 'widgets/court_surface_item.dart';

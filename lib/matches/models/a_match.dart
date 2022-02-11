@@ -1,12 +1,12 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tennis_plan/match_detail/plan/models/tactical_plans.dart';
+import '../../opponent_info/models/shots.dart';
+import '../../opponent_info/models/strengths.dart';
+import '../../opponent_info/models/weaknesses.dart';
+import '../../tactics/models/tactical_plans.dart';
 
 import '../../add_edit_match/models/validation_match.dart';
-import '../../match_detail/plan/models/shots.dart';
-import '../../match_detail/plan/models/strengths.dart';
-import '../../match_detail/plan/models/weaknesses.dart';
 import 'ranking.dart';
 
 enum MatchState { win, lose, notPlayed }

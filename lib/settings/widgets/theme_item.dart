@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../constants/constants.dart';
 import '../../services/theme_manager.dart';
 import '../../widgets/radio_button.dart';
-import '../../widgets/settings_item_widget.dart';
+import 'settings_item_widget.dart';
 
 class ThemeItem extends StatelessWidget {
   const ThemeItem({Key? key}) : super(key: key);

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CourtPainter extends CustomPainter {
-  CourtPainter(this.context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
-    paddingTop = height / 10;
-    courtHeight = height - height / 3 - paddingTop * 2;
+  CourtPainter(this.context, this.courtHeight, this.paddingTop) {
     courtWidth = courtHeight / aspectRatio;
     netStart = paddingLeft - 16;
     netEnd = courtWidth - paddingRight + 16;
@@ -14,8 +10,6 @@ class CourtPainter extends CustomPainter {
   final double aspectRatio = 1.2;
 
   final BuildContext context;
-  late double width;
-  late double height;
   late double courtWidth;
   late double courtHeight;
   late double paddingTop;

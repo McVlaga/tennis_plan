@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/match_detail/plan/tactics/canvas_path.dart';
-import 'package:tennis_plan/match_detail/plan/tactics/drawing.dart';
+import 'canvas_path.dart';
+import 'drawing.dart';
 
 class Painter extends CustomPainter {
   final Drawing drawing;

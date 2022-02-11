@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../dialogs/add_edit_shot_dialog.dart';
 
 import '../../../constants/constants.dart';
 import '../models/shot.dart';
 import '../models/shots.dart';
-import 'add_edit_shot_dialog.dart';
 
-class RippleShotWidget extends StatelessWidget {
-  const RippleShotWidget({
+class EditableShotItemWidget extends StatelessWidget {
+  const EditableShotItemWidget({
     required this.shots,
     Key? key,
   }) : super(key: key);
