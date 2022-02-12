@@ -64,22 +64,20 @@ class _AddEditWeaknessDialogState extends State<AddEditWeaknessDialog> {
           Row(
             children: [
               if (editing)
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                      child: const Text(
-                        'DELETE',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      onPressed: () {
-                        widget.weaknesses.deleteOpponentWeakness(oldWeakness);
-                        Navigator.of(context).pop();
-                      },
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    child: const Text(
+                      'DELETE',
+                      style: TextStyle(color: Colors.red),
                     ),
+                    onPressed: () {
+                      widget.weaknesses.deleteOpponentWeakness(oldWeakness);
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ),
-              if (!editing) const Spacer(),
+              const Spacer(),
               TextButton(
                 child: const Text('CANCEL'),
                 onPressed: () {

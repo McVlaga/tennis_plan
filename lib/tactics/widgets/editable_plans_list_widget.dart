@@ -3,10 +3,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
-import 'package:tennis_plan/opponent_info/add_header_list_button.dart';
-import 'package:tennis_plan/tactics/dialogs/add_edit_plan_info_dialog.dart';
-import 'package:tennis_plan/tactics/models/tactical_plan.dart';
-import 'package:tennis_plan/tactics/models/tactical_plans.dart';
+import '../../opponent_info/add_header_list_button.dart';
+import '../dialogs/add_edit_plan_info_dialog.dart';
+import '../models/tactical_plan.dart';
+import '../models/tactical_plans.dart';
 
 import '../../constants/constants.dart';
 
@@ -31,17 +31,6 @@ class EditablePlansListWidget extends StatelessWidget {
       },
     );
   }
-
-  // void openAddPlanScreen() {
-  //   Map<String, String> arguments = {
-  //     'matchId': matchId,
-  //     'planTitle': 'Plan A',
-  //   };
-  //   Navigator.of(context).pushNamed(
-  //     DrawPlanScreen.routeName,
-  //     arguments: arguments,
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +67,13 @@ class EditablePlansListWidget extends StatelessWidget {
             }).toList(),
           ],
           onReorder: (int from, int to) {
-            tempPlans.reorderPlans(from, to, plans[from].title,
-                plans[from].description, plans[from].imageBytes);
+            tempPlans.reorderPlans(
+                from,
+                to,
+                plans[from].title,
+                plans[from].description,
+                plans[from].color,
+                plans[from].imageBytes);
           },
           buildDraggableFeedback: (context, constraints, child) =>
               ConstrainedBox(
@@ -117,12 +111,16 @@ class EditablePlanItemWidget extends StatelessWidget {
               child: IntrinsicHeight(
                 child: Row(
                   children: [
-                    SizedBox(
-                      width: 100,
-                      child: Image.asset('assets/images/court_on_black.png'),
-                    ),
-                    const SizedBox(width: 16),
                     Expanded(
+                      flex: 1,
+                      child: plan.imageBytes == null
+                          ? Image.asset('assets/images/court_on_black.png')
+                          : Image.memory(plan.imageBytes!),
+                    ),
+                    const VerticalDivider(
+                        width: 48, thickness: 1, indent: 16, endIndent: 16),
+                    Expanded(
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 20.0, bottom: 16),
                         child: Column(
@@ -130,9 +128,9 @@ class EditablePlanItemWidget extends StatelessWidget {
                           children: [
                             Text(
                               plan.title,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 18,
-                                color: Colors.green,
+                                color: plan.color,
                               ),
                             ),
                             const SizedBox(height: 8),

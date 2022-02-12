@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/opponent_info/models/weaknesses.dart';
+import '../../constants/constants.dart';
+import '../../opponent_info/models/weaknesses.dart';
 import 'weakness_item_widget.dart';
 import '../../widgets/section_header_widget.dart';
 

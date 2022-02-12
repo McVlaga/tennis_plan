@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/opponent_info/models/shots.dart';
+
+import '../../constants/constants.dart';
 import '../../opponent_info/models/shot.dart';
+import '../../opponent_info/models/shots.dart';
 import 'shot_item_widget.dart';
 
 class ShotsListWidget extends StatelessWidget {

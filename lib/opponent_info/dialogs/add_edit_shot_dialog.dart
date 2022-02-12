@@ -153,22 +153,20 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
           Row(
             children: [
               if (editing)
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                      child: const Text(
-                        'DELETE',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      onPressed: () {
-                        widget.shots.deleteOpponentShot(oldShotName);
-                        Navigator.of(context).pop();
-                      },
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    child: const Text(
+                      'DELETE',
+                      style: TextStyle(color: Colors.red),
                     ),
+                    onPressed: () {
+                      widget.shots.deleteOpponentShot(oldShotName);
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ),
-              if (!editing) const Spacer(),
+              const Spacer(),
               TextButton(
                 child: const Text('CANCEL'),
                 onPressed: () {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../dialogs/add_edit_weakness_dialog.dart';
 
 import '../../../constants/constants.dart';
+import '../dialogs/add_edit_weakness_dialog.dart';
 import '../models/weaknesses.dart';
 
 class EditableWeaknessItemWidget extends StatelessWidget {

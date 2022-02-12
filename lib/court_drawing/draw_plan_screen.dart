@@ -27,19 +27,13 @@ class DrawPlanScreen extends StatefulWidget {
 
 class _DrawPlanScreenState extends State<DrawPlanScreen> {
   bool firstInit = true;
-  late AMatch match;
-  late TacticalPlans tempPlans;
-  late TacticalPlan tempPlan;
+  late TacticalPlan plan;
   late bool editing;
 
   final GlobalKey _globalKey = GlobalKey();
   final Drawing _drawing = Drawing(paths: []);
   CanvasPath? _newPath;
-  Paint _currentPaintSettings = Paint()
-    ..strokeWidth = 15
-    ..color = Colors.orange
-    ..strokeCap = StrokeCap.round
-    ..style = PaintingStyle.stroke;
+  late Paint _currentPaintSettings;
 
   final StreamController<Drawing> _drawingStreamController =
       StreamController<Drawing>.broadcast();
@@ -54,18 +48,14 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (firstInit) {
+      _currentPaintSettings = Paint()
+        ..strokeWidth = 15
+        ..color = Theme.of(context).colorScheme.onPrimary
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke;
       _newPath = CanvasPath([], _currentPaintSettings);
       initCanvasSizes();
-      Map<String, String?> arguments =
-          ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-      String matchId = arguments['matchId'] as String;
-      match = Provider.of<Matches>(
-        context,
-        listen: false,
-      ).findById(matchId);
-      String planTitle = arguments['planTitle'] as String;
-      tempPlan = tempPlans.findByTitle(planTitle);
-      tempPlans = match.tacticalPlans;
+      plan = ModalRoute.of(context)!.settings.arguments as TacticalPlan;
       firstInit = false;
     }
   }
@@ -88,16 +78,15 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
       ByteData? byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       Uint8List? pngBytes = byteData?.buffer.asUint8List();
-      tempPlans.addPlan('Plan A', 'Description', pngBytes);
-      match.setTacticalPlans(tempPlans);
-      var saved = await ImageGallerySaver.saveImage(
-        pngBytes!,
-        quality: 100,
-        name: DateTime.now().toIso8601String() + ".png",
-        isReturnImagePathOfIOS: true,
-      );
+      plan.setImage(pngBytes!);
+      // var saved = await ImageGallerySaver.saveImage(
+      //   pngBytes,
+      //   quality: 100,
+      //   name: DateTime.now().toIso8601String() + ".png",
+      //   isReturnImagePathOfIOS: true,
+      // );
+      // print(saved);
       Navigator.of(context).pop();
-      print(saved);
     } catch (e) {
       print(e);
     }
@@ -275,11 +264,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
 
   IconButton buildColorButton(Color color) {
     return IconButton(
-      onPressed: () {
-        setState(() {
-          _currentPaintSettings = _currentPaintSettings..color = color;
-        });
-      },
+      onPressed: showColorPickerDialog,
       icon: CircleAvatar(
         backgroundColor: _currentPaintSettings.color,
         child: Icon(
@@ -331,6 +316,103 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
         ),
       ),
     );
+  }
+
+  void showColorPickerDialog() async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Select color",
+            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    iconSize: 50,
+                    icon: CircleAvatar(
+                      backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    onPressed: () {
+                      _currentPaintSettings = _currentPaintSettings
+                        ..color = Theme.of(context).colorScheme.onPrimary;
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  IconButton(
+                    iconSize: 50,
+                    icon: CircleAvatar(
+                      backgroundColor: Colors.blue,
+                    ),
+                    onPressed: () {
+                      _currentPaintSettings = _currentPaintSettings
+                        ..color = Colors.blue;
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  IconButton(
+                    iconSize: 50,
+                    icon: CircleAvatar(
+                      backgroundColor: Colors.green,
+                    ),
+                    onPressed: () {
+                      _currentPaintSettings = _currentPaintSettings
+                        ..color = Colors.green;
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    iconSize: 50,
+                    icon: CircleAvatar(
+                      backgroundColor: Colors.orange,
+                    ),
+                    onPressed: () {
+                      _currentPaintSettings = _currentPaintSettings
+                        ..color = Colors.orange;
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  IconButton(
+                    iconSize: 50,
+                    icon: CircleAvatar(
+                      backgroundColor: Colors.red,
+                    ),
+                    onPressed: () {
+                      _currentPaintSettings = _currentPaintSettings
+                        ..color = Colors.red;
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  IconButton(
+                    iconSize: 50,
+                    icon: CircleAvatar(
+                      backgroundColor: Colors.purpleAccent,
+                    ),
+                    onPressed: () {
+                      _currentPaintSettings = _currentPaintSettings
+                        ..color = Colors.purpleAccent;
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          backgroundColor: Theme.of(context).colorScheme.surface,
+        );
+      },
+    );
+    setState(() {});
   }
 
   @override

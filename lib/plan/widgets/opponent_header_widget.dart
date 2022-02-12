@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/matches/models/a_match.dart';
-import 'package:tennis_plan/matches/widgets/flag_and_name_widget.dart';
-import 'package:tennis_plan/opponent_info/models/shots.dart';
-import 'package:tennis_plan/plan/widgets/shots_list_widget.dart';
+import '../../constants/constants.dart';
+import '../../matches/models/a_match.dart';
+import '../../matches/widgets/flag_and_name_widget.dart';
+import '../../opponent_info/models/shots.dart';
+import 'shots_list_widget.dart';
 
 class OpponentHeaderWidget extends StatelessWidget {
   const OpponentHeaderWidget({Key? key}) : super(key: key);

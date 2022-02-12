@@ -9,19 +9,24 @@ class TacticalPlans with ChangeNotifier {
 
   List<TacticalPlan> plans = [];
 
-  void addPlan(String title, String description, Uint8List? imageBytes) {
+  void addPlan(
+      String title, String description, Color color, Uint8List? imageBytes) {
     plans.add(TacticalPlan(
-        title: title, description: description, imageBytes: imageBytes));
+        title: title,
+        description: description,
+        color: color,
+        imageBytes: imageBytes));
     notifyListeners();
   }
 
-  void addPlanAt(
-      String title, String description, Uint8List? imageBytes, int index) {
+  void addPlanAt(String title, String description, Color color,
+      Uint8List? imageBytes, int index) {
     plans.insert(
       index,
       TacticalPlan(
         title: title,
         description: description,
+        color: color,
         imageBytes: imageBytes,
       ),
     );
@@ -46,10 +51,11 @@ class TacticalPlans with ChangeNotifier {
     int to,
     String title,
     String description,
+    Color color,
     Uint8List? imageBytes,
   ) {
     deletePlanAt(from);
-    addPlanAt(title, description, imageBytes, to);
+    addPlanAt(title, description, color, imageBytes, to);
     notifyListeners();
   }
 }

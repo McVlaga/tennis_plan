@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/widgets/section_title_widget.dart';
+import '../widgets/section_title_widget.dart';
 import '../court_drawing/draw_plan_screen.dart';
 import 'dialogs/add_edit_plan_info_dialog.dart';
 import 'models/tactical_plans.dart';
@@ -86,6 +86,7 @@ class _AddEditTacticalGoalsScreenState
                   color: Colors.blue,
                   child: InkWell(
                     onTap: () {
+                      match.setTacticalPlans(tempPlans);
                       Navigator.of(context).pop();
                     },
                     child: SizedBox(

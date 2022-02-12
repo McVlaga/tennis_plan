@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/opponent_info/models/shots.dart';
-import 'package:tennis_plan/opponent_info/models/strengths.dart';
-import 'package:tennis_plan/opponent_info/models/weaknesses.dart';
-import 'package:tennis_plan/plan/widgets/opponent_header_widget.dart';
-import 'package:tennis_plan/tactics/models/tactical_plans.dart';
-import 'package:tennis_plan/widgets/section_title_widget.dart';
+import '../opponent_info/models/shots.dart';
+import '../opponent_info/models/strengths.dart';
+import '../opponent_info/models/weaknesses.dart';
+import 'widgets/opponent_header_widget.dart';
+import '../tactics/models/tactical_plans.dart';
+import '../widgets/section_title_widget.dart';
 
 import '../../constants/constants.dart';
 import '../../matches/models/a_match.dart';
@@ -39,14 +39,16 @@ class PlanScreen extends StatelessWidget {
             return const OpponentHeaderWidget();
           },
         ),
-        const SizedBox(height: Dimensions.paddingOne),
+        if (strengths.strengths.isNotEmpty)
+          const SizedBox(height: Dimensions.paddingTwo),
         ChangeNotifierProvider<Strengths>.value(
           value: strengths,
           builder: (_, __) {
             return const StrengthsListWidget();
           },
         ),
-        const SizedBox(height: Dimensions.paddingOne),
+        if (weaknesses.weaknesses.isNotEmpty)
+          const SizedBox(height: Dimensions.paddingTwo),
         ChangeNotifierProvider<Weaknesses>.value(
           value: weaknesses,
           builder: (_, __) {
