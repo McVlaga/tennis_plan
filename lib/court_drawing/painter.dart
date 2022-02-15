@@ -2,28 +2,23 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'canvas_path.dart';
 import 'drawing.dart';
 
 class Painter extends CustomPainter {
   Painter({
     required this.drawing,
-    required this.widthRatio,
-    required this.heightRatio,
+    required this.pathsRatio,
     required this.darkMode,
   });
 
   final Drawing drawing;
   final bool darkMode;
-  late double widthRatio;
-  late double heightRatio;
+  late double pathsRatio;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final List<CanvasPath?> canvasPaths = drawing.paths;
-
-    if (canvasPaths.isNotEmpty) {
-      for (var canvasPath in canvasPaths) {
+    if (drawing.paths.isNotEmpty) {
+      for (var canvasPath in drawing.paths) {
         if (canvasPath!.points.isNotEmpty) {
           if (canvasPath.paint.color.value == Colors.black.value && darkMode) {
             canvasPath.paint.color = Colors.white;
@@ -34,21 +29,22 @@ class Painter extends CustomPainter {
           Paint paint = Paint()
             ..color = canvasPath.paint.color
             ..strokeCap = canvasPath.paint.strokeCap
-            ..strokeWidth = canvasPath.paint.strokeWidth * widthRatio
+            ..strokeWidth = canvasPath.paint.strokeWidth * pathsRatio
             ..blendMode = canvasPath.paint.blendMode
             ..style = PaintingStyle.stroke;
-          List<Offset> scaledPoints = [];
-          for (var point in canvasPath.points) {
-            scaledPoints.add(
-              Offset(point.dx * widthRatio, point.dy * heightRatio),
-            );
-          }
-          if (scaledPoints.length == 1) {
-            canvas.drawPoints(PointMode.points, scaledPoints, paint);
+          if (canvasPath.points.length == 1) {
+            canvas.drawPoints(
+                PointMode.points,
+                [
+                  Offset(canvasPath.points[0].dx * pathsRatio,
+                      canvasPath.points[0].dy * pathsRatio)
+                ],
+                paint);
           } else {
             final Matrix4 matrix4 = Matrix4.identity();
-            matrix4.scale(widthRatio, heightRatio);
+            matrix4.scale(pathsRatio, pathsRatio);
             Path path = canvasPath.path.transform(matrix4.storage);
+
             canvas.drawPath(path, paint);
           }
         }

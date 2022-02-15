@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../dialogs/add_edit_shot_dialog.dart';
 
 import '../../../constants/constants.dart';
+import '../dialogs/add_edit_shot_dialog.dart';
 import '../models/shot.dart';
 import '../models/shots.dart';
 

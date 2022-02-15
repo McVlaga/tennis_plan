@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/court_drawing/drawing.dart';
+import '../../court_drawing/drawing.dart';
 
 class TacticalPlan with ChangeNotifier {
   TacticalPlan({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
+
+import '../../constants/constants.dart';
 import '../add_header_list_button.dart';
 import '../dialogs/add_edit_weakness_dialog.dart';
-import '../../constants/constants.dart';
-
 import '../models/weaknesses.dart';
 import 'editable_weakness_item_widget.dart';
 

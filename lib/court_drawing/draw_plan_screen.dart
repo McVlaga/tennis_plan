@@ -5,10 +5,10 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:tennis_plan/court_drawing/cancel_save_bar_widget.dart';
-import 'package:tennis_plan/services/court_drawing_manager.dart';
-import 'package:tennis_plan/widgets/color_picker_dialog.dart';
-import 'package:tennis_plan/widgets/screen_save_button.dart';
+import 'cancel_save_bar_widget.dart';
+import '../services/court_drawing_manager.dart';
+import '../widgets/color_picker_dialog.dart';
+import '../widgets/screen_save_button.dart';
 import '../tactics/models/tactical_plan.dart';
 import '../../../constants/constants.dart';
 import 'court_painter.dart';
@@ -32,6 +32,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
   late Drawing _drawing;
   CanvasPath? _newPath;
   late Paint _currentPaintSettings;
+  bool erasing = false;
 
   final StreamController<Drawing> _drawingStreamController =
       StreamController<Drawing>.broadcast();
@@ -48,7 +49,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
 
   void _onInit() {
     final double canvasWidth = MediaQuery.of(context).size.width - 32;
-    _courtManager = CourtDrawingManager(context, canvasWidth, 1);
+    _courtManager = CourtDrawingManager(context, canvasWidth);
     _currentPaintSettings = Paint()
       ..strokeWidth = 15
       ..color = Theme.of(context).colorScheme.onPrimary
@@ -121,6 +122,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
     return Scaffold(
       body: Column(
         children: [
+          SizedBox(height: MediaQuery.of(context).viewPadding.top),
           const Spacer(),
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -137,10 +139,9 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
 
   GestureDetector buildAllPaths(BuildContext context) {
     return GestureDetector(
-      onPanStart: onPanStart,
-      onPanUpdate: onPanUpdate,
+      onPanStart: erasing ? onErasingStart : onDrawingStart,
+      onPanUpdate: erasing ? onErasingUpdate : onDrawingUpdate,
       child: RepaintBoundary(
-        key: _globalKey,
         child: Container(
           width: _courtManager.canvasWidth,
           height: _courtManager.canvasHeight,
@@ -157,7 +158,31 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
     );
   }
 
-  onPanStart(DragStartDetails det) {
+  void onErasingStart(DragStartDetails det) {
+    _removePathOnTouch(det.localPosition);
+  }
+
+  void onErasingUpdate(DragUpdateDetails det) {
+    _removePathOnTouch(det.localPosition);
+  }
+
+  void _removePathOnTouch(Offset touchPoint) {
+    _drawing.paths.removeWhere((path) {
+      double touchOffset = path!.paint.strokeWidth / 2 + 10;
+      for (var point in path.points) {
+        if (touchPoint.dx > point.dx - touchOffset &&
+            touchPoint.dx < point.dx + touchOffset &&
+            touchPoint.dy > point.dy - touchOffset &&
+            touchPoint.dy < point.dy + touchOffset) {
+          return true;
+        }
+      }
+      return false;
+    });
+    setState(() {});
+  }
+
+  void onDrawingStart(DragStartDetails det) {
     Offset point = det.localPosition;
     _newPath = CanvasPath([point], _paintFrom(_currentPaintSettings));
     _newPath!.movePathTo(point.dx, point.dy);
@@ -165,7 +190,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
     _drawingStreamController.add(_drawing);
   }
 
-  onPanUpdate(DragUpdateDetails det) {
+  void onDrawingUpdate(DragUpdateDetails det) {
     Offset point = det.localPosition;
     _newPath!.makeLineTo(point.dx, point.dy);
     _newPath!.points.add(point);
@@ -202,6 +227,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
       data: SliderThemeData(
         thumbShape: RoundSliderThumbShape(
             enabledThumbRadius: _currentPaintSettings.strokeWidth / 2),
+        trackHeight: _currentPaintSettings.strokeWidth / 5,
       ),
       child: Expanded(
         child: Slider(
@@ -209,12 +235,14 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
           value: _currentPaintSettings.strokeWidth,
           min: 1,
           max: 30,
-          onChanged: (value) {
-            setState(() {
-              _currentPaintSettings = _currentPaintSettings
-                ..strokeWidth = value;
-            });
-          },
+          onChanged: erasing
+              ? null
+              : (value) {
+                  setState(() {
+                    _currentPaintSettings = _currentPaintSettings
+                      ..strokeWidth = value;
+                  });
+                },
         ),
       ),
     );
@@ -222,9 +250,10 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
 
   IconButton buildColorButton(Color color) {
     return IconButton(
-      onPressed: showColorPickerDialog,
+      disabledColor: Colors.grey,
+      onPressed: erasing ? null : showColorPickerDialog,
       icon: CircleAvatar(
-        backgroundColor: _currentPaintSettings.color,
+        backgroundColor: erasing ? Colors.grey : _currentPaintSettings.color,
         child: Icon(
           Icons.color_lens,
           size: 20.0,
@@ -250,9 +279,14 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
 
   IconButton buildEraserButton() {
     return IconButton(
-      onPressed: () {},
+      onPressed: () {
+        setState(() {
+          erasing = !erasing;
+        });
+      },
       icon: CircleAvatar(
-        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor:
+            erasing ? Colors.green : Theme.of(context).colorScheme.onPrimary,
         child: Icon(
           Icons.edit_off,
           size: 20.0,

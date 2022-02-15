@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/court_drawing/court_painter.dart';
-import 'package:tennis_plan/opponent_info/add_header_list_button.dart';
-import 'package:tennis_plan/services/court_drawing_manager.dart';
-import 'package:tennis_plan/settings/widgets/settings_section_widget.dart';
-import 'package:tennis_plan/tactics/models/tactical_plan.dart';
-import 'package:tennis_plan/tactics/models/tactical_plans.dart';
-import 'package:tennis_plan/widgets/color_picker_dialog.dart';
-import 'package:tennis_plan/widgets/screen_save_button.dart';
+import '../constants/constants.dart';
+import '../court_drawing/court_painter.dart';
+import '../opponent_info/add_header_list_button.dart';
+import '../services/court_drawing_manager.dart';
+import '../settings/widgets/settings_section_widget.dart';
+import 'models/tactical_plan.dart';
+import 'models/tactical_plans.dart';
+import '../widgets/color_picker_dialog.dart';
+import '../widgets/screen_save_button.dart';
 
 class AddEditTacticalPlanScreen extends StatefulWidget {
   const AddEditTacticalPlanScreen({Key? key}) : super(key: key);
@@ -23,6 +23,7 @@ class _AddEditTacticalPlanScreenState extends State<AddEditTacticalPlanScreen> {
   bool editing = false;
   late TacticalPlans tempPlans;
   late TacticalPlan plan;
+  String oldPlanTitle = '';
   late CourtDrawingManager _courtManager;
 
   TextEditingController titleController = TextEditingController();
@@ -39,8 +40,8 @@ class _AddEditTacticalPlanScreenState extends State<AddEditTacticalPlanScreen> {
   }
 
   void _onInit() {
-    final courtWidth = MediaQuery.of(context).size.width - 32;
-    _courtManager = CourtDrawingManager(context, courtWidth, 1);
+    final canvasWidth = MediaQuery.of(context).size.width - 32;
+    _courtManager = CourtDrawingManager(context, canvasWidth);
     Map<String, Object?> arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, Object?>;
     tempPlans = arguments['tempPlans'] as TacticalPlans;
@@ -51,7 +52,14 @@ class _AddEditTacticalPlanScreenState extends State<AddEditTacticalPlanScreen> {
           title: '', description: '', color: selectedColor, drawing: null);
     } else {
       editing = true;
-      plan = tempPlans.findByTitle(planTitle);
+      final tempPlan = tempPlans.findByTitle(planTitle);
+      oldPlanTitle = tempPlan.title;
+      plan = TacticalPlan(
+        title: tempPlan.title,
+        description: tempPlan.description,
+        color: tempPlan.color,
+        drawing: tempPlan.drawing,
+      );
       titleController.text = plan.title;
       oldTitle = plan.title;
       descriptionController.text = plan.description;
@@ -65,6 +73,7 @@ class _AddEditTacticalPlanScreenState extends State<AddEditTacticalPlanScreen> {
         descriptionController.text.isNotEmpty) {
       if (editing) {
         tempPlans.updatePlan(
+          oldPlanTitle,
           titleController.text,
           descriptionController.text,
           selectedColor,

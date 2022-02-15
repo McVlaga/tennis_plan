@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/tactics/add_edit%20_tactical_plan_screen.dart';
+import 'tactics/add_edit%20_tactical_plan_screen.dart';
 
 import 'add_edit_match/add_edit_match_screen.dart';
 import 'main_screen.dart';

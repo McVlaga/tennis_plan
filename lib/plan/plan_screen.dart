@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../opponent_info/models/shots.dart';
-import '../opponent_info/models/strengths.dart';
-import '../opponent_info/models/weaknesses.dart';
-import 'widgets/opponent_header_widget.dart';
-import '../tactics/models/tactical_plans.dart';
-import '../widgets/section_title_widget.dart';
 
 import '../../constants/constants.dart';
 import '../../matches/models/a_match.dart';
+import '../opponent_info/models/shots.dart';
+import '../opponent_info/models/strengths.dart';
+import '../opponent_info/models/weaknesses.dart';
+import '../tactics/models/tactical_plans.dart';
+import '../widgets/section_title_widget.dart';
+import 'widgets/opponent_header_widget.dart';
 import 'widgets/plans_list_widget.dart';
 import 'widgets/strengths_list_widget.dart';
 import 'widgets/weaknesses_list_widget.dart';

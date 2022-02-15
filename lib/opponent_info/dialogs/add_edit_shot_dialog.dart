@@ -69,15 +69,11 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
           const SizedBox(height: Dimensions.paddingZero),
           Row(children: [
             IconButton(
-              padding: EdgeInsets.only(top: 6, right: 10, bottom: 10),
-              constraints: BoxConstraints(),
+              iconSize: 35,
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              icon: Icon(
-                selectedStar > 0 ? Icons.star : Icons.star_outline,
-                size: 35,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+              color: Theme.of(context).colorScheme.secondary,
+              icon: Icon(selectedStar > 0 ? Icons.star : Icons.star_outline),
               onPressed: () {
                 setState(() {
                   selectedStar = 1;
@@ -85,15 +81,11 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
               },
             ),
             IconButton(
-              padding: EdgeInsets.only(left: 10, top: 6, right: 10, bottom: 10),
-              constraints: BoxConstraints(),
+              iconSize: 35,
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              icon: Icon(
-                selectedStar > 1 ? Icons.star : Icons.star_outline,
-                size: 35,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+              color: Theme.of(context).colorScheme.secondary,
+              icon: Icon(selectedStar > 1 ? Icons.star : Icons.star_outline),
               onPressed: () {
                 setState(() {
                   selectedStar = 2;
@@ -101,15 +93,11 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
               },
             ),
             IconButton(
-              padding: EdgeInsets.only(left: 10, top: 6, right: 10, bottom: 10),
-              constraints: BoxConstraints(),
+              iconSize: 35,
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              icon: Icon(
-                selectedStar > 2 ? Icons.star : Icons.star_outline,
-                size: 35,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+              color: Theme.of(context).colorScheme.secondary,
+              icon: Icon(selectedStar > 2 ? Icons.star : Icons.star_outline),
               onPressed: () {
                 setState(() {
                   selectedStar = 3;
@@ -117,15 +105,11 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
               },
             ),
             IconButton(
-              padding: EdgeInsets.only(left: 10, top: 6, right: 10, bottom: 10),
-              constraints: BoxConstraints(),
+              iconSize: 35,
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              icon: Icon(
-                selectedStar > 3 ? Icons.star : Icons.star_outline,
-                size: 35,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+              color: Theme.of(context).colorScheme.secondary,
+              icon: Icon(selectedStar > 3 ? Icons.star : Icons.star_outline),
               onPressed: () {
                 setState(() {
                   selectedStar = 4;
@@ -133,15 +117,11 @@ class _AddEditShotDialogState extends State<AddEditShotDialog> {
               },
             ),
             IconButton(
-              padding: EdgeInsets.only(left: 10, top: 6, bottom: 10, right: 20),
-              constraints: BoxConstraints(),
+              iconSize: 35,
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              icon: Icon(
-                selectedStar > 4 ? Icons.star : Icons.star_outline,
-                size: 35,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+              color: Theme.of(context).colorScheme.secondary,
+              icon: Icon(selectedStar > 4 ? Icons.star : Icons.star_outline),
               onPressed: () {
                 setState(() {
                   selectedStar = 5;

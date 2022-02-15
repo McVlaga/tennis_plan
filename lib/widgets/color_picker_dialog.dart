@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/widgets/color_picker_button.dart';
+import 'color_picker_button.dart';
 
 class ColorPickerDialog extends StatelessWidget {
   const ColorPickerDialog({required this.selectedColor, Key? key})

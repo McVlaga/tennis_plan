@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/constants.dart';
-import '../../match_detail/match_detail_tab_bar_screen.dart';
 import '../models/a_match.dart';
 import 'flag_and_name_widget.dart';
 import 'surface_practice_badge_widget.dart';

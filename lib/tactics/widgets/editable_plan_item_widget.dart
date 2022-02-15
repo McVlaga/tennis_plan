@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/constants/constants.dart';
-import 'package:tennis_plan/services/court_drawing_manager.dart';
-import 'package:tennis_plan/tactics/models/tactical_plan.dart';
+import '../../constants/constants.dart';
+import '../../services/court_drawing_manager.dart';
+import '../models/tactical_plan.dart';
 
 class EditablePlanItemWidget extends StatefulWidget {
   const EditablePlanItemWidget({
@@ -27,8 +27,8 @@ class _EditablePlanItemWidgetState extends State<EditablePlanItemWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (firstInit) {
-      final canvasWidth = (MediaQuery.of(context).size.width / 2) - 16;
-      _courtManager = CourtDrawingManager(context, canvasWidth, 2);
+      final canvasWidth = (MediaQuery.of(context).size.width - 80) / 2;
+      _courtManager = CourtDrawingManager(context, canvasWidth);
       plan = context.watch<TacticalPlan>();
       bool darkMode = Theme.of(context).brightness == Brightness.dark;
       if (plan.color.value == Colors.black.value && darkMode) {
@@ -53,39 +53,35 @@ class _EditablePlanItemWidgetState extends State<EditablePlanItemWidget> {
             child: IntrinsicHeight(
               child: Row(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      width: _courtManager.canvasWidth,
-                      height: _courtManager.canvasHeight,
-                      alignment: Alignment.topLeft,
-                      color: Colors.transparent,
-                      child: plan.drawing == null
-                          ? _courtManager.buildCourtWidget()
-                          : _courtManager
-                              .buildCourtDrawingWidget(plan.drawing!),
+                  const SizedBox(width: 16),
+                  Center(
+                    child: ClipRRect(
+                      child: Container(
+                        width: _courtManager.canvasWidth,
+                        height: _courtManager.canvasHeight,
+                        alignment: Alignment.topLeft,
+                        color: Colors.transparent,
+                        child: plan.drawing == null
+                            ? _courtManager.buildCourtWidget()
+                            : _courtManager
+                                .buildCourtDrawingWidget(plan.drawing!),
+                      ),
                     ),
                   ),
                   const VerticalDivider(
-                      width: 0, thickness: 1, indent: 16, endIndent: 16),
+                      width: 32, thickness: 1, indent: 16, endIndent: 16),
                   Expanded(
-                    flex: 1,
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 30.0,
-                        bottom: 16,
-                        right: 16,
-                        left: 24,
+                      padding: EdgeInsets.symmetric(
+                        vertical: _courtManager.courtPaddingTop,
+                        horizontal: _courtManager.courtPaddingTop / 2,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             plan.title,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: plan.color,
-                            ),
+                            style: TextStyle(fontSize: 18, color: plan.color),
                           ),
                           const SizedBox(height: 8),
                           Text(plan.description),

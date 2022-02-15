@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/widgets/screen_save_button.dart';
+import '../widgets/screen_save_button.dart';
 import '../widgets/section_title_widget.dart';
 import 'models/tactical_plans.dart';
 import 'widgets/editable_plans_list_widget.dart';

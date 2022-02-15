@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/court_drawing/court_painter.dart';
-import 'package:tennis_plan/court_drawing/drawing.dart';
-import 'package:tennis_plan/court_drawing/painter.dart';
+import '../court_drawing/court_painter.dart';
+import '../court_drawing/drawing.dart';
+import '../court_drawing/painter.dart';
 
 class CourtDrawingManager {
-  CourtDrawingManager(this.context, this.canvasWidth, this.sizeRatio) {
+  CourtDrawingManager(this.context, this.canvasWidth) {
     final totalWidth = MediaQuery.of(context).size.width - 32;
-    pathsWidthRatio = canvasWidth / totalWidth;
-    final totalHeight = totalWidth * courtAspectRatio + totalWidth / 10 * 2;
-    paddingTop = canvasWidth / 10;
-    canvasHeight = canvasWidth * courtAspectRatio + paddingTop * 2;
-    pathsHeightRatio = canvasHeight / totalHeight;
+    canvasPaddingTop = canvasWidth / 10;
+    canvasHeight = canvasWidth * courtAspectRatio + canvasPaddingTop * 2;
+    sizeRatio = canvasWidth / totalWidth;
     darkMode = Theme.of(context).brightness == Brightness.dark;
+    courtPaddingTop = getCourtPaddingTop();
   }
+  static const courtAspectRatio = 1.2;
   late BuildContext context;
   late bool darkMode;
   late double sizeRatio;
-  late double pathsWidthRatio;
-  late double pathsHeightRatio;
   late double canvasPaddingTop;
   late double canvasHeight;
   late double canvasWidth;
-  late double paddingTop;
-  static const courtAspectRatio = 1.2;
+  late double courtPaddingTop;
+
+  double getCourtPaddingTop() {
+    final paddingHorizontal = canvasWidth / 10;
+    final courtWidth = canvasWidth - paddingHorizontal * 2;
+    final courtHeight = courtWidth * courtAspectRatio;
+    return (canvasHeight - courtHeight) / 2;
+  }
 
   CustomPaint buildCourtWidget() {
     return CustomPaint(
@@ -39,8 +43,7 @@ class CourtDrawingManager {
           size: Size(canvasWidth, canvasHeight),
           painter: Painter(
             drawing: drawing,
-            widthRatio: pathsWidthRatio,
-            heightRatio: pathsHeightRatio,
+            pathsRatio: sizeRatio,
             darkMode: darkMode,
           ),
         ),

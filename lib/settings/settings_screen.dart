@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
-import 'widgets/settings_section_widget.dart';
 import 'widgets/settings_first_name.dart';
 import 'widgets/settings_last_name.dart';
+import 'widgets/settings_section_widget.dart';
 import 'widgets/theme_item.dart';
 
 class SettingsScreen extends StatelessWidget {

@@ -7,14 +7,13 @@ class CourtPainter extends CustomPainter {
     this.canvasHeight,
     this.sizeRatio,
   ) {
-    centerY = canvasWidth / 2;
     paddingHorizontal = canvasWidth / 10;
     courtWidth = canvasWidth - paddingHorizontal * 2;
     courtHeight = courtWidth * courtAspectRatio;
     paddingTop = (canvasHeight - courtHeight) / 2;
-    paddingSD = 20 / sizeRatio;
-    netStart = canvasWidth / 20 / sizeRatio;
-    netEnd = canvasWidth - canvasWidth / 20 / sizeRatio;
+    paddingSD = 20 * sizeRatio;
+    netStart = canvasWidth / 20 * sizeRatio;
+    netEnd = canvasWidth - canvasWidth / 20 * sizeRatio;
   }
 
   static const double courtAspectRatio = 1.2;
@@ -36,7 +35,7 @@ class CourtPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2 / sizeRatio
+      ..strokeWidth = 2 * sizeRatio
       ..color = darkMode ? Colors.white : Colors.black;
 
     Path path = Path();
@@ -58,19 +57,19 @@ class CourtPainter extends CustomPainter {
     path.lineTo(
         canvasWidth - paddingHorizontal - paddingSD, paddingTop + courtHeight);
     // center line
-    path.moveTo(canvasWidth / 2, courtHeight / 4 + paddingTop - 16 / sizeRatio);
+    path.moveTo(canvasWidth / 2, courtHeight / 4 + paddingTop - 16 * sizeRatio);
     path.lineTo(canvasWidth / 2,
-        courtHeight - courtHeight / 4 + paddingTop + 16 / sizeRatio);
+        courtHeight - courtHeight / 4 + paddingTop + 16 * sizeRatio);
     // futher service line
     path.moveTo(paddingHorizontal + paddingSD,
-        courtHeight / 4 + paddingTop - 16 / sizeRatio);
+        courtHeight / 4 + paddingTop - 16 * sizeRatio);
     path.lineTo(canvasWidth - paddingHorizontal - paddingSD,
-        courtHeight / 4 + paddingTop - 16 / sizeRatio);
+        courtHeight / 4 + paddingTop - 16 * sizeRatio);
     //closer service line
     path.moveTo(paddingHorizontal + paddingSD,
-        courtHeight - courtHeight / 4 + paddingTop + 16 / sizeRatio);
+        courtHeight - courtHeight / 4 + paddingTop + 16 * sizeRatio);
     path.lineTo(canvasWidth - paddingHorizontal - paddingSD,
-        courtHeight - courtHeight / 4 + paddingTop + 16 / sizeRatio);
+        courtHeight - courtHeight / 4 + paddingTop + 16 * sizeRatio);
 
     canvas.drawPath(path, paint);
 
@@ -78,7 +77,7 @@ class CourtPainter extends CustomPainter {
     path = Path();
     paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 4 / sizeRatio
+      ..strokeWidth = 4 * sizeRatio
       ..color = darkMode ? Colors.white : Colors.black;
     path.moveTo(netStart, courtHeight / 2 + paddingTop);
     path.lineTo(netEnd, courtHeight / 2 + paddingTop);
