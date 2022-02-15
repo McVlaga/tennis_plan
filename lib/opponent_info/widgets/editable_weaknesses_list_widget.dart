@@ -46,7 +46,8 @@ class EditableWeaknessesListWidget extends StatelessWidget {
         children: [
           AddHeaderListButton(
             title: 'Add a weakness',
-            showDialog: () {
+            icon: Icons.add,
+            function: () {
               showAddItemDialog(context, tempWeaknesses);
             },
           ),

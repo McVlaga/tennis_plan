@@ -5,21 +5,19 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:provider/provider.dart';
+import 'package:tennis_plan/court_drawing/cancel_save_bar_widget.dart';
+import 'package:tennis_plan/services/court_drawing_manager.dart';
+import 'package:tennis_plan/widgets/color_picker_dialog.dart';
+import 'package:tennis_plan/widgets/screen_save_button.dart';
 import '../tactics/models/tactical_plan.dart';
-import '../tactics/models/tactical_plans.dart';
 import '../../../constants/constants.dart';
 import 'court_painter.dart';
 import 'drawing.dart';
 import 'canvas_path.dart';
 import 'painter.dart';
-import '../../../matches/models/a_match.dart';
-import '../../../matches/models/matches.dart';
 
 class DrawPlanScreen extends StatefulWidget {
   const DrawPlanScreen({Key? key}) : super(key: key);
-
-  static const routeName = '/add-edit-plan';
 
   @override
   State<DrawPlanScreen> createState() => _DrawPlanScreenState();
@@ -31,54 +29,50 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
   late bool editing;
 
   final GlobalKey _globalKey = GlobalKey();
-  final Drawing _drawing = Drawing(paths: []);
+  late Drawing _drawing;
   CanvasPath? _newPath;
   late Paint _currentPaintSettings;
 
   final StreamController<Drawing> _drawingStreamController =
       StreamController<Drawing>.broadcast();
 
-  late double paddingTop;
-  late double canvasHeight;
-  late double canvasWidth;
-  late double courtHeight;
-  static const courtAspectRatio = 1.2;
+  late CourtDrawingManager _courtManager;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (firstInit) {
-      _currentPaintSettings = Paint()
-        ..strokeWidth = 15
-        ..color = Theme.of(context).colorScheme.onPrimary
-        ..strokeCap = StrokeCap.round
-        ..style = PaintingStyle.stroke;
-      _newPath = CanvasPath([], _currentPaintSettings);
-      initCanvasSizes();
-      plan = ModalRoute.of(context)!.settings.arguments as TacticalPlan;
-      firstInit = false;
+      _onInit();
     }
   }
 
-  void initCanvasSizes() {
-    final deviceHeight =
-        MediaQuery.of(context).size.height - AppBar().preferredSize.height;
-    canvasHeight = deviceHeight - deviceHeight / 3;
-    paddingTop = canvasHeight / 7;
-
-    courtHeight = deviceHeight - deviceHeight / 3 - paddingTop * 2;
-    canvasWidth = courtHeight / courtAspectRatio;
+  void _onInit() {
+    final double canvasWidth = MediaQuery.of(context).size.width - 32;
+    _courtManager = CourtDrawingManager(context, canvasWidth, 1);
+    _currentPaintSettings = Paint()
+      ..strokeWidth = 15
+      ..color = Theme.of(context).colorScheme.onPrimary
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
+    _newPath = CanvasPath([], _currentPaintSettings);
+    plan = ModalRoute.of(context)!.settings.arguments as TacticalPlan;
+    if (plan.drawing == null) {
+      _drawing = Drawing(paths: []);
+    } else {
+      _drawing = Drawing(paths: plan.drawing!.paths);
+    }
+    firstInit = false;
   }
 
-  Future<void> save() async {
+  Future<void> _save() async {
     try {
-      RenderRepaintBoundary boundary = _globalKey.currentContext
-          ?.findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage();
-      ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List? pngBytes = byteData?.buffer.asUint8List();
-      plan.setImage(pngBytes!);
+      plan.setDrawing(_drawing);
+      // RenderRepaintBoundary boundary = _globalKey.currentContext
+      //     ?.findRenderObject() as RenderRepaintBoundary;
+      // ui.Image image = await boundary.toImage();
+      // ByteData? byteData =
+      //     await image.toByteData(format: ui.ImageByteFormat.png);
+      // Uint8List? pngBytes = byteData?.buffer.asUint8List();
       // var saved = await ImageGallerySaver.saveImage(
       //   pngBytes,
       //   quality: 100,
@@ -92,14 +86,14 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
     }
   }
 
-  void clear() {
+  void _clear() {
     setState(() {
       _drawing.paths = [];
       _newPath = null;
     });
   }
 
-  void undo() {
+  void _undo() {
     setState(() {
       if (_drawing.paths.isNotEmpty) {
         _drawing.paths.removeLast();
@@ -108,63 +102,35 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
     });
   }
 
+  void showColorPickerDialog() async {
+    final Color? color = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ColorPickerDialog(selectedColor: _currentPaintSettings.color);
+      },
+    );
+    if (color != null) {
+      setState(() {
+        _currentPaintSettings = _currentPaintSettings..color = color;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add a plan'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Theme.of(context).colorScheme.onSecondary,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 16),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              child: Container(
-                width: canvasWidth,
-                height: canvasHeight,
-                color: Theme.of(context).colorScheme.surface,
-                child: buildAllPaths(context),
-              ),
-            ),
-            const SizedBox(height: 8),
-            buildToolbar(),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: Dimensions.paddingTwo,
-                right: Dimensions.paddingTwo,
-                bottom: Dimensions.paddingTwo,
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(Dimensions.borderRadius),
-                ),
-                child: Material(
-                  color: Colors.blue,
-                  child: InkWell(
-                    onTap: save,
-                    child: SizedBox(
-                      height: Dimensions.addMatchDialogInputHeight,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'SAVE',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          const Spacer(),
+          ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            child: buildAllPaths(context),
+          ),
+          const SizedBox(height: 8),
+          buildToolbar(),
+          const Spacer(),
+          CancelSaveBarWidget(saveFunction: _save),
+        ],
       ),
     );
   }
@@ -176,23 +142,15 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
       child: RepaintBoundary(
         key: _globalKey,
         child: Container(
-          width: canvasWidth,
-          height: canvasHeight,
+          width: _courtManager.canvasWidth,
+          height: _courtManager.canvasHeight,
           alignment: Alignment.topLeft,
-          color: Colors.transparent,
-          child: Stack(
-            children: [
-              CustomPaint(
-                  painter: CourtPainter(context, courtHeight, paddingTop)),
-              StreamBuilder<Drawing>(
-                stream: _drawingStreamController.stream,
-                builder: (context, snapshot) {
-                  return CustomPaint(
-                    painter: Painter(drawing: _drawing),
-                  );
-                },
-              ),
-            ],
+          color: Theme.of(context).colorScheme.surface,
+          child: StreamBuilder<Drawing>(
+            stream: _drawingStreamController.stream,
+            builder: (_, __) {
+              return _courtManager.buildCourtDrawingWidget(_drawing);
+            },
           ),
         ),
       ),
@@ -278,7 +236,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
 
   IconButton buildUndoButton() {
     return IconButton(
-      onPressed: undo,
+      onPressed: _undo,
       icon: CircleAvatar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
         child: Icon(
@@ -306,7 +264,7 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
 
   IconButton buildClearButton() {
     return IconButton(
-      onPressed: clear,
+      onPressed: _clear,
       icon: CircleAvatar(
         backgroundColor: Colors.red,
         child: Icon(
@@ -316,103 +274,6 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
         ),
       ),
     );
-  }
-
-  void showColorPickerDialog() async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            "Select color",
-            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    iconSize: 50,
-                    icon: CircleAvatar(
-                      backgroundColor: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                    onPressed: () {
-                      _currentPaintSettings = _currentPaintSettings
-                        ..color = Theme.of(context).colorScheme.onPrimary;
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  IconButton(
-                    iconSize: 50,
-                    icon: CircleAvatar(
-                      backgroundColor: Colors.blue,
-                    ),
-                    onPressed: () {
-                      _currentPaintSettings = _currentPaintSettings
-                        ..color = Colors.blue;
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  IconButton(
-                    iconSize: 50,
-                    icon: CircleAvatar(
-                      backgroundColor: Colors.green,
-                    ),
-                    onPressed: () {
-                      _currentPaintSettings = _currentPaintSettings
-                        ..color = Colors.green;
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    iconSize: 50,
-                    icon: CircleAvatar(
-                      backgroundColor: Colors.orange,
-                    ),
-                    onPressed: () {
-                      _currentPaintSettings = _currentPaintSettings
-                        ..color = Colors.orange;
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  IconButton(
-                    iconSize: 50,
-                    icon: CircleAvatar(
-                      backgroundColor: Colors.red,
-                    ),
-                    onPressed: () {
-                      _currentPaintSettings = _currentPaintSettings
-                        ..color = Colors.red;
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  IconButton(
-                    iconSize: 50,
-                    icon: CircleAvatar(
-                      backgroundColor: Colors.purpleAccent,
-                    ),
-                    onPressed: () {
-                      _currentPaintSettings = _currentPaintSettings
-                        ..color = Colors.purpleAccent;
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-          backgroundColor: Theme.of(context).colorScheme.surface,
-        );
-      },
-    );
-    setState(() {});
   }
 
   @override

@@ -1,10 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
+import 'package:tennis_plan/tactics/widgets/editable_plan_item_widget.dart';
 import '../../opponent_info/add_header_list_button.dart';
-import '../dialogs/add_edit_plan_info_dialog.dart';
 import '../models/tactical_plan.dart';
 import '../models/tactical_plans.dart';
 
@@ -15,20 +13,15 @@ class EditablePlansListWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  void showAddPlanInfoDialog(BuildContext ctx, TacticalPlans tempPlans) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: ctx,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(Dimensions.borderRadius),
-          topRight: Radius.circular(Dimensions.borderRadius),
-        ),
-      ),
-      backgroundColor: Theme.of(ctx).canvasColor,
-      builder: (_) {
-        return AddEditPlanInfoDialog(plans: tempPlans, plan: null);
-      },
+  void openAddEditTacticalPlanScreen(
+      BuildContext context, TacticalPlans tempPlans, String? planTitle) {
+    Map<String, Object?> arguments = {
+      'tempPlans': tempPlans,
+      'planTitle': planTitle,
+    };
+    Navigator.of(context).pushNamed(
+      '/match-detail/add-edit-tactics/add-edit-tactical-plan',
+      arguments: arguments,
     );
   }
 
@@ -48,8 +41,9 @@ class EditablePlansListWidget extends StatelessWidget {
           ),
           child: AddHeaderListButton(
             title: 'Add a plan',
-            showDialog: () {
-              showAddPlanInfoDialog(context, tempPlans);
+            icon: Icons.add,
+            function: () {
+              openAddEditTacticalPlanScreen(context, tempPlans, null);
             },
           ),
         ),
@@ -61,7 +55,12 @@ class EditablePlansListWidget extends StatelessWidget {
                 key: ValueKey(plan.title),
                 value: plan,
                 builder: (_, __) {
-                  return EditablePlanItemWidget(plans: tempPlans);
+                  return EditablePlanItemWidget(
+                    openEditScreenFunction: () {
+                      openAddEditTacticalPlanScreen(
+                          context, tempPlans, plan.title);
+                    },
+                  );
                 },
               );
             }).toList(),
@@ -73,7 +72,7 @@ class EditablePlansListWidget extends StatelessWidget {
                 plans[from].title,
                 plans[from].description,
                 plans[from].color,
-                plans[from].imageBytes);
+                plans[from].drawing);
           },
           buildDraggableFeedback: (context, constraints, child) =>
               ConstrainedBox(
@@ -82,71 +81,6 @@ class EditablePlansListWidget extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class EditablePlanItemWidget extends StatelessWidget {
-  const EditablePlanItemWidget({
-    Key? key,
-    required this.plans,
-  }) : super(key: key);
-
-  final TacticalPlans plans;
-
-  @override
-  Widget build(BuildContext context) {
-    TacticalPlan plan = context.watch<TacticalPlan>();
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(Dimensions.borderRadius),
-        ),
-        child: Material(
-          color: Theme.of(context).colorScheme.surface,
-          child: InkWell(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: IntrinsicHeight(
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: plan.imageBytes == null
-                          ? Image.asset('assets/images/court_on_black.png')
-                          : Image.memory(plan.imageBytes!),
-                    ),
-                    const VerticalDivider(
-                        width: 48, thickness: 1, indent: 16, endIndent: 16),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20.0, bottom: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              plan.title,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: plan.color,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(plan.description),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            onTap: () {},
-          ),
-        ),
-      ),
     );
   }
 }

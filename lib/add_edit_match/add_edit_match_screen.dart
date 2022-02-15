@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/widgets/screen_save_button.dart';
 
 import '../constants/constants.dart';
 import '../matches/models/a_match.dart';
@@ -17,8 +18,6 @@ import 'widgets/ranking_item.dart';
 import 'widgets/time_item.dart';
 
 class AddEditMatchScreen extends StatefulWidget {
-  static const routeName = '/add-edit-match-screen';
-
   const AddEditMatchScreen({Key? key}) : super(key: key);
 
   @override
@@ -38,29 +37,33 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (firstInit) {
-      var argument = ModalRoute.of(context)!.settings.arguments;
-      if (argument != null) {
-        editing = true;
-        matchId = argument as String;
-        match = Provider.of<Matches>(context, listen: false).findById(matchId);
-        tempMatch = ValidationMatch(
-          id: match.id,
-          opponentFirstName: match.opponentFirstName,
-          opponentLastName: match.opponentLastName,
-          opponentCountry: match.opponentCountry,
-          opponentRanking: match.opponentRanking,
-          isPractice: match.isPractice,
-          matchDate: match.matchDate,
-          matchTime: match.matchTime,
-          courtSurface: match.courtSurface,
-        );
-        firstNameController.text = match.opponentFirstName!;
-        lastNameController.text = match.opponentLastName!;
-      } else {
-        tempMatch = ValidationMatch(id: DateTime.now().toString());
-      }
-      firstInit = false;
+      _onInit();
     }
+  }
+
+  void _onInit() {
+    var argument = ModalRoute.of(context)!.settings.arguments;
+    if (argument != null) {
+      editing = true;
+      matchId = argument as String;
+      match = Provider.of<Matches>(context, listen: false).findById(matchId);
+      tempMatch = ValidationMatch(
+        id: match.id,
+        opponentFirstName: match.opponentFirstName,
+        opponentLastName: match.opponentLastName,
+        opponentCountry: match.opponentCountry,
+        opponentRanking: match.opponentRanking,
+        isPractice: match.isPractice,
+        matchDate: match.matchDate,
+        matchTime: match.matchTime,
+        courtSurface: match.courtSurface,
+      );
+      firstNameController.text = match.opponentFirstName!;
+      lastNameController.text = match.opponentLastName!;
+    } else {
+      tempMatch = ValidationMatch(id: DateTime.now().toString());
+    }
+    firstInit = false;
   }
 
   void _saveMatch(BuildContext ctx, Matches matches) {
@@ -120,51 +123,17 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                   children: [
                     CourtSurfaceItem(),
                   ],
-                )
+                ),
               ],
             ),
-            Positioned(
-              bottom: 0,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: Dimensions.paddingTwo,
-                  right: Dimensions.paddingTwo,
-                  bottom: Dimensions.paddingTwo,
-                ),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(Dimensions.borderRadius),
-                  ),
-                  child: Material(
-                    color: Theme.of(context).colorScheme.secondaryVariant,
-                    child: Consumer<Matches>(
-                      builder: (_, matches, child) {
-                        return InkWell(
-                          onTap: () {
-                            _saveMatch(context, matches);
-                          },
-                          child: child,
-                        );
-                      },
-                      child: SizedBox(
-                        height: Dimensions.addMatchDialogInputHeight,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'SAVE',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Theme.of(context).colorScheme.onSecondary,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            Consumer<Matches>(builder: (_, matches, __) {
+              return ScreenSaveButton(
+                saveFunction: () {
+                  _saveMatch(context, matches);
+                },
+                color: Theme.of(context).colorScheme.secondaryVariant,
+              );
+            }),
           ],
         ),
       ),

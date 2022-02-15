@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class AddEditOtherGoalsScreen extends StatelessWidget {
   const AddEditOtherGoalsScreen({Key? key}) : super(key: key);
-  static const routeName = '/add-edit-other-goals';
 
   @override
   Widget build(BuildContext context) {

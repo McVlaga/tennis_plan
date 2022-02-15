@@ -1,24 +1,27 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/constants/constants.dart';
 import 'package:tennis_plan/services/court_drawing_manager.dart';
-import '../../constants/constants.dart';
-import '../../tactics/models/tactical_plans.dart';
-import '../../tactics/models/tactical_plan.dart';
+import 'package:tennis_plan/tactics/models/tactical_plan.dart';
 
-class PlansListWidget extends StatefulWidget {
-  const PlansListWidget({
+class EditablePlanItemWidget extends StatefulWidget {
+  const EditablePlanItemWidget({
     Key? key,
+    required this.openEditScreenFunction,
   }) : super(key: key);
 
+  final void Function() openEditScreenFunction;
+
   @override
-  State<PlansListWidget> createState() => _PlansListWidgetState();
+  State<EditablePlanItemWidget> createState() => _EditablePlanItemWidgetState();
 }
 
-class _PlansListWidgetState extends State<PlansListWidget> {
+class _EditablePlanItemWidgetState extends State<EditablePlanItemWidget> {
   bool firstInit = true;
+
   late CourtDrawingManager _courtManager;
+
+  late TacticalPlan plan;
 
   @override
   void didChangeDependencies() {
@@ -26,25 +29,27 @@ class _PlansListWidgetState extends State<PlansListWidget> {
     if (firstInit) {
       final canvasWidth = (MediaQuery.of(context).size.width / 2) - 16;
       _courtManager = CourtDrawingManager(context, canvasWidth, 2);
-      firstInit = false;
+      plan = context.watch<TacticalPlan>();
+      bool darkMode = Theme.of(context).brightness == Brightness.dark;
+      if (plan.color.value == Colors.black.value && darkMode) {
+        plan.setColor(Colors.white);
+      } else if (plan.color.value == Colors.white.value && !darkMode) {
+        plan.setColor(Colors.black);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<TacticalPlan> plans = context.watch<TacticalPlans>().plans;
-    return ListView.separated(
-      shrinkWrap: true,
-      itemCount: plans.length,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (_, index) {
-        return ClipRRect(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: const BorderRadius.all(
-                  Radius.circular(Dimensions.borderRadius)),
-            ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(Dimensions.borderRadius),
+        ),
+        child: Material(
+          color: Theme.of(context).colorScheme.surface,
+          child: InkWell(
             child: IntrinsicHeight(
               child: Row(
                 children: [
@@ -55,20 +60,20 @@ class _PlansListWidgetState extends State<PlansListWidget> {
                       height: _courtManager.canvasHeight,
                       alignment: Alignment.topLeft,
                       color: Colors.transparent,
-                      child: plans[index].drawing == null
+                      child: plan.drawing == null
                           ? _courtManager.buildCourtWidget()
                           : _courtManager
-                              .buildCourtDrawingWidget(plans[index].drawing!),
+                              .buildCourtDrawingWidget(plan.drawing!),
                     ),
                   ),
                   const VerticalDivider(
-                      width: 0, thickness: 1, indent: 8, endIndent: 8),
+                      width: 0, thickness: 1, indent: 16, endIndent: 16),
                   Expanded(
                     flex: 1,
                     child: Padding(
                       padding: const EdgeInsets.only(
                         top: 30.0,
-                        bottom: 30,
+                        bottom: 16,
                         right: 16,
                         left: 24,
                       ),
@@ -76,16 +81,14 @@ class _PlansListWidgetState extends State<PlansListWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            plans[index].title,
+                            plan.title,
                             style: TextStyle(
                               fontSize: 18,
-                              color: plans[index].color,
+                              color: plan.color,
                             ),
                           ),
                           const SizedBox(height: 8),
-                          Text(
-                            plans[index].description,
-                          ),
+                          Text(plan.description),
                         ],
                       ),
                     ),
@@ -93,12 +96,10 @@ class _PlansListWidgetState extends State<PlansListWidget> {
                 ],
               ),
             ),
+            onTap: widget.openEditScreenFunction,
           ),
-        );
-      },
-      separatorBuilder: (_, __) {
-        return const Divider(color: Colors.transparent, height: 16);
-      },
+        ),
+      ),
     );
   }
 }

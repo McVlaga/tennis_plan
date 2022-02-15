@@ -1,7 +1,9 @@
 import 'canvas_path.dart';
 
 class Drawing {
-  List<CanvasPath?> paths;
+  late List<CanvasPath?> paths;
 
-  Drawing({required this.paths});
+  Drawing({required paths}) {
+    this.paths = List.from(paths);
+  }
 }

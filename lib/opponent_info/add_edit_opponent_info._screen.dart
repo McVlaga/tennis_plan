@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../../constants/constants.dart';
 import '../../../matches/models/a_match.dart';
-import '../../../matches/models/matches.dart';
 import '../../widgets/screen_save_button.dart';
 import '../../widgets/section_title_widget.dart';
 import 'models/shots.dart';
@@ -16,7 +15,6 @@ import 'widgets/opponent_info_instruction_widget.dart';
 
 class AddEditOpponentInfoScreen extends StatefulWidget {
   const AddEditOpponentInfoScreen({Key? key}) : super(key: key);
-  static const routeName = '/add-edit-opponent-info';
 
   @override
   State<AddEditOpponentInfoScreen> createState() =>
@@ -28,18 +26,13 @@ class _AddEditOpponentInfoScreenState extends State<AddEditOpponentInfoScreen> {
   late Shots tempShots;
   late Strengths tempStrengths;
   late Weaknesses tempWeaknesses;
-  bool reordering = false;
   bool firstInit = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (firstInit) {
-      String matchId = ModalRoute.of(context)!.settings.arguments as String;
-      match = Provider.of<Matches>(
-        context,
-        listen: false,
-      ).findById(matchId);
+      match = ModalRoute.of(context)!.settings.arguments as AMatch;
       tempShots = Shots(match.opponentShots.shots);
       tempStrengths = Strengths(match.opponentStrengths.strengths);
       tempWeaknesses = Weaknesses(match.opponentWeaknesses.weaknesses);
@@ -92,7 +85,7 @@ class _AddEditOpponentInfoScreenState extends State<AddEditOpponentInfoScreen> {
               const OpponentInfoInstructionWidget()
             ],
           ),
-          ScreenSaveButton(saveFunction: saveOpponentInfo),
+          ScreenSaveButton(saveFunction: saveOpponentInfo, color: Colors.red),
         ],
       ),
     );

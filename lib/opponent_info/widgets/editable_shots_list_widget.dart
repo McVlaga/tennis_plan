@@ -48,7 +48,8 @@ class EditableShotsListWidget extends StatelessWidget {
         children: [
           AddHeaderListButton(
             title: 'Add a shot',
-            showDialog: () {
+            icon: Icons.add,
+            function: () {
               showAddItemDialog(context, tempShots);
             },
           ),

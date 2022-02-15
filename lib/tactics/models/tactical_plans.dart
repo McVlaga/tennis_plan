@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:tennis_plan/court_drawing/drawing.dart';
 import 'tactical_plan.dart';
 
 class TacticalPlans with ChangeNotifier {
@@ -10,29 +11,40 @@ class TacticalPlans with ChangeNotifier {
   List<TacticalPlan> plans = [];
 
   void addPlan(
-      String title, String description, Color color, Uint8List? imageBytes) {
+      String title, String description, Color color, Drawing? drawing) {
     plans.add(TacticalPlan(
         title: title,
         description: description,
         color: color,
-        imageBytes: imageBytes));
+        drawing: drawing));
     notifyListeners();
   }
 
   void addPlanAt(String title, String description, Color color,
-      Uint8List? imageBytes, int index) {
+      Drawing? drawing, int index) {
     plans.insert(
       index,
       TacticalPlan(
         title: title,
         description: description,
         color: color,
-        imageBytes: imageBytes,
+        drawing: drawing,
       ),
     );
   }
 
-  void deleteOpponentPlan(String title) {
+  void updatePlan(
+      String title, String description, Color color, Drawing? drawing) {
+    TacticalPlan plan = TacticalPlan(
+        title: title, description: description, color: color, drawing: drawing);
+    int foundIndex = plans.indexWhere((indexPlan) => indexPlan.title == title);
+    if (foundIndex >= 0) {
+      plans[plans.indexWhere((indexPlan) => indexPlan.title == title)] = plan;
+    }
+    notifyListeners();
+  }
+
+  void deletePlan(String title) {
     plans.remove(
         plans[plans.indexWhere((indexPlan) => indexPlan.title == title)]);
     notifyListeners();
@@ -52,10 +64,10 @@ class TacticalPlans with ChangeNotifier {
     String title,
     String description,
     Color color,
-    Uint8List? imageBytes,
+    Drawing? drawing,
   ) {
     deletePlanAt(from);
-    addPlanAt(title, description, color, imageBytes, to);
+    addPlanAt(title, description, color, drawing, to);
     notifyListeners();
   }
 }

@@ -10,14 +10,14 @@ import 'matches/match_list_screen.dart';
 import 'players/player_list_screen.dart';
 import 'settings/settings_screen.dart';
 
-class BottomTabBarScreen extends StatefulWidget {
-  const BottomTabBarScreen({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
-  State<BottomTabBarScreen> createState() => _BottomTabBarScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
+class _MainScreenState extends State<MainScreen> {
   int _page = 0;
   String _appBarTitle = 'MyMatches';
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
@@ -119,7 +119,7 @@ class _BottomTabBarScreenState extends State<BottomTabBarScreen> {
               ),
               onPressed: () {
                 if (_page == 0) {
-                  Navigator.pushNamed(context, AddEditMatchScreen.routeName);
+                  Navigator.pushNamed(context, '/add-edit-match');
                   FocusManager.instance.primaryFocus?.unfocus();
                 }
               },

@@ -17,7 +17,7 @@ class MatchListItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(
-          MatchDetailTabBarScreen.routeName,
+          '/match-detail',
           arguments: match.id,
         );
 

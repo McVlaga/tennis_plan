@@ -46,7 +46,8 @@ class EditableStrengthsListWidget extends StatelessWidget {
         children: [
           AddHeaderListButton(
             title: 'Add a strength',
-            showDialog: () {
+            icon: Icons.add,
+            function: () {
               showAddItemDialog(context, tempStrengths);
             },
           ),

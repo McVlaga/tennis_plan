@@ -1,18 +1,19 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/tactics/add_edit%20_tactical_plan_screen.dart';
 
 import 'add_edit_match/add_edit_match_screen.dart';
-import 'bottom_tab_bar_screen.dart';
+import 'main_screen.dart';
 import 'court_drawing/draw_plan_screen.dart';
 import 'match_detail/match_detail_tab_bar_screen.dart';
 import 'matches/models/matches.dart';
-import 'mental/add_edit_mental_goals_sreen.dart';
+import 'mental/add_edit_mentality_sreen.dart';
 import 'opponent_info/add_edit_opponent_info._screen.dart';
 import 'other/add_edit_other_goals.dart';
 import 'services/theme_manager.dart';
 import 'settings/models/user_info.dart';
-import 'tactics/add_edit_tactical_goals_screen.dart';
+import 'tactics/add_edit_tactics_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,19 +46,21 @@ class MyApp extends StatelessWidget {
         theme: theme.getThemeData(),
         initialRoute: '/',
         routes: {
-          '/': (context) => const BottomTabBarScreen(),
-          MatchDetailTabBarScreen.routeName: (context) =>
-              const MatchDetailTabBarScreen(),
-          AddEditMatchScreen.routeName: (context) => const AddEditMatchScreen(),
-          AddEditOpponentInfoScreen.routeName: (context) =>
+          '/': (context) => const MainScreen(),
+          '/match-detail': (context) => const MatchDetailTabBarScreen(),
+          '/add-edit-match': (context) => const AddEditMatchScreen(),
+          '/match-detail/add-edit-opponent-info': (context) =>
               const AddEditOpponentInfoScreen(),
-          AddEditTacticalGoalsScreen.routeName: (context) =>
-              const AddEditTacticalGoalsScreen(),
-          AddEditMentalGoalsScreen.routeName: (context) =>
-              const AddEditMentalGoalsScreen(),
-          AddEditOtherGoalsScreen.routeName: (context) =>
+          '/match-detail/add-edit-tactics': (context) =>
+              const AddEditTacticsScreen(),
+          '/match-detail/add-edit-tactics/add-edit-tactical-plan': (context) =>
+              const AddEditTacticalPlanScreen(),
+          '/match-detail/add-edit-mentality': (context) =>
+              const AddEditMentalityScreen(),
+          '/match-detail/add-edit-other-goals': (context) =>
               const AddEditOtherGoalsScreen(),
-          DrawPlanScreen.routeName: (context) => const DrawPlanScreen(),
+          '/match-detail/add-edit-tactics/add-edit-tactical-plan/draw-plan':
+              (context) => const DrawPlanScreen(),
         },
       );
     });

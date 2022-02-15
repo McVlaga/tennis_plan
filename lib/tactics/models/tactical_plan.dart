@@ -1,23 +1,28 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:tennis_plan/court_drawing/drawing.dart';
 
 class TacticalPlan with ChangeNotifier {
   TacticalPlan({
     required this.title,
     required this.description,
     required this.color,
-    required this.imageBytes,
+    required this.drawing,
   });
 
   String title;
   String description;
   Color color;
-  Uint8List? imageBytes;
+  Drawing? drawing;
 
   void setTitle(String title) {
     this.title = title;
     notifyListeners();
+  }
+
+  void setColor(Color color) {
+    this.color = color;
   }
 
   void setDescription(String description) {
@@ -25,8 +30,8 @@ class TacticalPlan with ChangeNotifier {
     notifyListeners();
   }
 
-  void setImage(Uint8List imageBytes) {
-    this.imageBytes = imageBytes;
+  void setDrawing(Drawing drawing) {
+    this.drawing = drawing;
     notifyListeners();
   }
 }

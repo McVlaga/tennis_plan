@@ -6,16 +6,14 @@ import '../add_edit_match/add_edit_match_screen.dart';
 import '../constants/constants.dart';
 import '../matches/models/a_match.dart';
 import '../matches/models/matches.dart';
-import '../mental/add_edit_mental_goals_sreen.dart';
+import '../mental/add_edit_mentality_sreen.dart';
 import '../opponent_info/add_edit_opponent_info._screen.dart';
 import '../other/add_edit_other_goals.dart';
 import '../plan/plan_screen.dart';
 import '../review/review_screen.dart';
-import '../tactics/add_edit_tactical_goals_screen.dart';
+import '../tactics/add_edit_tactics_screen.dart';
 
 class MatchDetailTabBarScreen extends StatefulWidget {
-  static const routeName = '/match-detail-tab-bar';
-
   const MatchDetailTabBarScreen({Key? key}) : super(key: key);
 
   @override
@@ -28,20 +26,23 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
 
   late AMatch match;
   late Matches matches;
-  late String matchId;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (firstInit) {
-      matchId = ModalRoute.of(context)!.settings.arguments as String;
-      matches = Provider.of<Matches>(context, listen: false);
-      match = matches.findById(matchId);
-      firstInit = false;
+      _onInit();
     }
   }
 
-  void showDeleteDialog() {
+  void _onInit() {
+    String matchId = ModalRoute.of(context)!.settings.arguments as String;
+    matches = Provider.of<Matches>(context, listen: false);
+    match = matches.findById(matchId);
+    firstInit = false;
+  }
+
+  void _showDeleteDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -67,7 +68,7 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
-                matches.deleteMatch(matchId);
+                matches.deleteMatch(match.id);
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
@@ -101,14 +102,14 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                    AddEditMatchScreen.routeName,
+                    '/add-edit-match',
                     arguments: match.id,
                   );
                 },
                 icon: const Icon(Icons.edit),
               ),
               IconButton(
-                onPressed: showDeleteDialog,
+                onPressed: _showDeleteDialog,
                 icon: const Icon(Icons.delete),
               ),
             ],
@@ -144,8 +145,8 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                     Theme.of(context).appBarTheme.backgroundColor,
                 onTap: () {
                   Navigator.of(context).pushNamed(
-                      AddEditOpponentInfoScreen.routeName,
-                      arguments: matchId);
+                      '/match-detail/add-edit-opponent-info',
+                      arguments: match);
                 },
               ),
               SpeedDialChild(
@@ -160,8 +161,8 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                     Theme.of(context).appBarTheme.backgroundColor,
                 onTap: () {
                   Navigator.of(context).pushNamed(
-                      AddEditTacticalGoalsScreen.routeName,
-                      arguments: matchId);
+                      '/match-detail/add-edit-tactics',
+                      arguments: match);
                 },
               ),
               SpeedDialChild(
@@ -176,8 +177,8 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                     Theme.of(context).appBarTheme.backgroundColor,
                 onTap: () {
                   Navigator.of(context).pushNamed(
-                      AddEditMentalGoalsScreen.routeName,
-                      arguments: matchId);
+                      '/match-detail/add-edit-mentality',
+                      arguments: match);
                 },
               ),
               SpeedDialChild(
@@ -192,8 +193,8 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                     Theme.of(context).appBarTheme.backgroundColor,
                 onTap: () {
                   Navigator.of(context).pushNamed(
-                      AddEditOtherGoalsScreen.routeName,
-                      arguments: matchId);
+                      '/match-detail/add-edit-other-goals',
+                      arguments: match);
                 },
               ),
             ],

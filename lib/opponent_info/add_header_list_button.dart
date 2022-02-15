@@ -6,11 +6,13 @@ class AddHeaderListButton extends StatelessWidget {
   const AddHeaderListButton({
     Key? key,
     required this.title,
-    required this.showDialog,
+    required this.icon,
+    required this.function,
   }) : super(key: key);
 
   final String title;
-  final void Function() showDialog;
+  final IconData icon;
+  final void Function() function;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +30,13 @@ class AddHeaderListButton extends StatelessWidget {
                 ),
               ),
               Icon(
-                Icons.add,
+                icon,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
             ],
           ),
         ),
-        onTap: showDialog,
+        onTap: function,
       ),
     );
   }

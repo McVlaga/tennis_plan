@@ -5,16 +5,19 @@ import '../constants/constants.dart';
 class ScreenSaveButton extends StatelessWidget {
   const ScreenSaveButton({
     required this.saveFunction,
+    required this.color,
     Key? key,
   }) : super(key: key);
 
   final void Function() saveFunction;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
       bottom: 0,
       width: MediaQuery.of(context).size.width,
+      height: 80,
       child: Padding(
         padding: const EdgeInsets.only(
           left: Dimensions.paddingTwo,
@@ -26,7 +29,7 @@ class ScreenSaveButton extends StatelessWidget {
             Radius.circular(Dimensions.borderRadius),
           ),
           child: Material(
-            color: Colors.red,
+            color: color,
             child: InkWell(
               onTap: saveFunction,
               child: SizedBox(
