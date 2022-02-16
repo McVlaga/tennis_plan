@@ -56,15 +56,17 @@ class _EditablePlanItemWidgetState extends State<EditablePlanItemWidget> {
                   const SizedBox(width: 16),
                   Center(
                     child: ClipRRect(
-                      child: Container(
-                        width: _courtManager.canvasWidth,
-                        height: _courtManager.canvasHeight,
-                        alignment: Alignment.topLeft,
-                        color: Colors.transparent,
-                        child: plan.drawing == null
-                            ? _courtManager.buildCourtWidget()
-                            : _courtManager
-                                .buildCourtDrawingWidget(plan.drawing!),
+                      child: RepaintBoundary(
+                        child: Container(
+                          width: _courtManager.canvasWidth,
+                          height: _courtManager.canvasHeight,
+                          alignment: Alignment.topLeft,
+                          color: Colors.transparent,
+                          child: plan.drawing == null
+                              ? _courtManager.buildCourtWidget()
+                              : _courtManager
+                                  .buildCourtDrawingWidget(plan.drawing!),
+                        ),
                       ),
                     ),
                   ),

@@ -12,23 +12,23 @@ class CourtSurfaceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newMatch = Provider.of<ValidationMatch>(context);
+    final match = context.watch<ValidationMatch>();
     return SizedBox(
       height: Dimensions.addMatchDialogInputHeight,
       child: InkWell(
         child: SettingsItemWidget(
           title: 'Surface',
-          label: newMatch.courtSurfaceString,
-          showError: newMatch.showError(newMatch.courtSurface),
+          label: match.courtSurfaceString,
+          showError: match.showError(match.courtSurface),
         ),
         onTap: () {
-          showDialog(context, newMatch);
+          showDialog(context, match);
         },
       ),
     );
   }
 
-  void showDialog(BuildContext context, ValidationMatch newMatch) {
+  void showDialog(BuildContext context, ValidationMatch match) {
     FocusScope.of(context).unfocus();
     showModalBottomSheet(
       isScrollControlled: true,
@@ -41,69 +41,83 @@ class CourtSurfaceItem extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).canvasColor,
       builder: (builder) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 32),
-          child: Wrap(
-            children: <Widget>[
-              RadioButton(
-                label: 'Hard Indoors',
-                valueType: newMatch.courtSurface,
-                value: CourtSurface.hardIndoors,
-                function: () {
-                  if (newMatch.courtSurface != CourtSurface.hardIndoors) {
-                    newMatch.setCourtSurface(CourtSurface.hardIndoors);
-                  }
-                  Navigator.pop(context);
-                },
-              ),
-              RadioButton(
-                label: 'Hard Outdoors',
-                valueType: newMatch.courtSurface,
-                value: CourtSurface.hardOutdoors,
-                function: () {
-                  if (newMatch.courtSurface != CourtSurface.hardOutdoors) {
-                    newMatch.setCourtSurface(CourtSurface.hardOutdoors);
-                  }
-                  Navigator.pop(context);
-                },
-              ),
-              RadioButton(
-                label: 'Clay',
-                valueType: newMatch.courtSurface,
-                value: CourtSurface.clay,
-                function: () {
-                  if (newMatch.courtSurface != CourtSurface.clay) {
-                    newMatch.setCourtSurface(CourtSurface.clay);
-                  }
-                  Navigator.pop(context);
-                },
-              ),
-              RadioButton(
-                label: 'Grass',
-                valueType: newMatch.courtSurface,
-                value: CourtSurface.grass,
-                function: () {
-                  if (newMatch.courtSurface != CourtSurface.grass) {
-                    newMatch.setCourtSurface(CourtSurface.grass);
-                  }
-                  Navigator.pop(context);
-                },
-              ),
-              RadioButton(
-                label: 'Carpet',
-                valueType: newMatch.courtSurface,
-                value: CourtSurface.carpet,
-                function: () {
-                  if (newMatch.courtSurface != CourtSurface.carpet) {
-                    newMatch.setCourtSurface(CourtSurface.carpet);
-                  }
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
+        return CourtSurfacePickerDialog(match: match);
       },
+    );
+  }
+}
+
+class CourtSurfacePickerDialog extends StatelessWidget {
+  const CourtSurfacePickerDialog({
+    Key? key,
+    required this.match,
+  }) : super(key: key);
+
+  final ValidationMatch match;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 32),
+      child: Wrap(
+        children: <Widget>[
+          RadioButton(
+            label: 'Hard Indoors',
+            valueType: match.courtSurface,
+            value: CourtSurface.hardIndoors,
+            function: () {
+              if (match.courtSurface != CourtSurface.hardIndoors) {
+                match.setCourtSurface(CourtSurface.hardIndoors);
+              }
+              Navigator.pop(context);
+            },
+          ),
+          RadioButton(
+            label: 'Hard Outdoors',
+            valueType: match.courtSurface,
+            value: CourtSurface.hardOutdoors,
+            function: () {
+              if (match.courtSurface != CourtSurface.hardOutdoors) {
+                match.setCourtSurface(CourtSurface.hardOutdoors);
+              }
+              Navigator.pop(context);
+            },
+          ),
+          RadioButton(
+            label: 'Clay',
+            valueType: match.courtSurface,
+            value: CourtSurface.clay,
+            function: () {
+              if (match.courtSurface != CourtSurface.clay) {
+                match.setCourtSurface(CourtSurface.clay);
+              }
+              Navigator.pop(context);
+            },
+          ),
+          RadioButton(
+            label: 'Grass',
+            valueType: match.courtSurface,
+            value: CourtSurface.grass,
+            function: () {
+              if (match.courtSurface != CourtSurface.grass) {
+                match.setCourtSurface(CourtSurface.grass);
+              }
+              Navigator.pop(context);
+            },
+          ),
+          RadioButton(
+            label: 'Carpet',
+            valueType: match.courtSurface,
+            value: CourtSurface.carpet,
+            function: () {
+              if (match.courtSurface != CourtSurface.carpet) {
+                match.setCourtSurface(CourtSurface.carpet);
+              }
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

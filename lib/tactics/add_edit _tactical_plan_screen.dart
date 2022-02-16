@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants/constants.dart';
-import '../court_drawing/court_painter.dart';
-import '../opponent_info/add_header_list_button.dart';
+import '../widgets/add_header_list_button.dart';
 import '../services/court_drawing_manager.dart';
 import '../settings/widgets/settings_section_widget.dart';
 import 'models/tactical_plan.dart';

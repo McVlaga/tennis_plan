@@ -10,29 +10,28 @@ class DateItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newMatch = Provider.of<ValidationMatch>(context);
+    final match = context.watch<ValidationMatch>();
     return SizedBox(
       height: Dimensions.addMatchDialogInputHeight,
       child: InkWell(
         child: SettingsItemWidget(
           title: 'Date',
-          label: newMatch.matchDateString,
-          showError: newMatch.showError(newMatch.matchDate),
+          label: match.matchDateString,
+          showError: match.showError(match.matchDate),
         ),
         onTap: () async {
-          await showDateDialog(context, newMatch);
+          await showDateDialog(context, match);
         },
       ),
     );
   }
 
   Future<void> showDateDialog(
-      BuildContext context, ValidationMatch newMatch) async {
+      BuildContext context, ValidationMatch match) async {
     FocusScope.of(context).unfocus();
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate:
-          newMatch.matchDate == null ? DateTime.now() : newMatch.matchDate!,
+      initialDate: match.matchDate == null ? DateTime.now() : match.matchDate!,
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
       builder: (BuildContext context, Widget? child) {
@@ -45,8 +44,8 @@ class DateItem extends StatelessWidget {
         );
       },
     );
-    if (pickedDate != null && pickedDate != newMatch.matchDate) {
-      newMatch.setMatchDate(pickedDate);
+    if (pickedDate != null && pickedDate != match.matchDate) {
+      match.setMatchDate(pickedDate);
     }
   }
 }

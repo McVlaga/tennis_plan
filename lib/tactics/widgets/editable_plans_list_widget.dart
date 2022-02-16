@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 import 'editable_plan_item_widget.dart';
-import '../../opponent_info/add_header_list_button.dart';
+import '../../widgets/add_header_list_button.dart';
 import '../models/tactical_plan.dart';
 import '../models/tactical_plans.dart';
 

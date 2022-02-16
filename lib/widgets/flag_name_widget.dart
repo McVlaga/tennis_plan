@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/constants/constants.dart';
+import 'package:tennis_plan/matches/models/a_match.dart';
 
-import '../../constants/constants.dart';
-import '../models/a_match.dart';
-
-class FlagAndNameWidget extends StatelessWidget {
-  const FlagAndNameWidget({
+class FlagNameWidget extends StatelessWidget {
+  const FlagNameWidget({
     Key? key,
     required this.fullName,
   }) : super(key: key);

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'drawing.dart';
+import 'models/drawing.dart';
 
 class Painter extends CustomPainter {
   Painter({

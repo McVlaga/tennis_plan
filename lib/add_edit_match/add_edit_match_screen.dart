@@ -10,10 +10,6 @@ import 'models/validation_match.dart';
 import 'widgets/countries_item.dart';
 import 'widgets/court_surface_item.dart';
 import 'widgets/date_item.dart';
-import 'widgets/first_name_item.dart';
-import 'widgets/last_name_item.dart';
-import 'widgets/lefty_check_box.dart';
-import 'widgets/practice_check_box.dart';
 import 'widgets/ranking_item.dart';
 import 'widgets/time_item.dart';
 
@@ -46,7 +42,7 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
     if (argument != null) {
       editing = true;
       matchId = argument as String;
-      match = Provider.of<Matches>(context, listen: false).findById(matchId);
+      match = context.read<Matches>().findById(matchId);
       tempMatch = ValidationMatch(
         id: match.id,
         opponentFirstName: match.opponentFirstName,
@@ -107,7 +103,7 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                     LastNameItem(nameController: lastNameController),
                     const CountriesItem(),
                     const RankingItem(),
-                    const LeftyCheckBox(),
+                    const LeftyCheckBoxItem(),
                   ],
                 ),
                 const SettingsSectionWidget(
@@ -115,7 +111,7 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
                   children: [
                     DateItem(),
                     TimeItem(),
-                    PracticeCheckBox(),
+                    PracticeCheckBoxItem(),
                   ],
                 ),
                 const SettingsSectionWidget(
@@ -136,6 +132,112 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
             }),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class FirstNameItem extends StatelessWidget {
+  FirstNameItem({
+    Key? key,
+    required this.nameController,
+  }) : super(key: key);
+
+  TextEditingController nameController;
+
+  @override
+  Widget build(BuildContext context) {
+    final match = context.read<ValidationMatch>();
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimensions.paddingTwo,
+        vertical: Dimensions.paddingOne,
+      ),
+      child: TextField(
+        controller: nameController,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(
+          border: const UnderlineInputBorder(),
+          hintText: 'FirstName',
+          errorText: match.opponentFirstNameError,
+        ),
+      ),
+    );
+  }
+}
+
+class LastNameItem extends StatelessWidget {
+  LastNameItem({
+    Key? key,
+    required this.nameController,
+  }) : super(key: key);
+
+  TextEditingController nameController;
+
+  @override
+  Widget build(BuildContext context) {
+    final match = context.read<ValidationMatch>();
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimensions.paddingTwo,
+        vertical: Dimensions.paddingOne,
+      ),
+      child: TextField(
+        controller: nameController,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(
+          border: const UnderlineInputBorder(),
+          hintText: 'Last Name',
+          errorText: match.opponentLastNameError,
+        ),
+      ),
+    );
+  }
+}
+
+class LeftyCheckBoxItem extends StatelessWidget {
+  const LeftyCheckBoxItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final match = context.watch<ValidationMatch>();
+    return SizedBox(
+      height: Dimensions.addMatchDialogInputHeight,
+      child: SwitchListTile(
+        activeColor: Theme.of(context).colorScheme.secondary,
+        contentPadding: const EdgeInsets.only(
+          left: Dimensions.paddingTwo,
+          right: Dimensions.paddingTwo,
+        ),
+        title: const Text("Lefty"),
+        value: match.isOpponentLefty!,
+        onChanged: (newValue) {
+          match.setIsOpponentLefty(newValue);
+        }, //  <-- leading Checkbox
+      ),
+    );
+  }
+}
+
+class PracticeCheckBoxItem extends StatelessWidget {
+  const PracticeCheckBoxItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final match = context.watch<ValidationMatch>();
+    return SizedBox(
+      height: Dimensions.addMatchDialogInputHeight,
+      child: SwitchListTile(
+        activeColor: Theme.of(context).colorScheme.secondary,
+        contentPadding: const EdgeInsets.only(
+          left: Dimensions.paddingTwo,
+          right: Dimensions.paddingTwo,
+        ),
+        title: const Text("Practice"),
+        value: match.isPractice!,
+        onChanged: (newValue) {
+          match.setIsPractice(newValue);
+        }, //  <-- leading Checkbox
       ),
     );
   }

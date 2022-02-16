@@ -11,23 +11,23 @@ class CountriesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newMatch = Provider.of<ValidationMatch>(context);
+    final match = context.watch<ValidationMatch>();
     return SizedBox(
       height: Dimensions.addMatchDialogInputHeight,
       child: InkWell(
         child: SettingsItemWidget(
           title: 'Country',
-          label: newMatch.opponentCountryString,
-          showError: newMatch.showError(newMatch.opponentCountry),
+          label: match.opponentCountryString,
+          showError: match.showError(match.opponentCountry),
         ),
         onTap: () {
-          showCountriesDialog(context, newMatch);
+          showCountriesDialog(context, match);
         },
       ),
     );
   }
 
-  void showCountriesDialog(BuildContext context, ValidationMatch newMatch) {
+  void showCountriesDialog(BuildContext context, ValidationMatch match) {
     FocusScope.of(context).unfocus();
     showCountryPicker(
       context: context,
@@ -54,7 +54,7 @@ class CountriesItem extends StatelessWidget {
         ),
       ),
       onSelect: (Country country) {
-        newMatch.setOpponentCountry(country);
+        match.setOpponentCountry(country);
       },
     );
   }

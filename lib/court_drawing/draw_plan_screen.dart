@@ -5,15 +5,15 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'cancel_save_bar_widget.dart';
+import 'widgets/cancel_save_bar_widget.dart';
 import '../services/court_drawing_manager.dart';
 import '../widgets/color_picker_dialog.dart';
 import '../widgets/screen_save_button.dart';
 import '../tactics/models/tactical_plan.dart';
 import '../../../constants/constants.dart';
 import 'court_painter.dart';
-import 'drawing.dart';
-import 'canvas_path.dart';
+import 'models/drawing.dart';
+import 'models/canvas_path.dart';
 import 'painter.dart';
 
 class DrawPlanScreen extends StatefulWidget {

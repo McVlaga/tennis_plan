@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../court_drawing/drawing.dart';
+import '../../court_drawing/models/drawing.dart';
 import 'tactical_plan.dart';
 
 class TacticalPlans with ChangeNotifier {

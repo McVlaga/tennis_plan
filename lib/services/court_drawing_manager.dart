@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../court_drawing/court_painter.dart';
-import '../court_drawing/drawing.dart';
+import '../court_drawing/models/drawing.dart';
 import '../court_drawing/painter.dart';
 
 class CourtDrawingManager {

@@ -10,30 +10,30 @@ class TimeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newMatch = Provider.of<ValidationMatch>(context);
+    final match = context.watch<ValidationMatch>();
     return SizedBox(
       height: Dimensions.addMatchDialogInputHeight,
       child: InkWell(
         child: SettingsItemWidget(
           title: 'Time',
-          label: newMatch.getMatchTimeString(context),
-          showError: newMatch.showError(newMatch.matchTime),
+          label: match.getMatchTimeString(context),
+          showError: match.showError(match.matchTime),
         ),
         onTap: () async {
-          await showTimeDialog(context, newMatch);
+          await showTimeDialog(context, match);
         },
       ),
     );
   }
 
   Future<void> showTimeDialog(
-      BuildContext context, ValidationMatch newMatch) async {
+      BuildContext context, ValidationMatch match) async {
     FocusScope.of(context).unfocus();
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: newMatch.matchTime == null
+      initialTime: match.matchTime == null
           ? TimeOfDay.now().replacing(minute: 0)
-          : newMatch.matchTime!,
+          : match.matchTime!,
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
@@ -45,8 +45,8 @@ class TimeItem extends StatelessWidget {
       },
     );
 
-    if (pickedTime != null && pickedTime != newMatch.matchTime) {
-      newMatch.setMatchTime(pickedTime);
+    if (pickedTime != null && pickedTime != match.matchTime) {
+      match.setMatchTime(pickedTime);
     }
   }
 }

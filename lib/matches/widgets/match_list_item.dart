@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/widgets/flag_name_widget.dart';
 
 import '../../constants/constants.dart';
 import '../models/a_match.dart';
-import 'flag_and_name_widget.dart';
-import 'surface_practice_badge_widget.dart';
-import 'win_lose_badge_widget.dart';
 
 class MatchListItem extends StatelessWidget {
   const MatchListItem({Key? key}) : super(key: key);
@@ -19,7 +17,6 @@ class MatchListItem extends StatelessWidget {
           '/match-detail',
           arguments: match.id,
         );
-
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: SizedBox(
@@ -63,7 +60,7 @@ class MatchListItem extends StatelessWidget {
                     child: Row(
                       children: const [
                         Expanded(
-                          child: FlagAndNameWidget(fullName: false),
+                          child: FlagNameWidget(fullName: false),
                         ),
                         SizedBox(width: 10),
                         Text(
@@ -78,6 +75,74 @@ class MatchListItem extends StatelessWidget {
                 ),
                 const SurfacePracticeBadgeWidget(),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class WinLoseBadgeWidget extends StatelessWidget {
+  const WinLoseBadgeWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    AMatch match = context.watch<AMatch>();
+    return Positioned(
+      right: -14,
+      bottom: 0,
+      child: Transform.rotate(
+        angle: Dimensions.badgeWinLoseAngle,
+        child: Container(
+          height: Dimensions.badgeWinLoseHeight,
+          width: 300,
+          color: match.matchResult == MatchState.win
+              ? AppColors.winColor
+              : match.matchResult == MatchState.lose
+                  ? AppColors.loseColor
+                  : AppColors.notPlayedColor,
+        ),
+      ),
+    );
+  }
+}
+
+class SurfacePracticeBadgeWidget extends StatelessWidget {
+  const SurfacePracticeBadgeWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    AMatch match = context.watch<AMatch>();
+    return Container(
+      height: 20,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: match.getSurfaceColor(),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingTwo),
+        child: Row(
+          children: [
+            if (match.courtSurface != null)
+              Text(
+                match.buildSurfaceLocationString(),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  fontSize: 12,
+                ),
+              ),
+            const Spacer(),
+            Text(
+              match.getDateString(context),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondary,
+                fontSize: 12,
+              ),
             ),
           ],
         ),
