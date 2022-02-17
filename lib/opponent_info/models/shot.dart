@@ -20,9 +20,9 @@ class Shot with ChangeNotifier {
   }
 
   Color getShotColor(BuildContext context) {
-    if (score == 5) {
+    if (score > 3) {
       return Theme.of(context).colorScheme.cardShotGoodBg;
-    } else if (score == 3 || score == 4) {
+    } else if (score == 3) {
       return Theme.of(context).colorScheme.cardShotMediumBg;
     } else {
       return Theme.of(context).colorScheme.cardShotBadBg;

@@ -1,12 +1,13 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tennis_plan/tactics/models/tactical_goals.dart';
+
+import '../../add_edit_match/models/validation_match.dart';
 import '../../opponent_info/models/shots.dart';
 import '../../opponent_info/models/strengths.dart';
 import '../../opponent_info/models/weaknesses.dart';
 import '../../tactics/models/tactical_plans.dart';
-
-import '../../add_edit_match/models/validation_match.dart';
 import 'ranking.dart';
 
 enum MatchState { win, lose, notPlayed }
@@ -33,6 +34,7 @@ class AMatch with ChangeNotifier {
   Weaknesses opponentWeaknesses = Weaknesses([]);
 
   TacticalPlans tacticalPlans = TacticalPlans([]);
+  TacticalGoals tacticalGoals = TacticalGoals([]);
 
   AMatch({
     required this.id,
@@ -77,8 +79,8 @@ class AMatch with ChangeNotifier {
     notifyListeners();
   }
 
-  void setTacticalInfo(TacticalPlans newTacticalPlans) {
-    tacticalPlans = newTacticalPlans;
+  void setTacticalGoals(TacticalGoals newTacticalGoals) {
+    tacticalGoals = newTacticalGoals;
     notifyListeners();
   }
 

@@ -87,7 +87,7 @@ class CourtPainter extends CustomPainter {
 
   // 4
   @override
-  bool shouldRepaint(CourtPainter _) {
+  bool shouldRepaint(CourtPainter oldDelegate) {
     return true;
   }
 }

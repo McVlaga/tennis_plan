@@ -4,6 +4,14 @@ import '../constants/constants.dart';
 import 'storage_manager.dart';
 
 class ThemeManager with ChangeNotifier {
+  ThemeManager() {
+    _themeData = lightTheme;
+    _theme = ThemeType.light;
+  }
+
+  late ThemeData _themeData;
+  late ThemeType _theme;
+
   final darkTheme = ThemeData(
     fontFamily: 'Rubik',
     primarySwatch: AppColors.primarySwatchDark,
@@ -25,8 +33,8 @@ class ThemeManager with ChangeNotifier {
         ),
       ),
     ),
-    textTheme: const TextTheme(
-      headline6: TextStyle(color: AppColors.textSecondaryColorDark),
+    textTheme: TextTheme(
+      headline6: const TextStyle(color: AppColors.textSecondaryColorDark),
     ),
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primarySwatchDark,
@@ -80,8 +88,8 @@ class ThemeManager with ChangeNotifier {
         ),
       ),
     ),
-    textTheme: const TextTheme(
-      headline6: TextStyle(color: AppColors.textSecondaryColorLight),
+    textTheme: TextTheme(
+      headline6: const TextStyle(color: AppColors.textSecondaryColorLight),
     ),
     colorScheme: const ColorScheme.light(
       primary: AppColors.primarySwatchLight,
@@ -115,15 +123,8 @@ class ThemeManager with ChangeNotifier {
     iconTheme: const IconThemeData(color: Colors.white),
   );
 
-  late ThemeData _themeData;
-  late ThemeType _theme;
   ThemeData getThemeData() => _themeData;
   ThemeType getTheme() => _theme;
-
-  ThemeManager() {
-    _themeData = lightTheme;
-    _theme = ThemeType.light;
-  }
 
   Future<void> loadTheme() async {
     var value = await StorageManager.readData('themeMode');
@@ -157,15 +158,15 @@ class ThemeManager with ChangeNotifier {
 extension ColorSchemeExtension on ColorScheme {
   Color get cardShotGoodBg => brightness == Brightness.light
       ? const Color(0xffE8F5E9)
-      : const Color(0xFF292e40);
+      : const Color(0x204CAF50);
 
   Color get cardShotMediumBg => brightness == Brightness.light
       ? const Color(0xffFFF3E0)
-      : const Color(0xFF292e40);
+      : const Color(0x20FF9800);
 
   Color get cardShotBadBg => brightness == Brightness.light
       ? const Color(0xffFFEBEE)
-      : const Color(0xFF292e40);
+      : const Color(0x20F44336);
 
   Color get contentBgColor => brightness == Brightness.light
       ? const Color(0xffF8F8F8)

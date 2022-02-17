@@ -17,7 +17,7 @@ import 'tactics/add_edit_tactics_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  GestureBinding.instance?.resamplingEnabled = true;
+  GestureBinding.instance.resamplingEnabled = true;
   UserInfo userInfo = UserInfo();
   await userInfo.loadUserInfo();
   ThemeManager themeManager = ThemeManager();

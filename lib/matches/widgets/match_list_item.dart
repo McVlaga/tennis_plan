@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/widgets/flag_name_widget.dart';
+import '../../widgets/flag_name_widget.dart';
 
 import '../../constants/constants.dart';
 import '../models/a_match.dart';

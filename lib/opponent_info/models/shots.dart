@@ -7,12 +7,7 @@ class Shots with ChangeNotifier {
     shots = List.from(newShots);
   }
 
-  List<Shot> shots = [
-    Shot(name: 'Forehand', score: 5),
-    Shot(name: 'Backhand', score: 4),
-    Shot(name: 'Serve', score: 5),
-    Shot(name: 'Volleys', score: 3),
-  ];
+  List<Shot> shots = [];
 
   void addOpponentShot(String name, int score) {
     shots.add(Shot(name: name, score: score));

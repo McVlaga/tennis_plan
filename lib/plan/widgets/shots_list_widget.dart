@@ -65,11 +65,14 @@ class ShotItemWidget extends StatelessWidget {
               children: [
                 Text(
                   shot.score.toString(),
-                  style: const TextStyle(fontSize: 20),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
-                Icon(
+                const Icon(
                   Icons.star,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Color(0xFFFBC02D),
                 ),
               ],
             ),

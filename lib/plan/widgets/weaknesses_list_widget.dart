@@ -14,7 +14,6 @@ class WeaknessesListWidget extends StatelessWidget {
     List<String> weaknesses = context.watch<Weaknesses>().weaknesses;
     if (weaknesses.isEmpty) return const SizedBox.shrink();
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingOne),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius:
@@ -22,28 +21,38 @@ class WeaknessesListWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           const SectionHeaderWidget(
               title: 'Weaknesses', icon: Icons.broken_image),
           const SizedBox(height: 8),
-          ListView.separated(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (_, index) {
-              return WeaknessItemWidget(
-                weakness: weaknesses[index],
-              );
-            },
-            itemCount: weaknesses.length,
-            separatorBuilder: (_, index) {
-              return const Divider(
-                height: 1,
-                thickness: 1,
-                indent: 41,
-              );
-            },
+          Column(
+            children: [
+              for (int i = 0; i < weaknesses.length; i++) ...[
+                WeaknessItemWidget(weakness: weaknesses[i]),
+                if (i < weaknesses.length - 1)
+                  const Divider(height: 1, thickness: 1, indent: 42),
+              ]
+            ],
           ),
+          const SizedBox(height: 8),
+          // ListView.separated(
+          //   shrinkWrap: true,
+          //   padding: EdgeInsets.zero,
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   itemBuilder: (_, index) {
+          //     return WeaknessItemWidget(
+          //       weakness: weaknesses[index],
+          //     );
+          //   },
+          //   itemCount: weaknesses.length,
+          //   separatorBuilder: (_, index) {
+          //     return const Divider(
+          //       height: 1,
+          //       thickness: 1,
+          //       indent: 41,
+          //     );
+          //   },
+          // ),
         ],
       ),
     );

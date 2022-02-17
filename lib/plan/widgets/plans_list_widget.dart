@@ -31,69 +31,82 @@ class _PlansListWidgetState extends State<PlansListWidget> {
   @override
   Widget build(BuildContext context) {
     List<TacticalPlan> plans = context.watch<TacticalPlans>().plans;
-    return ListView.separated(
-      shrinkWrap: true,
-      itemCount: plans.length,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (_, index) {
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: const BorderRadius.all(
-                Radius.circular(Dimensions.borderRadius)),
-          ),
-          child: IntrinsicHeight(
-            child: Row(
-              children: [
-                const SizedBox(width: 16),
-                Center(
-                  child: ClipRRect(
-                    child: Container(
-                      width: _courtManager.canvasWidth,
-                      height: _courtManager.canvasHeight,
-                      alignment: Alignment.topLeft,
-                      color: Colors.transparent,
-                      child: plans[index].drawing == null
-                          ? _courtManager.buildCourtWidget()
-                          : _courtManager
-                              .buildCourtDrawingWidget(plans[index].drawing!),
-                    ),
-                  ),
+    return Column(
+      children: [
+        for (int i = 0; i < plans.length; i++) ...[
+          TacticalPlanItemWidget(courtManager: _courtManager, plan: plans[i]),
+          if (i < plans.length - 1) const Divider(color: Colors.transparent),
+        ],
+      ],
+    );
+  }
+}
+
+class TacticalPlanItemWidget extends StatelessWidget {
+  const TacticalPlanItemWidget({
+    Key? key,
+    required CourtDrawingManager courtManager,
+    required this.plan,
+  })  : _courtManager = courtManager,
+        super(key: key);
+
+  final CourtDrawingManager _courtManager;
+  final TacticalPlan plan;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius:
+            const BorderRadius.all(Radius.circular(Dimensions.borderRadius)),
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            const SizedBox(width: 16),
+            Center(
+              child: ClipRRect(
+                child: Container(
+                  width: _courtManager.canvasWidth,
+                  height: _courtManager.canvasHeight,
+                  alignment: Alignment.topLeft,
+                  color: Colors.transparent,
+                  child: plan.drawing == null
+                      ? _courtManager.buildCourtWidget()
+                      : _courtManager.buildCourtDrawingWidget(plan.drawing!),
                 ),
-                const VerticalDivider(
-                    width: 32, thickness: 1, indent: 12, endIndent: 12),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: _courtManager.courtPaddingTop,
-                      horizontal: _courtManager.courtPaddingTop / 2,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          plans[index].title,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: plans[index].color,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          plans[index].description,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
-      separatorBuilder: (_, __) {
-        return const Divider(color: Colors.transparent, height: 16);
-      },
+            const VerticalDivider(
+                width: 32, thickness: 1, indent: 12, endIndent: 12),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: _courtManager.courtPaddingTop,
+                  horizontal: _courtManager.courtPaddingTop / 2,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      plan.title,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: plan.color,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      plan.description,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

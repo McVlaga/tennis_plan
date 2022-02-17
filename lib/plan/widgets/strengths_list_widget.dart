@@ -14,7 +14,6 @@ class StrengthsListWidget extends StatelessWidget {
     List<String> strengths = context.watch<Strengths>().strengths;
     if (strengths.isEmpty) return const SizedBox.shrink();
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingOne),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius:
@@ -22,30 +21,36 @@ class StrengthsListWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           const SectionHeaderWidget(
             title: 'Strengths',
             icon: Icons.shield,
           ),
           const SizedBox(height: 8),
-          ListView.separated(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (_, index) {
-              return StrengthItemWidget(
-                strength: strengths[index],
-              );
-            },
-            itemCount: strengths.length,
-            separatorBuilder: (_, __) {
-              return const Divider(
-                height: 1,
-                thickness: 1,
-                indent: 41,
-              );
-            },
+          Column(
+            children: [
+              for (int i = 0; i < strengths.length; i++) ...[
+                StrengthItemWidget(strength: strengths[i]),
+                if (i < strengths.length - 1)
+                  const Divider(height: 1, thickness: 1, indent: 42),
+              ]
+            ],
           ),
+          const SizedBox(height: 8),
+          // ListView.separated(
+          //   shrinkWrap: true,
+          //   padding: EdgeInsets.zero,
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   itemBuilder: (_, index) {
+          //     return StrengthItemWidget(
+          //       strength: strengths[index],
+          //     );
+          //   },
+          //   itemCount: strengths.length,
+          //   separatorBuilder: (_, __) {
+          //     return const Divider(height: 1, thickness: 1, indent: 41);
+          //   },
+          // ),
         ],
       ),
     );
