@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/tactics/models/tactical_goal.dart';
+import 'tactical_goal.dart';
 
 class TacticalGoals with ChangeNotifier {
   TacticalGoals(List<TacticalGoal> newGoals) {

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:tennis_plan/main_navigation.dart';
 
 import 'constants/constants.dart';
 import 'matches/match_list_screen.dart';
@@ -118,7 +119,8 @@ class _MainScreenState extends State<MainScreen> {
               ),
               onPressed: () {
                 if (_page == 0) {
-                  Navigator.pushNamed(context, '/add-edit-match');
+                  Navigator.pushNamed(
+                      context, MainNavigationRouteNames.addEditMatch);
                   FocusManager.instance.primaryFocus?.unfocus();
                 }
               },

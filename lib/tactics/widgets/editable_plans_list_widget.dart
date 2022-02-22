@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
-import 'editable_plan_item_widget.dart';
+import 'package:tennis_plan/main_navigation.dart';
+
+import '../../constants/constants.dart';
 import '../../widgets/add_header_list_button.dart';
 import '../models/tactical_plan.dart';
 import '../models/tactical_plans.dart';
-
-import '../../constants/constants.dart';
+import 'editable_plan_item_widget.dart';
 
 class EditablePlansListWidget extends StatelessWidget {
   const EditablePlansListWidget({
@@ -20,7 +21,7 @@ class EditablePlansListWidget extends StatelessWidget {
       'planTitle': planTitle,
     };
     Navigator.of(context).pushNamed(
-      '/match-detail/add-edit-tactics/add-edit-tactical-plan',
+      MainNavigationRouteNames.addEditTacticalPlan,
       arguments: arguments,
     );
   }

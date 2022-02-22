@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../constants/constants.dart';
 import '../../opponent_info/models/strengths.dart';
 import '../../widgets/section_header_widget.dart';

@@ -1,8 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/tactics/models/tactical_goal.dart';
-import 'package:tennis_plan/tactics/models/tactical_goals.dart';
+import '../tactics/models/tactical_goal.dart';
+import '../tactics/models/tactical_goals.dart';
 import 'widgets/shots_list_widget.dart';
 import '../widgets/flag_name_widget.dart';
 import '../widgets/section_header_widget.dart';

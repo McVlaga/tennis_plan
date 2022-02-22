@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/main_navigation.dart';
 
-import '../add_edit_match/add_edit_match_screen.dart';
 import '../constants/constants.dart';
 import '../matches/models/a_match.dart';
 import '../matches/models/matches.dart';
-import '../mental/add_edit_mentality_sreen.dart';
-import '../opponent_info/add_edit_opponent_info._screen.dart';
-import '../other/add_edit_other_goals.dart';
 import '../plan/plan_screen.dart';
 import '../review/review_screen.dart';
-import '../tactics/add_edit_tactics_screen.dart';
 
 class MatchDetailTabBarScreen extends StatefulWidget {
   const MatchDetailTabBarScreen({Key? key}) : super(key: key);
@@ -102,7 +98,7 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                    '/add-edit-match',
+                    MainNavigationRouteNames.addEditMatch,
                     arguments: match.id,
                   );
                 },
@@ -145,8 +141,9 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                     Theme.of(context).appBarTheme.backgroundColor,
                 onTap: () {
                   Navigator.of(context).pushNamed(
-                      '/match-detail/add-edit-opponent-info',
-                      arguments: match);
+                    MainNavigationRouteNames.addEditOpponentInfo,
+                    arguments: match,
+                  );
                 },
               ),
               SpeedDialChild(
@@ -161,8 +158,9 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                     Theme.of(context).appBarTheme.backgroundColor,
                 onTap: () {
                   Navigator.of(context).pushNamed(
-                      '/match-detail/add-edit-tactics',
-                      arguments: match);
+                    MainNavigationRouteNames.addEditTactics,
+                    arguments: match,
+                  );
                 },
               ),
               SpeedDialChild(
@@ -177,8 +175,9 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                     Theme.of(context).appBarTheme.backgroundColor,
                 onTap: () {
                   Navigator.of(context).pushNamed(
-                      '/match-detail/add-edit-mentality',
-                      arguments: match);
+                    MainNavigationRouteNames.addEditMentality,
+                    arguments: match,
+                  );
                 },
               ),
               SpeedDialChild(
@@ -193,8 +192,9 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
                     Theme.of(context).appBarTheme.backgroundColor,
                 onTap: () {
                   Navigator.of(context).pushNamed(
-                      '/match-detail/add-edit-other-goals',
-                      arguments: match);
+                    MainNavigationRouteNames.addEditOtherGoals,
+                    arguments: match,
+                  );
                 },
               ),
             ],

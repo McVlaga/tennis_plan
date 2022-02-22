@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
-import 'package:tennis_plan/tactics/add_edit_tactical_goal_dialog.dart';
-import 'package:tennis_plan/tactics/models/tactical_goal.dart';
-import 'package:tennis_plan/tactics/models/tactical_goals.dart';
+import 'add_edit_tactical_goal_dialog.dart';
+import 'models/tactical_goal.dart';
+import 'models/tactical_goals.dart';
 import '../widgets/screen_save_button.dart';
 import '../widgets/section_title_widget.dart';
 import 'models/tactical_plans.dart';

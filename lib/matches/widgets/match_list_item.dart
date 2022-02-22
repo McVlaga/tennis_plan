@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tennis_plan/main_navigation.dart';
 import '../../widgets/flag_name_widget.dart';
 
 import '../../constants/constants.dart';
@@ -14,7 +15,7 @@ class MatchListItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(
-          '/match-detail',
+          MainNavigationRouteNames.matchDetails,
           arguments: match.id,
         );
         FocusManager.instance.primaryFocus?.unfocus();

@@ -1,7 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tennis_plan/tactics/models/tactical_goals.dart';
+import '../../tactics/models/tactical_goals.dart';
 
 import '../../add_edit_match/models/validation_match.dart';
 import '../../opponent_info/models/shots.dart';

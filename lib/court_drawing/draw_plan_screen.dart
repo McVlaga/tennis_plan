@@ -1,20 +1,13 @@
 import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'widgets/cancel_save_bar_widget.dart';
+
 import '../services/court_drawing_manager.dart';
-import '../widgets/color_picker_dialog.dart';
-import '../widgets/screen_save_button.dart';
 import '../tactics/models/tactical_plan.dart';
-import '../../../constants/constants.dart';
-import 'court_painter.dart';
-import 'models/drawing.dart';
+import '../widgets/color_picker_dialog.dart';
 import 'models/canvas_path.dart';
-import 'painter.dart';
+import 'models/drawing.dart';
+import 'widgets/cancel_save_bar_widget.dart';
 
 class DrawPlanScreen extends StatefulWidget {
   const DrawPlanScreen({Key? key}) : super(key: key);
@@ -28,7 +21,6 @@ class _DrawPlanScreenState extends State<DrawPlanScreen> {
   late TacticalPlan plan;
   late bool editing;
 
-  final GlobalKey _globalKey = GlobalKey();
   late Drawing _drawing;
   CanvasPath? _newPath;
   late Paint _currentPaintSettings;

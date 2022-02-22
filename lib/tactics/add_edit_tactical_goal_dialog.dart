@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/tactics/models/tactical_goal.dart';
-import 'package:tennis_plan/tactics/models/tactical_goals.dart';
-import 'package:tennis_plan/widgets/color_picker_dialog.dart';
+import 'models/tactical_goal.dart';
+import 'models/tactical_goals.dart';
+import '../widgets/color_picker_dialog.dart';
 
 import '../../../constants/constants.dart';
 
