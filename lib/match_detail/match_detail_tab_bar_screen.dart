@@ -10,7 +10,10 @@ import '../plan/plan_screen.dart';
 import '../review/review_screen.dart';
 
 class MatchDetailTabBarScreen extends StatefulWidget {
-  const MatchDetailTabBarScreen({Key? key}) : super(key: key);
+  const MatchDetailTabBarScreen({required this.matchId, Key? key})
+      : super(key: key);
+
+  final String matchId;
 
   @override
   _MatchDetailTabBarScreenState createState() =>
@@ -27,15 +30,10 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (firstInit) {
-      _onInit();
+      matches = Provider.of<Matches>(context, listen: false);
+      match = matches.findById(widget.matchId);
+      firstInit = false;
     }
-  }
-
-  void _onInit() {
-    String matchId = ModalRoute.of(context)!.settings.arguments as String;
-    matches = Provider.of<Matches>(context, listen: false);
-    match = matches.findById(matchId);
-    firstInit = false;
   }
 
   void _showDeleteDialog() {

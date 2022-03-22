@@ -27,8 +27,6 @@ abstract class MainNavigationRouteNames {
 class MainNavigation {
   final routes = <String, Widget Function(BuildContext)>{
     MainNavigationRouteNames.mainScreen: (context) => const MainScreen(),
-    MainNavigationRouteNames.matchDetails: (context) =>
-        const MatchDetailTabBarScreen(),
     MainNavigationRouteNames.addEditMatch: (context) =>
         const AddEditMatchScreen(),
     MainNavigationRouteNames.addEditOpponentInfo: (context) =>
@@ -44,9 +42,17 @@ class MainNavigation {
     MainNavigationRouteNames.drawPlan: (context) => const DrawPlanScreen(),
   };
 
-  // Route<Object> onGenerateRout(RouteSettings settings) {
-  //   switch (settings.name) {
-  //     case
-  //   }
-  // }
+  Route<Object> onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case MainNavigationRouteNames.matchDetails:
+        final arguments = settings.arguments;
+        final matchId = arguments is String ? arguments : '';
+        return MaterialPageRoute(
+          builder: (context) => MatchDetailTabBarScreen(matchId: matchId),
+        );
+      default:
+        const widget = Text('Navigation error');
+        return MaterialPageRoute(builder: (context) => widget);
+    }
+  }
 }

@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
         theme: theme.getThemeData(),
         initialRoute: MainNavigationRouteNames.mainScreen,
         routes: mainNavigation.routes,
+        onGenerateRoute: mainNavigation.onGenerateRoute,
       );
     });
   }
