@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:tennis_plan/main_navigation.dart';
+import 'main_navigation.dart';
 
 import 'constants/constants.dart';
 import 'matches/match_list_screen.dart';

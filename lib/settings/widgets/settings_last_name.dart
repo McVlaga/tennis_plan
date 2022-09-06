@@ -17,7 +17,6 @@ class SettingsLastName extends StatelessWidget {
           child: SettingsItemWidget(
             title: 'Last name',
             label: userInfo.lastName ?? 'Nadal',
-            showError: false,
           ),
           onTap: () {
             showDialog(context, userInfo);

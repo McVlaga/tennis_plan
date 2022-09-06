@@ -5,16 +5,17 @@ import '../../constants/constants.dart';
 import '../../tactics/models/tactical_plans.dart';
 import '../../tactics/models/tactical_plan.dart';
 
-class PlansListWidget extends StatefulWidget {
-  const PlansListWidget({
+class TacticalPlansListWidget extends StatefulWidget {
+  const TacticalPlansListWidget({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<PlansListWidget> createState() => _PlansListWidgetState();
+  State<TacticalPlansListWidget> createState() =>
+      _TacticalPlansListWidgetState();
 }
 
-class _PlansListWidgetState extends State<PlansListWidget> {
+class _TacticalPlansListWidgetState extends State<TacticalPlansListWidget> {
   bool firstInit = true;
   late CourtDrawingManager _courtManager;
 
@@ -97,9 +98,7 @@ class TacticalPlanItemWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      plan.description,
-                    ),
+                    Text(plan.description),
                   ],
                 ),
               ),

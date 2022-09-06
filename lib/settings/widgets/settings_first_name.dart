@@ -17,7 +17,6 @@ class SettingsFirstName extends StatelessWidget {
           child: SettingsItemWidget(
             title: 'First name',
             label: userInfo.firstName ?? 'Roger',
-            showError: false,
           ),
           onTap: () {
             showDialog(context, userInfo);

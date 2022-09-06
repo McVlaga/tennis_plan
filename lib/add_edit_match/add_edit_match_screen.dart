@@ -49,6 +49,7 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
         opponentLastName: match.opponentLastName,
         opponentCountry: match.opponentCountry,
         opponentRanking: match.opponentRanking,
+        isOpponentLefty: match.isOpponentLefty,
         isPractice: match.isPractice,
         matchDate: match.matchDate,
         matchTime: match.matchTime,
@@ -63,10 +64,8 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
   }
 
   void _saveMatch(BuildContext ctx, Matches matches) {
-    tempMatch.setOpponentFirstName(
-        firstNameController.text.isEmpty ? null : firstNameController.text);
-    tempMatch.setOpponentLastName(
-        lastNameController.text.isEmpty ? null : lastNameController.text);
+    tempMatch.setOpponentFirstName(firstNameController.text);
+    tempMatch.setOpponentLastName(lastNameController.text);
     if (tempMatch.isValid()) {
       if (editing) {
         match.updateMatch(tempMatch);
@@ -138,16 +137,16 @@ class _AddEditMatchScreenState extends State<AddEditMatchScreen> {
 }
 
 class FirstNameItem extends StatelessWidget {
-  FirstNameItem({
+  const FirstNameItem({
     Key? key,
     required this.nameController,
   }) : super(key: key);
 
-  TextEditingController nameController;
+  final TextEditingController nameController;
 
   @override
   Widget build(BuildContext context) {
-    final match = context.read<ValidationMatch>();
+    final match = context.watch<ValidationMatch>();
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.paddingTwo,
@@ -158,7 +157,7 @@ class FirstNameItem extends StatelessWidget {
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           border: const UnderlineInputBorder(),
-          hintText: 'FirstName',
+          hintText: 'First Name',
           errorText: match.opponentFirstNameError,
         ),
       ),
@@ -167,16 +166,16 @@ class FirstNameItem extends StatelessWidget {
 }
 
 class LastNameItem extends StatelessWidget {
-  LastNameItem({
+  const LastNameItem({
     Key? key,
     required this.nameController,
   }) : super(key: key);
 
-  TextEditingController nameController;
+  final TextEditingController nameController;
 
   @override
   Widget build(BuildContext context) {
-    final match = context.read<ValidationMatch>();
+    final match = context.watch<ValidationMatch>();
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.paddingTwo,

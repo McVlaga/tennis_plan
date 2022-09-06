@@ -19,7 +19,6 @@ class ThemeItem extends StatelessWidget {
           child: SettingsItemWidget(
             title: 'Theme',
             label: themeString,
-            showError: false,
           ),
           onTap: () {
             showDialog(context, theme);

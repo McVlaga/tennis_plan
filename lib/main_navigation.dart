@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_plan/add_edit_match/add_edit_match_screen.dart';
-import 'package:tennis_plan/court_drawing/draw_plan_screen.dart';
-import 'package:tennis_plan/main_screen.dart';
-import 'package:tennis_plan/match_detail/match_detail_tab_bar_screen.dart';
-import 'package:tennis_plan/mental/add_edit_mentality_sreen.dart';
-import 'package:tennis_plan/opponent_info/add_edit_opponent_info._screen.dart';
-import 'package:tennis_plan/other/add_edit_other_goals.dart';
-import 'package:tennis_plan/tactics/add_edit%20_tactical_plan_screen.dart';
-import 'package:tennis_plan/tactics/add_edit_tactics_screen.dart';
+import 'add_edit_match/add_edit_match_screen.dart';
+import 'court_drawing/draw_plan_screen.dart';
+import 'main_screen.dart';
+import 'match_detail/match_detail_tab_bar_screen.dart';
+import 'mental/add_edit_mentality_sreen.dart';
+import 'opponent_info/add_edit_opponent_info._screen.dart';
+import 'other/add_edit_other_goals.dart';
+import 'tactics/add_edit%20_tactical_plan_screen.dart';
+import 'tactics/add_edit_tactics_screen.dart';
 
 abstract class MainNavigationRouteNames {
   static const auth = 'auth';

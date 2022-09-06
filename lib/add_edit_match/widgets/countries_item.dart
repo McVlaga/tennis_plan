@@ -18,7 +18,6 @@ class CountriesItem extends StatelessWidget {
         child: SettingsItemWidget(
           title: 'Country',
           label: match.opponentCountryString,
-          showError: match.showError(match.opponentCountry),
         ),
         onTap: () {
           showCountriesDialog(context, match);

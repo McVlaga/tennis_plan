@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/main_navigation.dart';
+import '../main_navigation.dart';
 
 import '../constants/constants.dart';
 import '../matches/models/a_match.dart';
@@ -30,7 +30,7 @@ class _MatchDetailTabBarScreenState extends State<MatchDetailTabBarScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (firstInit) {
-      matches = Provider.of<Matches>(context, listen: false);
+      matches = context.read<Matches>();
       match = matches.findById(widget.matchId);
       firstInit = false;
     }

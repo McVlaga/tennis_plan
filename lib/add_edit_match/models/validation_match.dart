@@ -33,15 +33,23 @@ class ValidationMatch with ChangeNotifier {
     this.courtSurface,
   });
 
-  bool isValid() {
+  bool isFirstNameValid() {
     bool isValid = true;
-    if (opponentFirstName == null) {
+    if (opponentFirstName!.isEmpty) {
       opponentFirstNameError = 'Enter first name';
       isValid = false;
     } else {
       opponentFirstNameError = null;
     }
-    if (opponentLastName == null) {
+    if (!isValid) {
+      notifyListeners();
+    }
+    return isValid;
+  }
+
+  bool isLastNameValid() {
+    bool isValid = true;
+    if (opponentLastName!.isEmpty) {
       opponentLastNameError = 'Enter last name';
       isValid = false;
     } else {
@@ -53,8 +61,10 @@ class ValidationMatch with ChangeNotifier {
     return isValid;
   }
 
-  bool showError(Object? property) {
-    return property == null;
+  bool isValid() {
+    bool firstNameValid = isFirstNameValid();
+    bool lastNameValid = isLastNameValid();
+    return firstNameValid && lastNameValid;
   }
 
   void setOpponentFirstName(String? firstName) {

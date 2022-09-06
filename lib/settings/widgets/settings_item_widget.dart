@@ -7,21 +7,15 @@ class SettingsItemWidget extends StatelessWidget {
     Key? key,
     required this.title,
     required this.label,
-    required this.showError,
   }) : super(key: key);
 
   final String title;
   final String label;
-  final bool showError;
 
   @override
   Widget build(BuildContext context) {
     Color labelColor;
-    if (showError) {
-      labelColor = Theme.of(context).colorScheme.error;
-    } else {
-      labelColor = Theme.of(context).colorScheme.secondaryVariant;
-    }
+    labelColor = Theme.of(context).colorScheme.secondaryVariant;
     return Padding(
       padding: const EdgeInsets.all(Dimensions.paddingTwo),
       child: Row(

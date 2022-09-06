@@ -17,7 +17,6 @@ class TimeItem extends StatelessWidget {
         child: SettingsItemWidget(
           title: 'Time',
           label: match.getMatchTimeString(context),
-          showError: match.showError(match.matchTime),
         ),
         onTap: () async {
           await showTimeDialog(context, match);

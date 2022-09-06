@@ -67,9 +67,7 @@ class _AddEditTacticalGoalDialogState extends State<AddEditTacticalGoalDialog> {
         children: [
           const Align(
             alignment: Alignment.centerLeft,
-            child: Text(
-              'Add a goal',
-            ),
+            child: Text('Add a goal'),
           ),
           TextField(
             autofocus: true,
@@ -87,7 +85,7 @@ class _AddEditTacticalGoalDialogState extends State<AddEditTacticalGoalDialog> {
             },
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              hintText: 'Try to be aggresive',
+              hintText: 'Try to be aggressive',
             ),
           ),
           const SizedBox(height: 8),
@@ -95,10 +93,7 @@ class _AddEditTacticalGoalDialogState extends State<AddEditTacticalGoalDialog> {
             alignment: Alignment.centerLeft,
             child: RichText(
               text: TextSpan(
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
+                style: const TextStyle(fontSize: 25),
                 children: [
                   ...coloredWords.map((coloredWord) {
                     FontWeight weight;

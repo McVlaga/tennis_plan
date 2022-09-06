@@ -19,7 +19,6 @@ class CourtSurfaceItem extends StatelessWidget {
         child: SettingsItemWidget(
           title: 'Surface',
           label: match.courtSurfaceString,
-          showError: match.showError(match.courtSurface),
         ),
         onTap: () {
           showDialog(context, match);

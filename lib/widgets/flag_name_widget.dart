@@ -40,12 +40,14 @@ class FlagNameWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                match.getNameString(fullName),
-                overflow: TextOverflow.fade,
-                maxLines: 1,
-                softWrap: false,
-                style: const TextStyle(fontSize: Fonts.matchListItemFontSize),
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  match.getNameString(fullName),
+                  maxLines: 1,
+                  softWrap: false,
+                  style: const TextStyle(fontSize: Fonts.matchListItemFontSize),
+                ),
               ),
               if (match.opponentRanking != null)
                 Text(

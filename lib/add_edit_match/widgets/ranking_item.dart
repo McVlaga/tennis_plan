@@ -17,7 +17,6 @@ class RankingItem extends StatelessWidget {
         child: SettingsItemWidget(
           title: 'Ranking',
           label: match.opponentRankingString,
-          showError: match.showError(match.opponentRanking),
         ),
         onTap: () {
           showDialog(context, match);

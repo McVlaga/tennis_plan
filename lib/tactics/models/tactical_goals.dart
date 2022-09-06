@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'tactical_goal.dart';
 
 class TacticalGoals with ChangeNotifier {

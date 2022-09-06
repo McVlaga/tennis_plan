@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
+
+import '../../../constants/constants.dart';
+import '../../../matches/models/a_match.dart';
+import '../widgets/add_header_list_button.dart';
+import '../widgets/screen_save_button.dart';
+import '../widgets/section_title_widget.dart';
 import 'add_edit_tactical_goal_dialog.dart';
 import 'models/tactical_goal.dart';
 import 'models/tactical_goals.dart';
-import '../widgets/screen_save_button.dart';
-import '../widgets/section_title_widget.dart';
 import 'models/tactical_plans.dart';
 import 'widgets/editable_plans_list_widget.dart';
-import '../../../matches/models/a_match.dart';
-import '../../../constants/constants.dart';
-import '../widgets/add_header_list_button.dart';
 
 class AddEditTacticsScreen extends StatefulWidget {
   const AddEditTacticsScreen({Key? key}) : super(key: key);
@@ -127,7 +128,6 @@ class EditableTacticalGoalsList extends StatelessWidget {
                   showAddGoalDialog(context, tempGoals);
                 },
               ),
-              const SizedBox(height: 8),
               ReorderableColumn(
                 children: [
                   for (int i = 0; i < goals.length; i++)

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tennis_plan/main_navigation.dart';
+import '../main_navigation.dart';
 import '../constants/constants.dart';
 import '../widgets/add_header_list_button.dart';
 import '../services/court_drawing_manager.dart';

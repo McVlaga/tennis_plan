@@ -17,7 +17,6 @@ class DateItem extends StatelessWidget {
         child: SettingsItemWidget(
           title: 'Date',
           label: match.matchDateString,
-          showError: match.showError(match.matchDate),
         ),
         onTap: () async {
           await showDateDialog(context, match);
